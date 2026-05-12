@@ -6,6 +6,7 @@
     <title>Queen's Game</title>
     <link rel="stylesheet" href="../css/style.css">
     <script src="../js/game.js" defer></script>
+    <script src="../js/regles.js" defer></script>
     <link rel="icon" href="../media/ico-car.ico" type="image/x-icon">
 </head>
 <body>
@@ -14,6 +15,7 @@
         <nav>
             <a href="index.php">Accueil</a>
             <a href="game.php">Jouer</a>
+            <a href="#" id="openRules">Règles</a>
         </nav>
     </header>
 
@@ -22,5 +24,21 @@
         <p>Allez vient jouer on est cool </p>
         <a href="game.php">Jouer</a>
     </main>
+
+    <div id="overlay" class="overlay">
+        <div class="modal">
+            <h2>Règles du jeu</h2>
+
+            <ul>
+                <li>Une seule reine par ligne</li>
+                <li>Une seule reine par colonne</li>
+                <li>Aucune reine en diagonale</li>
+                <li>Chaque couleur doit contenir une reine</li>
+            </ul>
+
+            <a href="#" id="closeRules">Fermer</a>
+        </div>
+    </div>
+
 </body>
 </html>

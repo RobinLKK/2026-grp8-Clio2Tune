@@ -61,3 +61,31 @@ main a {
 main a:hover {
     background: #c9a050;
 }
+
+.overlay {
+	position: fixed;
+	inset: 0;
+	background: rgba(0,0,0,0.6);
+	display: none;
+	justify-content: center;
+	align-items: center;
+}
+
+.overlay.active {
+	display: flex;
+}
+
+.modal {
+	background: white;
+	padding: 20px;
+	border-radius: 10px;
+	width: 320px;
+    color: #16213e;
+}
+
+.modal a {
+	display: inline-block;
+	margin-top: 10px;
+	color: blue;
+	cursor: pointer;
+}
