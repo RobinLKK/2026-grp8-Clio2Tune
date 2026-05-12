@@ -6,7 +6,7 @@
     <title>Queen's Game</title>
     <link rel="stylesheet" href="../css/style.css">
     <script src="../js/game.js" defer></script>
-    <link rel="icon" href="../media/car-icon.ico" type="image/x-icon">
+    <link rel="icon" href="../media/ico-car.ico" type="image/x-icon">
 </head>
 <body>
     <header>
