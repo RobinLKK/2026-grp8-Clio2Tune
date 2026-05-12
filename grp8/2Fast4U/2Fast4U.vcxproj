@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BiblioFonctions.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="solveur.c" />
   </ItemGroup>
