@@ -12,6 +12,10 @@ typedef struct {
 //Vérfie que l'on peut placer un objet en fonction de la ligne et colonne
 bool estPlacable(int ligne, int colonne);
 
-//
+//Place les croix de manière automatique autour de la pièces et en croix autour d'elle
+void croixauto(int ligne, int colonne);
+
+//Quand le jouer Clique sur une case
+void CliqueCase(int ligne, int colonne);
 
 
