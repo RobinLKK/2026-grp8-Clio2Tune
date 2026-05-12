@@ -1,9 +1,9 @@
 <?php
 
 $host = 'localhost';
-$dbname = 'clio2tune';
+$dbname = '2fast4u';
 $username = 'root';
-$password = '';
+$password = 'root';
 
 try {
 	$pdo = new PDO(
@@ -16,6 +16,5 @@ try {
 		]
 	);
 } catch (PDOException $e) {
-	die('Erreur de connexion à la base de données.');
+    die('Erreur : ' . $e->getMessage());
 }
-

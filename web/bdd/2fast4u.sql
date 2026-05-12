@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:3306
--- Généré le : mar. 12 mai 2026 à 09:14
+-- Généré le : mar. 12 mai 2026 à 14:42
 -- Version du serveur : 5.7.24
 -- Version de PHP : 8.3.1
 
@@ -28,9 +28,10 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `classement` (
-  `ID_niveau` int(11) NOT NULL,
+  `ID` int(11) NOT NULL,
   `ID_utilisateur` int(11) DEFAULT NULL,
-  `Score` int(64) NOT NULL
+  `Score` int(11) NOT NULL,
+  `Date` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -42,10 +43,17 @@ CREATE TABLE `classement` (
 CREATE TABLE `utilisateur` (
   `ID` int(11) NOT NULL,
   `Pseudo` varchar(64) NOT NULL,
-  `Mot de passe` varchar(64) NOT NULL,
-  `Admin` tinyint(1) NOT NULL,
-  `Nombre niveau` int(64) NOT NULL
+  `Mot_de_passe` varchar(255) NOT NULL,
+  `Admin` tinyint(1) NOT NULL DEFAULT '0',
+  `Email` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `utilisateur`
+--
+
+INSERT INTO `utilisateur` (`ID`, `Pseudo`, `Mot_de_passe`, `Admin`, `Email`) VALUES
+(1, 'Rob1', '$2y$10$Elbhc5mHX3YtdrK.2kELdu7/aDMOgaAInmiYIwMCg8P29JVSa6F7O', 1, 'rob@rob.fr');
 
 --
 -- Index pour les tables déchargées
@@ -55,14 +63,15 @@ CREATE TABLE `utilisateur` (
 -- Index pour la table `classement`
 --
 ALTER TABLE `classement`
-  ADD PRIMARY KEY (`ID_niveau`),
-  ADD KEY `Etrangère` (`ID_utilisateur`);
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `fk_utilisateur` (`ID_utilisateur`);
 
 --
 -- Index pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  ADD PRIMARY KEY (`ID`);
+  ADD PRIMARY KEY (`ID`),
+  ADD UNIQUE KEY `Pseudo` (`Pseudo`);
 
 --
 -- AUTO_INCREMENT pour les tables déchargées
@@ -72,13 +81,13 @@ ALTER TABLE `utilisateur`
 -- AUTO_INCREMENT pour la table `classement`
 --
 ALTER TABLE `classement`
-  MODIFY `ID_niveau` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Contraintes pour les tables déchargées
