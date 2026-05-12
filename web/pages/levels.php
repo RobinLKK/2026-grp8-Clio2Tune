@@ -10,6 +10,6 @@ declare(strict_types=1);
 </head>
 <body>
 	<h1>Clio2Tune</h1>
-	<p>Simple PHP page.</p>
+	<p>Page level.php</p>
 </body>
 </html>
