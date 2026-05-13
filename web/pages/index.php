@@ -38,7 +38,7 @@
             <ul>
                 <li>Une seule pièce par ligne</li>
                 <li>Une seule pièce par colonne</li>
-                <li>Aucune pièce en diagonale</li>
+                <li>Aucune pièce en diagonale directement collée</li>
                 <li>Chaque couleur doit contenir une pièce</li>
             </ul>
 
