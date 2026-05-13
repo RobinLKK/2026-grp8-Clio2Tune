@@ -16,12 +16,13 @@
         <h1>2Fast4U</h1>
         <nav>
             <a href="index.php">Accueil</a>
+            <a href="#" id="openRules">Règles</a>
             <?php if (isset($_SESSION["pseudo"])): ?>
                 <a href="profile.php"><?= htmlspecialchars($_SESSION["pseudo"]) ?></a>
             <?php else: ?>
                 <a href="login.php">Se connecter</a>
             <?php endif; ?>
-        </nav>
+            </nav>
     </header>
 
     <main>
