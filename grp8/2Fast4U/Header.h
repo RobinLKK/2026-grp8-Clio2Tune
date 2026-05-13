@@ -46,3 +46,9 @@ void placerCroix(Tile** p, int ligne, int colonne, int size);
 
 //supprime l'allocation de la grille
 void libererPlateau(Tile** p, int size);
+
+//Affiche le board
+void afficherPlateau(Tile** p, int size);
+
+//Vérifie si la partie est gagner
+bool VerifierVictoire(Tile** p, int size);
