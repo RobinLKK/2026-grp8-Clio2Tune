@@ -30,10 +30,10 @@
             <h2>Règles du jeu</h2>
 
             <ul>
-                <li>Une seule reine par ligne</li>
-                <li>Une seule reine par colonne</li>
-                <li>Aucune reine en diagonale</li>
-                <li>Chaque couleur doit contenir une reine</li>
+                <li>Une seule pièce par ligne</li>
+                <li>Une seule pièce par colonne</li>
+                <li>Aucune pièce en diagonale</li>
+                <li>Chaque couleur doit contenir une pièce</li>
             </ul>
 
             <a href="#" id="closeRules">Fermer</a>
