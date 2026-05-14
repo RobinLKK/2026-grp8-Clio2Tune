@@ -36,7 +36,7 @@ bool safeligne(Tile** p, int ligne, int colonne, int size) {
 }
 bool emptyregion(Tile** p, int ligne, int colonne, int size) {
 
-	int targetcolor = &p[ligne][colonne].ColorId;
+	int targetcolor = p[ligne][colonne].ColorId;
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size; j++) {
 			if (i == ligne && j == colonne) {
@@ -202,7 +202,7 @@ bool estPlacable(Tile** p, int ligne, int colonne, int size) {
 }
 void placerVoiture(Tile** p, int ligne, int colonne, int size) {
 	if (estPlacable(p, ligne, colonne, size)) {
-		p[ligne][colonne].hasCar == true;
+		p[ligne][colonne].hasCar = true;
 	}
 	else
 	{
@@ -216,11 +216,11 @@ void placerCroix(Tile** p, int ligne, int colonne, int size) {
 	}
 	else if (p[ligne][colonne].hasX == true)
 	{
-		p[ligne][colonne].hasX == false;
+		p[ligne][colonne].hasX = false;
 	}
 	else
 	{
-		p[ligne][colonne].hasX == true;
+		p[ligne][colonne].hasX = true;
 	}
 }
 

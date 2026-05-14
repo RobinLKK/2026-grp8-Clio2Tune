@@ -1,5 +1,5 @@
 #pragma once
-
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdio.h>
