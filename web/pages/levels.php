@@ -73,7 +73,7 @@ function afficherEtoiles(int $niveau): string
 </section>
 
 <footer>
-    © <?= date('Y') ?> 2Fast4U - Queen's Game version voiture
+    © <?= date('Y') ?> 2Fast4U - Niveaux
 </footer>
 
 </body>
