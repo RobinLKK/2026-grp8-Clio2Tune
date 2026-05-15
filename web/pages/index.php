@@ -36,13 +36,13 @@
             <h2>Règles du jeu</h2>
 
             <ul>
-                <li>Une seule pièce par ligne</li>
-                <li>Une seule pièce par colonne</li>
-                <li>Aucune pièce en diagonale directement collée</li>
-                <li>Chaque couleur doit contenir une pièce</li>
+                <li>Une seule voiture par ligne</li>
+                <li>Une seule voiture par colonne</li>
+                <li>Aucune voiture collée autour d'une autre</li>
+                <li>Chaque couleur doit contenir une voiture</li>
             </ul>
 
-            <a href="#" id="closeRules">Fermer</a>
+            <a href="#" id="closeRules">Close</a>
         </div>
     </div>
 </body>
