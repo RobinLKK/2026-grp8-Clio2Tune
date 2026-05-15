@@ -15,12 +15,12 @@
     <header>
         <h1>2Fast4U</h1>
         <nav>
-            <a href="index.php">Accueil</a>
-            <a href="#" id="openRules">Règles</a>
+            <a href="index.php">Home</a>
+            <a href="#" id="openRules">Rules</a>
             <?php if (isset($_SESSION["pseudo"])): ?>
                 <a href="profile.php"><?= htmlspecialchars($_SESSION["pseudo"]) ?></a>
             <?php else: ?>
-                <a href="login.php">Se connecter</a>
+                <a href="login.php">Login</a>
             <?php endif; ?>
             </nav>
     </header>
@@ -28,18 +28,18 @@
     <main>
         <h2>Clio 2 Tuné</h2>
         <p>Allez vient jouer on est cool </p>
-        <a href="game.php" class="btn">Jouer</a>
+        <a href="game.php" class="btn">Play</a>
     </main>
 
     <div id="overlay" class="overlay">
         <div class="modal">
-            <h2>Règles du jeu</h2>
+            <h2>Game Rules</h2>
 
             <ul>
-                <li>Une seule voiture par ligne</li>
-                <li>Une seule voiture par colonne</li>
-                <li>Aucune voiture collée autour d'une autre</li>
-                <li>Chaque couleur doit contenir une voiture</li>
+                <li>One car per row</li>
+                <li>One car per column</li>
+                <li>No cars touching each other</li>
+                <li>Each color must contain one car</li>
             </ul>
 
             <a href="#" id="closeRules">Close</a>
