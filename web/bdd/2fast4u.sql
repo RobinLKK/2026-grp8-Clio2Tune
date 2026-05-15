@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:3306
--- Généré le : mar. 12 mai 2026 à 14:42
+-- Généré le : ven. 15 mai 2026 à 08:00
 -- Version du serveur : 5.7.24
 -- Version de PHP : 8.3.1
 
@@ -32,6 +32,34 @@ CREATE TABLE `classement` (
   `ID_utilisateur` int(11) DEFAULT NULL,
   `Score` int(11) NOT NULL,
   `Date` datetime DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `classement`
+--
+
+INSERT INTO `classement` (`ID`, `ID_utilisateur`, `Score`, `Date`) VALUES
+(1, 1, 9070, '2026-05-13 15:20:56'),
+(2, 1, 10350, '2026-05-13 15:25:10'),
+(3, 1, 10440, '2026-05-13 15:28:20'),
+(4, 1, 10350, '2026-05-13 15:33:08'),
+(5, 1, 10480, '2026-05-13 15:33:13'),
+(6, 1, 10410, '2026-05-13 15:34:00');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `niveau_cree`
+--
+
+CREATE TABLE `niveau_cree` (
+  `ID` int(11) NOT NULL,
+  `Taille` int(11) NOT NULL,
+  `Nombre_coups` int(11) NOT NULL DEFAULT '0',
+  `Difficulte` int(11) NOT NULL DEFAULT '1',
+  `grille` text,
+  `Nom_du_niveau` text,
+  `ID_Utilisateur` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -67,6 +95,13 @@ ALTER TABLE `classement`
   ADD KEY `fk_utilisateur` (`ID_utilisateur`);
 
 --
+-- Index pour la table `niveau_cree`
+--
+ALTER TABLE `niveau_cree`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `fk_niveau_utilisateur` (`ID_Utilisateur`);
+
+--
 -- Index pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
@@ -81,6 +116,12 @@ ALTER TABLE `utilisateur`
 -- AUTO_INCREMENT pour la table `classement`
 --
 ALTER TABLE `classement`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT pour la table `niveau_cree`
+--
+ALTER TABLE `niveau_cree`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -98,6 +139,12 @@ ALTER TABLE `utilisateur`
 --
 ALTER TABLE `classement`
   ADD CONSTRAINT `classement_ibfk_1` FOREIGN KEY (`ID_utilisateur`) REFERENCES `utilisateur` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `niveau_cree`
+--
+ALTER TABLE `niveau_cree`
+  ADD CONSTRAINT `niveau_cree_ibfk_1` FOREIGN KEY (`ID_Utilisateur`) REFERENCES `utilisateur` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
