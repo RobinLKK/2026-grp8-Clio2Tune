@@ -36,7 +36,7 @@ bool safeligne(Tile** p, int ligne, int colonne, int size) {
 }
 bool emptyregion(Tile** p, int ligne, int colonne, int size) {
 
-	int targetcolor = p[ligne][colonne].ColorId;
+	int targetcolor = &p[ligne][colonne].ColorId;
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size; j++) {
 			if (i == ligne && j == colonne) {
@@ -226,11 +226,12 @@ void placerCroix(Tile** p, int ligne, int colonne, int size) {
 
 void libererPlateau(Tile** p, int size) {
 	for (int i = 0; i < size; i++) {
-		free(p[i]); 
+		free(p[i]);
 	}
-	free(p); 
+	free(p);
 }
-void afficherPlateau(Tile** p, int size) {
+
+/*void afficherPlateau(Tile** p, int size) {
 	printf("\n   ");
 	for (int p = 0; p < size; p++) {
 		printf("%d ", p);
@@ -253,7 +254,7 @@ void afficherPlateau(Tile** p, int size) {
 		}
 		printf("\n");
 	}
-}
+}*/
 bool VerifierVictoire(Tile** p, int size) {
 	int Cars = 0;
 	for (int i = 0; i < size; i++) {
@@ -270,4 +271,134 @@ bool VerifierVictoire(Tile** p, int size) {
 	{
 		return false;
 	}
+}
+
+bool peutPlacerPourGen(Tile** p, int r, int c, int size) {
+	for (int i = 0; i < r; i++) {
+		for (int j = 0; j < size; j++) {
+			if (p[i][j].hasCar) {
+				if (j == c) {
+					return false;
+				}
+				if (abs(i - r) <= 1 && abs(j - c) <= 1) {
+					return false;
+				}
+			}
+		}
+	}
+	return true;
+}
+bool placerReinesAlea(Tile** p, int r, int size) {
+	if (r == size) {
+		return true;
+	}
+
+
+	int cols[MAX_SIZE];
+	for (int i = 0; i < size; i++) {
+		cols[i] = i;
+	}
+	for (int i = 0; i < size; i++) {
+		int target = rand() % size;
+		int temp = cols[i];
+		cols[i] = cols[target];
+		cols[target] = temp;
+	}
+
+	for (int i = 0; i < size; i++) {
+		int c = cols[i];
+		if (peutPlacerPourGen(p, r, c, size)) {
+			p[r][c].hasCar = true;
+			p[r][c].ColorId = r;
+			if (placerReinesAlea(p, r + 1, size)) {
+				return true;
+			}
+			p[r][c].hasCar = false;
+			p[r][c].ColorId = -1;
+		}
+	}
+	return false;
+}
+void genererNiveauGagnable(Tile** p, int size) {
+	for (int i = 0; i < size; i++) {
+		for (int j = 0; j < size; j++) {
+			p[i][j].ColorId = -1;
+			p[i][j].hasCar = false;
+			p[i][j].hasX = false;
+		}
+	}
+	if (!placerReinesAlea(p, 0, size)) {
+
+		genererNiveauGagnable(p, size);
+		return;
+	}
+	int casesRestantes = (size * size) - size;
+	int dr[] = { -1, 1, 0, 0 };
+	int dc[] = { 0, 0, -1, 1 };
+
+	while (casesRestantes > 0) {
+		int r = rand() % size;
+		int c = rand() % size;
+
+		if (p[r][c].ColorId != -1) {
+			int d = rand() % 4;
+			int nr = r + dr[d];
+			int nc = c + dc[d];
+
+			if (nr >= 0 && nr < size && nc >= 0 && nc < size && p[nr][nc].ColorId == -1) {
+				p[nr][nc].ColorId = p[r][c].ColorId;
+				casesRestantes--;
+			}
+		}
+	}
+	for (int i = 0; i < size; i++) {
+		for (int j = 0; j < size; j++) {
+			//les lignes commenté suivantes servent à avoir la solution
+			/*if (p[i][j].hasCar==true)
+			{
+				printf("reine en %d, %d", i, j);
+			}*/
+			p[i][j].hasCar = false;
+		}
+	}
+}
+
+
+void afficherJeuCouleur(Tile** p, int size) {
+	// Liste de couleurs ANSI pour les zones
+	int couleurs[] = { 41, 42, 43, 44, 45, 46, 100, 104, 101, 102, 103, 106 };
+	int nbCouleursDispo = 12;
+
+	printf("\n     ");
+	for (int j = 0; j < size; j++) printf(" %d ", j);
+	printf("\n    +");
+	for (int j = 0; j < size; j++) printf("---");
+	printf("+\n");
+
+	for (int i = 0; i < size; i++) {
+		printf(" %2d |", i);
+		for (int j = 0; j < size; j++) {
+			int code = couleurs[p[i][j].ColorId % nbCouleursDispo];
+
+			// On active la couleur de fond de la zone
+			printf("\033[%dm", code);
+
+			if (p[i][j].hasCar) {
+				printf(" V "); // V pour Voiture
+			}
+			else if (p[i][j].hasX) {
+				printf(" X "); // X pour Croix
+			}
+			else {
+				printf("   "); // Case vide (juste la couleur)
+			}
+
+			// On réinitialise la couleur après la case
+			printf("\033[0m");
+		}
+		printf("|\n");
+	}
+	printf("    +");
+	for (int j = 0; j < size; j++) printf("---");
+	printf("+\n");
 }
