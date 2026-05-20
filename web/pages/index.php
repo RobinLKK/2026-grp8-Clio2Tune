@@ -51,5 +51,8 @@
             <a href="#" id="closeRules">Close</a>
         </div>
     </div>
+    <footer>
+    © <?= date('Y') ?> 2Fast4U - Home
+  </footer>
 </body>
 </html>
