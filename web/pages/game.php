@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Jouer - Queen's Game</title>
     <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/regles.js" defer></script>
     <link rel="icon" href="../media/car-icon.ico" type="image/x-icon">
     <style>
         :root { --cell: 52px; }
@@ -89,9 +90,31 @@
     </style>
 </head>
 <body>
+    <div id="overlay" class="overlay">
+        <div class="modal">
+            <h2>Game Rules</h2>
+
+            <ul>
+                <li>One car per row</li>
+                <li>One car per column</li>
+                <li>No cars touching each other</li>
+                <li>Each color must contain one car</li>
+            </ul>
+
+            <a href="#" id="closeRules">Close</a>
+        </div>
+    </div>
     <header>
         <h1>2Fast4U</h1>
-        <a href="index.php">← Retour</a>
+        <nav>
+            <a href="index.php">Home</a>
+            <a href="#" id="openRules">Rules</a>
+            <?php if (isset($_SESSION["pseudo"])): ?>
+                <a href="profile.php"><?= htmlspecialchars($_SESSION["pseudo"]) ?></a>
+            <?php else: ?>
+                <a href="login.php">Login</a>
+            <?php endif; ?>
+            </nav>
     </header>
 
     <main>

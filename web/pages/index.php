@@ -22,7 +22,7 @@
             <?php else: ?>
                 <a href="login.php">Login</a>
             <?php endif; ?>
-            </nav>
+        </nav>
     </header>
 
     <main>
