@@ -20,3 +20,5 @@ function placeQueen(e) {
     const cell = e.target;
     cell.textContent = cell.textContent === "♛" ? "" : "♛";
 }
+
+

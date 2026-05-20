@@ -13,6 +13,7 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
+    overflow-y: auto;  /* ← ajoute ça */
 }
 
 header {
@@ -97,12 +98,23 @@ main {
     max-width: 800px;
     margin: 0 auto;
     text-align: center;
-    min-height: calc(100vh - 70px);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 1rem;
+    padding: 2rem 0;
+}
+
+/* Override spécifique game page */
+main.game-main {
+    max-width: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 1.5rem 1rem;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
 }
 
 main h2 {
