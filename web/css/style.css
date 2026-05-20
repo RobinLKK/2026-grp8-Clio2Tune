@@ -59,6 +59,7 @@ nav {
     letter-spacing: 0.18em;
     text-transform: uppercase;
     transition: color 0.2s;
+    position: relative;
 }
 
 .nav-right a:hover {
@@ -81,11 +82,11 @@ nav a:hover {
     color: #f0ece3;
 }
 
-nav a:hover::after {
+nav a:hover::after, .nav-right a:hover::after {
     width: 100%;
 }
 
-nav a::after {
+nav a::after , .nav-right a::after{
     content: '';
     position: absolute;
     bottom: -4px; left: 0;

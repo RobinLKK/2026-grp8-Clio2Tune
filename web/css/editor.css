@@ -138,12 +138,22 @@ nav a:hover {
 
 .cell {
     background: #243b67;
-    border-radius: 6px;
-    transition: 0.2s;
-}
 
-.cell:hover {
-    background: #e2b96f;
+    border-radius: 6px;
+
+    transition: 0.2s;
+
     cursor: pointer;
 }
 
+.cell:hover {
+    transform: scale(1.05);
+}
+input[type="color"] {
+    width: 100%;
+    height: 50px;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    cursor: pointer;
+}
