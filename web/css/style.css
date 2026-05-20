@@ -6,8 +6,13 @@
 
 body {
     font-family: Arial, sans-serif;
-    background: #1a1a2e;
     color: #eee;
+    background-color: #1a1a2e;    
+    background-image: url('../media/background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 header {
@@ -42,10 +47,11 @@ main {
 main h2 {
     font-size: 32px;
     margin-bottom: 16px;
+    color: #1a1a2e;
 }
 
 main p {
-    color: #aaa;
+    color: #1a1a2e;
     margin-bottom: 32px;
 }
 
@@ -135,7 +141,7 @@ form button:hover {
 form label {
     text-align: left;
     font-size: 14px;
-    color: #aaa;
+    color: #1a1a2e;
 }
 
 form p {
