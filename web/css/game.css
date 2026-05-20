@@ -1,0 +1,271 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600&display=swap');
+
+:root { --cell: 52px; }
+
+
+
+body {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
+
+
+/* ── Boutons haut (reset + new) ── */
+#controls {
+    display: flex;
+    gap: 8px;
+}
+
+#controls button {
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border: 1px solid rgba(226, 185, 111, 0.35);
+    background: transparent;
+    color: rgba(240, 236, 227, 0.7);
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 0;
+}
+
+#controls button:hover {
+    background: rgba(226, 185, 111, 0.12);
+    color: #e2b96f;
+    border-color: #e2b96f;
+}
+
+/* ── Sélecteur taille ── */
+#size-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1.2rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(240, 236, 227, 0.45);
+}
+
+#size-row select {
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border: 1px solid rgba(226, 185, 111, 0.3);
+    background: rgba(10, 15, 30, 0.8);
+    color: #f0ece3;
+    cursor: pointer;
+    border-radius: 0;
+}
+
+/* ── Grille ── */
+#grid-container {
+    display: flex;
+    margin-bottom: 1rem;
+}
+
+#grid {
+    border-collapse: collapse;
+    border: 2px solid rgba(226, 185, 111, 0.4);
+    table-layout: fixed;
+    background-color: #111;
+    box-shadow: 0 0 40px rgba(0,0,0,0.6);
+}
+
+.cell {
+    width: var(--cell);
+    height: var(--cell);
+    min-width: var(--cell); max-width: var(--cell);
+    min-height: var(--cell); max-height: var(--cell);
+    cursor: pointer;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+    transition: filter 0.1s;
+    border: none;
+    box-shadow: inset 0 0 0 0.5px rgba(0,0,0,0.3);
+    background-size: 101% 101%;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+    padding: 0;
+    box-sizing: border-box;
+}
+.cell:hover { filter: brightness(1.2); }
+
+/* ── Voiture ── */
+.car-img {
+    width: 85%; height: 85%;
+    object-fit: contain;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 2;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6));
+}
+
+/* ── Croix ── */
+.cell.has-x::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 45%; height: 45%;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><line x1="8" y1="8" x2="56" y2="56" stroke="%23333" stroke-width="10" stroke-linecap="round"/><line x1="56" y1="8" x2="8" y2="56" stroke="%23333" stroke-width="10" stroke-linecap="round"/></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.45;
+    pointer-events: none;
+    z-index: 3;
+}
+
+/* ── Flash erreur ── */
+.cell.error-flash { animation: flash 0.4s; }
+@keyframes flash {
+    0%,100% { filter: brightness(1); }
+    50%      { filter: brightness(0.5) saturate(2); }
+}
+
+/* ── Message ── */
+#msg {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    min-height: 20px;
+    color: rgba(240, 236, 227, 0.4);
+    margin: 0.5rem 0 0;
+    text-align: center;
+    background: none !important;
+    text-shadow: none !important;
+}
+#msg.win {
+    color: #86efac;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.15em;
+}
+
+#btn-hint, #btn-solution {
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 8px 20px;
+    border: 2px solid #e2b96f;
+    background: rgba(10, 15, 30, 0.75);
+    color: #e2b96f;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 0;
+    backdrop-filter: blur(6px);
+}
+#btn-hint:hover, #btn-solution:hover {
+    background: #e2b96f;
+    color: #1a1a2e;
+}
+
+/* ── Chrono ── */
+#chrono {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: #e2b96f;
+    letter-spacing: 0.15em;
+    text-align: center;
+}
+
+/* ── Leaderboard latéral ── */
+#level-leaderboard {
+    position: absolute;
+    left: calc(100% + 1rem);
+    top: 0;
+    background: rgba(10, 15, 30, 0.72);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(226, 185, 111, 0.15);
+    padding: 1rem 1.2rem;
+    width: 150px;
+}
+
+
+#level-leaderboard .lb-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.15em;
+    color: #e2b96f;
+    margin-bottom: 0.8rem;
+}
+#level-leaderboard .lb-empty {
+    font-size: 0.72rem;
+    color: rgba(240, 236, 227, 0.35);
+    text-align: center;
+}
+
+/* ── Conseil ── */
+#conseil {
+    font-size: 0.72rem;
+    color: #e2b96f;
+    letter-spacing: 0.08em;
+    font-style: italic;
+    text-align: center;
+    background: rgba(10, 15, 30, 0.75);
+    backdrop-filter: blur(6px);
+    padding: 0.4rem 1rem;
+    border: 1px solid rgba(226, 185, 111, 0.2);
+}
+/* ── Layout principal ── */
+.game-outer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    width: 100%;
+    padding-bottom: 2rem;
+}
+
+.game-middle {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+#game-wrap {
+    padding: 0.8rem;
+    font-family: 'Barlow', sans-serif;
+    background: rgba(10, 15, 30, 0.72);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(226, 185, 111, 0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #f0ece3;
+}
+
+.game-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding-bottom: 1.5rem;
+}
+
+.game-bottom-btns {
+    display: flex;
+    gap: 8px;
+}
+
+body.game-page {
+    overflow-y: auto !important;
+}
+
+main.game-main {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 1.5rem 1rem !important;
+}

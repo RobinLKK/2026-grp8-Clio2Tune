@@ -46,7 +46,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <nav>
         <a href="index.php">Home</a>
         <a href="leaderboard.php">Leaderboard</a>
-        <a href="#" id="openRules">Rules</a>
     </nav>
     <div class="nav-right">
         <?php if (isset($_SESSION['pseudo'])): ?>
