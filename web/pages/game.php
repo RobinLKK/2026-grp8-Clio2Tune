@@ -4,108 +4,210 @@
     <meta charset="UTF-8">
     <title>Jouer - Queen's Game</title>
     <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="icon" href="../media/car-icon.ico" type="image/x-icon">
     <style>
-        :root { --cell: 52px; }
-        #game-wrap { padding: 1rem 0; font-family: sans-serif; }
-        #game-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
-        #game-title { font-size: 18px; font-weight: 500; margin: 0; }
-        #game-subtitle { font-size: 13px; color: #888; margin: 4px 0 0; }
-        #controls { display: flex; gap: 8px; }
-        #controls button { font-size: 13px; padding: 6px 14px; border-radius: 8px; border: 1px solid #ccc; background: white; cursor: pointer; }
-        #controls button:hover { background: #f5f5f5; }
-        #size-row { display: flex; align-items: center; gap: 10px; margin-bottom: 1.25rem; font-size: 13px; color: #888; }
-        #size-row select { font-size: 13px; padding: 4px 8px; border-radius: 8px; border: 1px solid #ccc; }
-        #grid-container { display: flex; margin-bottom: 1.25rem; }
-        #grid { 
-            border-collapse: collapse; 
-            border: 1.5px solid #aaa; 
-            table-layout: fixed;
-            background-color: #222; /* Fond sombre pour boucher les micro-trous restants */
-        }
-        
-        .cell {
-            width: var(--cell); 
-            height: var(--cell);
-            min-width: var(--cell);
-            max-width: var(--cell);
-            min-height: var(--cell);
-            max-height: var(--cell);
-            cursor: pointer; 
-            text-align: center; 
-            vertical-align: middle;
-            user-select: none;
-            transition: filter 0.1s;
-            
-            /* On remplace la bordure classique pour éviter les trous d'arrondi */
-            border: none; 
-            box-shadow: inset 0 0 0 0.5px rgba(0,0,0,0.25);
-            
-            /* On force l'image à bien couvrir la case */
-            background-size: 101% 101%;
-            background-repeat: no-repeat;
-            background-position: center;
-            
-            position: relative;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        .cell:hover { filter: brightness(0.88); }
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600&display=swap');
 
-        /* Style pour l'image de la voiture */
-        .car-img {
-            width: 90%;
-            height: 90%;
-            object-fit: contain;
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            z-index: 2; /* Passe au-dessus des traces de pneus */
-        }
+    :root { --cell: 52px; }
 
-        /* Marque X */
-        .cell.has-x::after {
-            content: '';
-            display: block;
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 45%;
-            height: 45%;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><line x1="8" y1="8" x2="56" y2="56" stroke="%23333" stroke-width="10" stroke-linecap="round"/><line x1="56" y1="8" x2="8" y2="56" stroke="%23333" stroke-width="10" stroke-linecap="round"/></svg>');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            opacity: 0.45;
-            pointer-events: none;
-            z-index: 3;
-        }
+    #game-wrap {
+        padding: 1.5rem 2rem;
+        font-family: 'Barlow', sans-serif;
+        background: rgba(10, 15, 30, 0.72);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(226, 185, 111, 0.15);
+        border-radius: 4px;
+        display: inline-block;
+        color: #f0ece3;
+    }
 
-        .cell.error-flash { animation: flash 0.4s; }
-        @keyframes flash { 0%,100%{filter:brightness(1)} 50%{filter:brightness(0.6) saturate(2)} }
-        #msg { font-size: 14px; min-height: 20px; color: #888; }
-        #msg.win { color: #1D9E75; font-weight: 500; font-size: 16px; }
-    </style>
+    #game-subtitle {
+        font-size: 0.75rem;
+        color: rgba(240, 236, 227, 0.5);
+        margin: 4px 0 0;
+        letter-spacing: 0.05em;
+    }
+
+    #controls { 
+        display: flex; 
+        gap: 8px; 
+    }
+
+    #controls button {
+        font-family: 'Barlow', sans-serif;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        padding: 6px 16px;
+        border: 1px solid rgba(226, 185, 111, 0.35);
+        background: transparent;
+        color: rgba(240, 236, 227, 0.7);
+        cursor: pointer;
+        transition: all 0.2s;
+        border-radius: 0;
+    }
+
+    #controls button:hover {
+        background: rgba(226, 185, 111, 0.12);
+        color: #e2b96f;
+        border-color: #e2b96f;
+    }
+
+    #size-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 1.2rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: rgba(240, 236, 227, 0.45);
+    }
+
+    #size-row select {
+        font-family: 'Barlow', sans-serif;
+        font-size: 0.75rem;
+        padding: 4px 8px;
+        border: 1px solid rgba(226, 185, 111, 0.3);
+        background: rgba(10, 15, 30, 0.8);
+        color: #f0ece3;
+        cursor: pointer;
+        border-radius: 0;
+    }
+
+    #grid-container { display: flex; margin-bottom: 1rem; }
+
+    #grid {
+        border-collapse: collapse;
+        border: 2px solid rgba(226, 185, 111, 0.4);
+        table-layout: fixed;
+        background-color: #111;
+        box-shadow: 0 0 40px rgba(0,0,0,0.6);
+    }
+
+    .cell {
+        width: var(--cell);
+        height: var(--cell);
+        min-width: var(--cell); max-width: var(--cell);
+        min-height: var(--cell); max-height: var(--cell);
+        cursor: pointer;
+        text-align: center;
+        vertical-align: middle;
+        user-select: none;
+        transition: filter 0.1s;
+        border: none;
+        box-shadow: inset 0 0 0 0.5px rgba(0,0,0,0.3);
+        background-size: 101% 101%;
+        background-repeat: no-repeat;
+        background-position: center;
+        position: relative;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    .cell:hover { filter: brightness(1.2); }
+
+    .car-img {
+        width: 85%; height: 85%;
+        object-fit: contain;
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        z-index: 2;
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6));
+    }
+
+    .cell.has-x::after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        width: 45%; height: 45%;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><line x1="8" y1="8" x2="56" y2="56" stroke="%23333" stroke-width="10" stroke-linecap="round"/><line x1="56" y1="8" x2="8" y2="56" stroke="%23333" stroke-width="10" stroke-linecap="round"/></svg>');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        opacity: 0.45;
+        pointer-events: none;
+        z-index: 3;
+    }
+
+    .cell.error-flash { animation: flash 0.4s; }
+    @keyframes flash {
+        0%,100% { filter: brightness(1); }
+        50% { filter: brightness(0.5) saturate(2); }
+    }
+
+    #msg {
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        min-height: 20px;
+        color: rgba(240, 236, 227, 0.4);
+        margin: 0.5rem 0 0;
+        text-align: center;
+        background: none !important;
+        text-shadow: none !important;
+    }
+    #msg.win {
+        color: #86efac;
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 1.1rem;
+        letter-spacing: 0.15em;
+    }
+
+    #btn-hint, #btn-solution {
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border: 1px solid rgba(226, 185, 111, 0.35);
+    background: transparent;
+    color: rgba(240, 236, 227, 0.7);
+    cursor: pointer;
+    transition: all 0.2s;
+    }
+
+    #btn-hint:hover, #btn-solution:hover {
+        background: rgba(226, 185, 111, 0.12);
+        color: #e2b96f;
+        border-color: #e2b96f;
+    }
+</style>
 </head>
 <body>
     <header>
-        <h1>2Fast4U</h1>
-        <a href="index.php">← Retour</a>
+    <a href="index.php" class="logo">2Fast4U</a>
+    <nav>
+        <a href="index.php">Home</a>
+        <a href="leaderboard.php">Leaderboard</a>
+        <a href="#" id="openRules">Rules</a>
+    </nav>
+    <div class="nav-right">
+        <?php if (isset($_SESSION['pseudo'])): ?>
+            <a href="profile.php"><?= htmlspecialchars($_SESSION['pseudo']) ?></a>
+            <a href="logout.php">Logout</a>
+        <?php else: ?>
+            <a href="login.php">Login</a>
+            <a href="register.php">Register</a>
+        <?php endif; ?>
+    </div>
     </header>
 
-    <main>
+    <main style="display:flex; align-items:center; justify-content:center; min-height:calc(100vh - 64px);">
         <div id="game-wrap">
-            <div id="game-header">
-                <div>
-                    <p id="game-title">Queens</p>
-                    <p id="game-subtitle">Une voiture par ligne, colonne et région · aucune voiture adjacente</p>
-                </div>
-                <div id="controls">
-                    <button id="btn-reset">Réinitialiser</button>
-                    <button id="btn-new">Nouveau niveau</button>
-                </div>
+
+            <div id="controls" style="display:flex; justify-content:center; gap:8px; margin-bottom:1.2rem;">
+                <button id="btn-reset">Réinitialiser</button>
+                <button id="btn-new">Nouveau niveau</button>
             </div>
+
             <div id="size-row">
                 Taille :
                 <select id="size-select">
@@ -117,8 +219,16 @@
                     <option value="10">10×10</option>
                 </select>
             </div>
+
             <div id="grid-container"><table id="grid"></table></div>
-            <p id="msg">Cliquez pour placer une voiture · recliquez pour une croix · encore pour effacer</p>
+
+            <div style="display:flex; justify-content:center; gap:8px; margin-top:1rem;">
+                <button id="btn-hint">Un indice</button>
+                <button id="btn-solution">Solution finale</button>
+            </div>
+
+            <p id="msg"></p>
+
         </div>
     </main>
 
@@ -244,6 +354,7 @@
         function genererNiveau(size) {
             let g = initGrid(size);
             while (!placerReinesAlea(g, 0, size)) g = initGrid(size);
+            
             let rest = size*size - size;
             const dr=[-1,1,0,0], dc=[0,0,-1,1];
             let iter = 0;
@@ -255,6 +366,13 @@
                     if (nr>=0&&nr<size&&nc>=0&&nc<size&&g[nr][nc].colorId===-1) { g[nr][nc].colorId=g[r][c].colorId; rest--; }
                 }
             }
+
+            // Sauvegarde ICI avant d'effacer
+            solution = [];
+            for (let i = 0; i < size; i++)
+                for (let j = 0; j < size; j++)
+                    if (g[i][j].hasCar) solution.push({r: i, c: j});
+
             for (let i=0;i<size;i++) for(let j=0;j<size;j++) g[i][j].hasCar=false;
             return g;
         }
@@ -349,8 +467,15 @@
             else { msg.textContent='Cliquez pour placer une voiture · recliquez pour une croix · encore pour effacer'; }
         }
         
-        function newGame() { SIZE=+document.getElementById('size-select').value; grid=genererNiveau(SIZE); document.getElementById('msg').textContent='Cliquez pour placer une voiture · recliquez pour une croix · encore pour effacer'; document.getElementById('msg').className=''; renderGrid(); }
-        
+        let solution = []; // stocke la solution
+
+        function newGame() {
+            SIZE = +document.getElementById('size-select').value;
+            grid = genererNiveau(SIZE);
+            document.getElementById('msg').textContent = 'Cliquez pour placer une voiture';
+            document.getElementById('msg').className = '';
+            renderGrid();
+        }
         function resetGame() { 
             for(let i=0; i<SIZE; i++) {
                 for(let j=0; j<SIZE; j++) {
@@ -358,7 +483,7 @@
                     grid[i][j].hasX = false;
                 }
             } 
-            document.getElementById('msg').textContent='Cliquez pour placer une voiture · recliquez pour une croix · encore pour effacer'; 
+            document.getElementById('msg').textContent = 'Cliquez pour placer une voiture';
             document.getElementById('msg').className=''; 
             renderGrid(); 
         }
@@ -367,6 +492,39 @@
         document.getElementById('btn-reset').addEventListener('click', resetGame);
         document.getElementById('size-select').addEventListener('change', newGame);
         newGame();
+
+        document.getElementById('btn-hint').addEventListener('click', function() {
+        // Trouve une case vide où une voiture peut être placée
+        for (let i = 0; i < SIZE; i++) {
+            for (let j = 0; j < SIZE; j++) {
+                if (!grid[i][j].hasCar && !grid[i][j].hasX && estPlacable(grid, i, j, SIZE)) {
+                    grid[i][j].hasCar = true;
+                    renderGrid();
+                    setTimeout(() => {
+                        if (!verifierVictoire(grid, SIZE)) {
+                            grid[i][j].hasCar = false;
+                            renderGrid();
+                        }
+                    }, 800);
+                    return;
+                }
+            }
+        }
+    });
+
+    document.getElementById('btn-solution').addEventListener('click', function() {
+        // Reset
+        for (let i = 0; i < SIZE; i++)
+            for (let j = 0; j < SIZE; j++) {
+                grid[i][j].hasCar = false;
+                grid[i][j].hasX = false;
+            }
+        // Place la solution sauvegardée
+        solution.forEach(pos => { grid[pos.r][pos.c].hasCar = true; });
+        renderGrid();
+        document.getElementById('msg').textContent = '✓ Solution affichée';
+        document.getElementById('msg').className = 'win';
+    });
     </script>
 </body>
 </html>

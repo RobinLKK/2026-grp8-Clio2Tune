@@ -51,18 +51,25 @@ $scores = $stmt->fetchAll();
     <title>2Fast4U – Profil</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="icon" href="../media/ico-car.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
-        <h1>2Fast4U</h1>
-        <nav>
-            <a href="index.php">Accueil</a>
-            <?php if (isset($_SESSION["pseudo"])): ?>
-                <a href="profile.php"><?= htmlspecialchars($_SESSION["pseudo"]) ?></a>
-            <?php else: ?>
-                <a href="login.php">Se connecter</a>
-            <?php endif; ?>
-        </nav>
+    <a href="index.php" class="logo">2Fast4U</a>
+    <nav>
+        <a href="index.php">Home</a>
+        <a href="leaderboard.php">Leaderboard</a>
+        <a href="#" id="openRules">Rules</a>
+    </nav>
+    <div class="nav-right">
+        <?php if (isset($_SESSION['pseudo'])): ?>
+            <a href="profile.php"><?= htmlspecialchars($_SESSION['pseudo']) ?></a>
+            <a href="logout.php">Logout</a>
+        <?php else: ?>
+            <a href="login.php">Login</a>
+            <a href="register.php">Register</a>
+        <?php endif; ?>
+    </div>
     </header>
 
     <main>

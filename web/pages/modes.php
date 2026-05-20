@@ -5,27 +5,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game Modes - 2Fast4U</title>
-
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/modes.css">
     <link rel="icon" href="../media/ico-car.ico" type="image/x-icon">
 </head>
 
 <body>
 
-<header>
-    <h1>2Fast4U</h1>
-
+    <header>
+    <a href="index.php" class="logo">2Fast4U</a>
     <nav>
         <a href="index.php">Home</a>
         <a href="leaderboard.php">Leaderboard</a>
-
-        <?php if (isset($_SESSION["pseudo"])): ?>
-            <a href="profile.php"><?= htmlspecialchars($_SESSION["pseudo"]) ?></a>
+        <a href="#" id="openRules">Rules</a>
+    </nav>
+    <div class="nav-right">
+        <?php if (isset($_SESSION['pseudo'])): ?>
+            <a href="profile.php"><?= htmlspecialchars($_SESSION['pseudo']) ?></a>
+            <a href="logout.php">Logout</a>
         <?php else: ?>
             <a href="login.php">Login</a>
+            <a href="register.php">Register</a>
         <?php endif; ?>
-    </nav>
-</header>
+    </div>
+    </header>
 
 <section class="hero">
     <h1>Choose Your Mode</h1>
