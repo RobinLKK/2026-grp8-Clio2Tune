@@ -135,5 +135,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       </p>
     </div>
   </main>
+  <footer>
+    © <?= date('Y') ?> 2Fast4U - Login
+  </footer>
 </body>
 </html>
