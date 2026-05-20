@@ -6,16 +6,9 @@
 
 body {
     font-family: Arial, sans-serif;
-
-    background:
-        linear-gradient(rgba(10,10,20,0.88), rgba(10,10,20,0.92)),
-        url("../media/background.png");
-
     background-size: cover;
     background-position: center;
-
     color: #eee;
-
     min-height: 100vh;
 }
 
@@ -84,47 +77,62 @@ nav a:hover {
 
 .mode-card {
     flex: 1;
-
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 
     padding: 60px;
-
     transition: 0.3s;
 
     position: relative;
     overflow: hidden;
 }
 
-.mode-card:nth-child(1) {
-    background: rgba(36, 73, 122, 0.85);
+.mode-card.story {
+
+    background:
+    linear-gradient(rgba(10,10,20,0.7), rgba(10,10,20,0.7)),
+    url("../media/background_histoire.png");
+
+    background-size: cover;
+    background-position: center;
 }
 
-.mode-card:nth-child(2) {
-    background: rgba(22, 39, 79, 0.88);
+.mode-card.random {
+
+    background:
+    linear-gradient(rgba(10,10,20,0.7), rgba(10,10,20,0.7)),
+    url("../media/background_aléatoire.png");
+
+    background-size: cover;
+    background-position: center;
 }
 
-.mode-card:nth-child(3) {
-    background: rgba(16, 61, 115, 0.85);
+.mode-card.create {
+
+    background:
+    linear-gradient(rgba(10,10,20,0.7), rgba(10,10,20,0.7)),
+    url("../media/background_editor.png");
+
+    background-size: cover;
+    background-position: center;
 }
 
 .mode-card::before {
     content: "";
-
     position: absolute;
     top: 0;
     left: -100%;
-
     width: 100%;
     height: 100%;
-
     background: rgba(255,255,255,0.05);
-
     transition: 0.5s;
 }
-
+.mode-card {
+    background-size: cover;
+    background-position: center;
+}
 .mode-card:hover::before {
     left: 100%;
 }
@@ -150,15 +158,10 @@ nav a:hover {
 
 .mode-card p {
     text-align: center;
-
     color: #f0f0f0;
-
     line-height: 1.7;
-
     max-width: 320px;
-
     margin-bottom: 40px;
-
     font-size: 20px;
 }
 
@@ -166,16 +169,11 @@ nav a:hover {
 .btn {
     background: #e2b96f;
     color: #111;
-
     text-decoration: none;
-
     padding: 16px 42px;
-
     border-radius: 8px;
-
     font-weight: bold;
     font-size: 18px;
-
     transition: 0.2s;
 }
 
@@ -187,10 +185,7 @@ nav a:hover {
 
 footer {
     text-align: center;
-
     padding: 25px;
-
     background: rgba(0,0,0,0.3);
-
     color: #888;
 }
