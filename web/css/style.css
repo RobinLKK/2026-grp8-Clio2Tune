@@ -134,7 +134,6 @@ main p {
 
 
 .overlay {
-<<<<<<< HEAD
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.75);
@@ -143,7 +142,6 @@ main p {
     justify-content: center;
     align-items: center;
     z-index: 100;
-=======
 	position: fixed;
 	inset: 0;
 	background: rgba(0,0,0,0.6);
@@ -151,7 +149,6 @@ main p {
 	justify-content: center;
 	align-items: center;
     z-index: 9999;
->>>>>>> d888f75b3ef04d760cea0bee7450fbecedb12dcd
 }
 
 .overlay.active {
