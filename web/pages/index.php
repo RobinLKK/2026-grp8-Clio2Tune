@@ -34,7 +34,7 @@
     <main>
         <h2>Clio 2 Tuné</h2>
         <p>Allez vient jouer on est cool </p>
-        <a href="game.php" class="btn">Play</a>
+        <a href="gamemodes.php" class="btn">Play</a>
     </main>
 
     <div id="overlay" class="overlay">
