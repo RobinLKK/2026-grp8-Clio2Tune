@@ -481,3 +481,11 @@ main h1 {
     background: #c9a050;
     transform: translateY(-2px);
 }
+
+footer{
+    text-align:center;
+    padding:10px;
+    background:rgba(10, 15, 30, 0.82);
+    color:#aaa;
+    margin-top:40px;
+}
