@@ -64,6 +64,18 @@ session_start();
                     <option>Hard</option>
                 </select>
             </div>
+            <div class="option-card">
+                <h3>Cell Color</h3>
+                <select id="cellColor">
+                    <option value="#243b67">Blue</option>
+                    <option value="#eeff00">yellow</option>
+                    <option value="#2e8b57">Green</option>
+                    <option value="#b22222">Red</option>
+                    <option value="#555555">Gray</option>
+                    <option value="#9f02befb">Purple</option>
+                    <option value="#00ffff">Cyan</option>
+                </select>
+            </div>
 
         </div>
 
@@ -77,10 +89,11 @@ session_start();
     <section class="editor-right">
 
         <div class="grid-preview" id="gridPreview"></div>
+        <div class="form-group"></div>
             <script>
-
                 const gridPreview = document.getElementById("gridPreview");
                 const gridSize = document.getElementById("gridSize");
+                const cellColor = document.getElementById("cellColor");
 
                 function createGrid(size)
                 {
@@ -93,23 +106,23 @@ session_start();
                         const cell = document.createElement("div");
 
                         cell.classList.add("cell");
-
+                        cell.addEventListener("click", () =>
+                        {
+                            cell.style.background = cellColor.value;
+                        });
                         gridPreview.appendChild(cell);
                     }
                 }
-
                 gridSize.addEventListener("change", () =>
                 {
                     createGrid(gridSize.value);
                 });
-
                 createGrid(5);
 
-                </script>
+            </script>
 
     </section>
 
 </main>
-
 </body>
 </html>
