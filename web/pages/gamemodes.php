@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game Modes - 2Fast4U</title>
 
-    <link rel="stylesheet" href="../css/modes.css">
+    <link rel="stylesheet" href="../css/gamemodes.css">
     <link rel="icon" href="../media/ico-car.ico" type="image/x-icon">
 </head>
 
