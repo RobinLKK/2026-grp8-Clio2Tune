@@ -24,22 +24,30 @@ function afficherEtoiles(int $niveau): string
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Choix des niveaux - 2Fast4U</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="../css/levels.css">
     <link rel="icon" href="../media/car-icon.ico" type="image/x-icon">
 </head>
 
 <body>
-
-<header>
-    <h1>2Fast4U</h1>
-
+    <header>
+    <a href="index.php" class="logo">2Fast4U</a>
     <nav>
-        <a href="index.php">Accueil</a>
-        <a href="leaderboard.php">Classement</a>
-        <a href="login.php">Connexion</a>
+        <a href="index.php">Home</a>
+        <a href="leaderboard.php">Leaderboard</a>
+        <a href="#" id="openRules">Rules</a>
     </nav>
-</header>
+    <div class="nav-right">
+        <?php if (isset($_SESSION['pseudo'])): ?>
+            <a href="profile.php"><?= htmlspecialchars($_SESSION['pseudo']) ?></a>
+            <a href="logout.php">Logout</a>
+        <?php else: ?>
+            <a href="login.php">Login</a>
+            <a href="register.php">Register</a>
+        <?php endif; ?>
+    </div>
+    </header>
 
 <section class="hero">
     <h2>Choisis ton circuit</h2>

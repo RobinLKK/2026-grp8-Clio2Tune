@@ -35,41 +35,59 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>2Fast4U – Inscription</title>
+    <title>2Fast4U – Register</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="icon" href="../media/favicon.ico">
 </head>
 <body>
     <header>
-        <h1>2Fast4U</h1>
-        <nav>
-            <a href="index.php">Accueil</a>
-        </nav>
+    <a href="index.php" class="logo">2Fast4U</a>
+    <nav>
+        <a href="index.php">Home</a>
+        <a href="leaderboard.php">Leaderboard</a>
+        <a href="#" id="openRules">Rules</a>
+    </nav>
+    <div class="nav-right">
+        <?php if (isset($_SESSION['pseudo'])): ?>
+            <a href="profile.php"><?= htmlspecialchars($_SESSION['pseudo']) ?></a>
+            <a href="logout.php">Logout</a>
+        <?php else: ?>
+            <a href="login.php">Login</a>
+            <a href="register.php">Register</a>
+        <?php endif; ?>
+    </div>
     </header>
 
-    <main>
-        <h2>Inscription</h2>
+  <main class="auth-wrap">
+    <div class="auth-box">
+      <h2>Register</h2>
+      <p class="auth-sub">Créer un compte</p>
 
-        <?php if ($erreur): ?>
-            <p class="erreur"><?= htmlspecialchars($erreur) ?></p>
-        <?php endif; ?>
+      <?php if ($erreur): ?>
+        <p class="erreur"><?= htmlspecialchars($erreur) ?></p>
+      <?php endif; ?>
 
-        <form method="POST">
-            <label>Pseudo</label>
-            <input type="text" name="pseudo" required>
+      <form method="POST">
+        <div class="form-group">
+          <label>Username</label>
+          <input type="text" name="pseudo" required>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" name="mot_de_passe" required>
+        </div>
+        <div class="form-group">
+          <label>Confirm Password</label>
+          <input type="password" name="confirmer" required>
+        </div>
+        <button type="submit" class="btn-submit">Register</button>
+      </form>
 
-            <label>Mot de passe</label>
-            <input type="password" name="mot_de_passe" required>
-
-            <label>Confirmer le mot de passe</label>
-            <input type="password" name="confirmer" required>
-
-            <button type="submit">S'inscrire</button>
-        </form>
-        <p></p>
-
-
-        <p>Déjà un compte ? <a href="login.php" class="btn-outline">Se connecter</a></p>
-    </main>
+      <p class="auth-footer">
+        Already an account ? <a href="login.php">Login</a>
+      </p>
+    </div>
+  </main>
 </body>
 </html>
