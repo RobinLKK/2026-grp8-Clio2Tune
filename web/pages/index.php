@@ -14,6 +14,7 @@
 </head>
 <body>
     <header>
+<<<<<<< HEAD
     <a href="index.php" class="logo">2Fast4U</a>
     <nav>
         <a href="index.php">Home</a>
@@ -29,6 +30,18 @@
             <a href="register.php">Register</a>
         <?php endif; ?>
     </div>
+=======
+        <h1>2Fast4U</h1>
+        <nav>
+            <a href="index.php">Home</a>
+            <a href="#" id="openRules">Rules</a>
+            <?php if (isset($_SESSION["pseudo"])): ?>
+                <a href="profile.php"><?= htmlspecialchars($_SESSION["pseudo"]) ?></a>
+            <?php else: ?>
+                <a href="login.php">Login</a>
+            <?php endif; ?>
+        </nav>
+>>>>>>> d888f75b3ef04d760cea0bee7450fbecedb12dcd
     </header>
 
     <main>

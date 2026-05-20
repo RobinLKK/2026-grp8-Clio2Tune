@@ -5,8 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game Modes - 2Fast4U</title>
+<<<<<<< HEAD:web/pages/modes.php
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/modes.css">
+=======
+
+    <link rel="stylesheet" href="../css/gamemodes.css">
+>>>>>>> d888f75b3ef04d760cea0bee7450fbecedb12dcd:web/pages/gamemodes.php
     <link rel="icon" href="../media/ico-car.ico" type="image/x-icon">
 </head>
 

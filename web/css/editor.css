@@ -1,0 +1,149 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background:
+        linear-gradient(rgba(10,10,25,0.85), rgba(10,10,25,0.9)),
+        url("../media/background.png");
+
+    background-size: cover;
+    background-position: center;
+    color: white;
+    min-height: 100vh;
+}
+
+header {
+    background: #16213e;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    color: #e2b96f;
+    font-size: 42px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 25px;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+nav a:hover {
+    color: #e2b96f;
+}
+
+.editor-container {
+    width: 100%;
+    min-height: calc(100vh - 90px);
+    display: flex;
+}
+
+.editor-left {
+    width: 35%;
+    background: rgba(22, 33, 62, 0.92);
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.editor-left h2 {
+    font-size: 58px;
+    color: #e2b96f;
+    margin-bottom: 15px;
+}
+
+.subtitle {
+    color: #ddd;
+    margin-bottom: 40px;
+    line-height: 1.6;
+}
+
+.editor-options {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.option-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(226,185,111,0.15);
+    border-radius: 14px;
+    padding: 20px;
+}
+
+.option-card h3 {
+    color: #e2b96f;
+    margin-bottom: 12px;
+}
+
+.option-card select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    background: #101728;
+    color: white;
+    font-size: 15px;
+}
+
+.editor-buttons {
+    margin-top: 40px;
+    display: flex;
+    gap: 20px;
+}
+
+.editor-buttons button {
+    padding: 14px 28px;
+    border: none;
+    border-radius: 10px;
+    background: #e2b96f;
+    color: #111;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.editor-buttons button:hover {
+    transform: scale(1.05);
+}
+
+.editor-right {
+    width: 65%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.grid-preview {
+    width: 620px;
+    height: 620px;
+    background: rgba(22, 33, 62, 0.85);
+    border: 5px solid #e2b96f;
+    border-radius: 20px;
+    display: grid;
+    padding: 10px;
+    gap: 5px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+}
+
+.cell {
+    background: #243b67;
+    border-radius: 6px;
+    transition: 0.2s;
+}
+
+.cell:hover {
+    background: #e2b96f;
+    cursor: pointer;
+}
+
