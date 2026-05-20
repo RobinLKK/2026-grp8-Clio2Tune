@@ -80,8 +80,8 @@ session_start();
         </div>
 
         <div class="editor-buttons">
-            <button>Create Level</button>
-            <button class="secondary-btn">Save</button>
+            <button class="btn-outline">Save</button>
+            <button class="btn-reset" id="resetGrid">Reset</button>
         </div>
 
     </section>
@@ -114,6 +114,11 @@ session_start();
                     }
                 }
                 gridSize.addEventListener("change", () =>
+                {
+                    createGrid(gridSize.value);
+                });
+                const resetGrid = document.getElementById("resetGrid");
+                resetGrid.addEventListener("click", () =>
                 {
                     createGrid(gridSize.value);
                 });
