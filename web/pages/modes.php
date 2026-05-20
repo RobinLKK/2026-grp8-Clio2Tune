@@ -61,7 +61,7 @@
             puzzle every game.
         </p>
 
-        <a href="random.php" class="btn">
+        <a href="game.php" class="btn">
             Play
         </a>
     </div>
