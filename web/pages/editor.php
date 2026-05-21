@@ -131,5 +131,8 @@ session_start();
     </section>
 
 </main>
+<footer>
+    <p>2Fast4U • Racing Puzzle Experience</p>
+</footer>
 </body>
 </html>

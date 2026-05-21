@@ -3,35 +3,6 @@
     padding:0;
     box-sizing:border-box;
 }
-
-body{
-    font-family:Arial, sans-serif;
-    background:#1a1a2e;
-    color:#eee;
-}
-
-header{
-    background:#16213e;
-    padding:20px 40px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-header h1{
-    color:#e2b96f;
-}
-
-nav a{
-    color:#eee;
-    text-decoration:none;
-    margin-left:20px;
-}
-
-nav a:hover{
-    color:#e2b96f;
-}
-
 .hero{
     text-align:center;
     padding:50px 20px 30px;

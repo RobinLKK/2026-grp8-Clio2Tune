@@ -3,40 +3,6 @@
     padding: 0;
     box-sizing: border-box;
 }
-
-body {
-    font-family: Arial, sans-serif;
-    background-size: cover;
-    background-position: center;
-    color: rgba(226, 185, 111, 0.15);
-    min-height: 100vh;
-}
-
-header {
-    background: rgba(226, 185, 111, 0.15);
-    padding: 20px 40px;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-header h1 {
-    color: #e2b96f;
-    font-size: 42px;
-}
-
-nav a {
-    color: white;
-    text-decoration: none;
-    margin-left: 24px;
-    font-weight: bold;
-}
-
-nav a:hover {
-    color: #e2b96f;
-}
-
 .hero {
     text-align: center;
     padding-top: 60px;
