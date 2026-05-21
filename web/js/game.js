@@ -2,7 +2,7 @@
 const TEXTURE_URLS = ['../image/bleu.png','../image/vert.png','../image/rouge.png','../image/jaune.png','../image/violet.png','../image/rose.png','../image/bleu_ciel.png','../image/marron.png','../image/orange.png','../image/gris.png'];
 const CAR_IMAGES = ['../image/bleu_voiture.png','../image/vert_voiture.png','../image/rouge_voiture.png','../image/jaune_voiture.png','../image/violet_voiture.png','../image/rose_voiture.png','../image/bleu_ciel_voiture.png','../image/marron_voiture.png','../image/orange_voiture.png','../image/gris_voiture.png'];
 const PNEU_IMAGES = ['../image/bleu_pneux.png','../image/vert_pneux.png','../image/rouge_pneux.png','../image/jaune_pneux.png','../image/violet_pneux.png','../image/rose_pneux.png','../image/bleu_ciel_pneux.png','../image/marron_pneux.png','../image/orange_pneux.png','../image/gris_pneux.png'];
-const PALETTE = ['#E57373','#81C784','#64B5F6','#FFD54F','#BA68C8','#4DB6AC','#FF8A65','#90A4AE','#A5D6A7','#F48FB1','#80DEEA','#FFCC80'];
+const CROSS_IMAGES = ['../image/bleu_croisement_pneux.png','../image/vert_croisement_pneux.png','../image/rouge_croisement_pneux.png','../image/jaune_croisement_pneux.png', '../image/violet_croisement_pneux.png',  '../image/rose_croisement_pneux.png' ,'../image/bleu_ciel_croisement_pneux.png','../image/marron_croisement_pneux.png','../image/orange_croisement_pneux.png','../image/gris_croisement_pneux.png'];
 
 // --- TES NIVEAUX PRÉDÉFINIS ---
 const PREDEFINED_LEVELS = [
@@ -17,12 +17,102 @@ const PREDEFINED_LEVELS = [
         ],
         solution: [{r: 0, c: 0}, {r: 1, c: 3}, {r: 2, c: 1}, {r: 3, c: 4}, {r: 4, c: 2}]
     },
-    // Ajoute tes autres niveaux ici...
 ];
 
 let SIZE = 8, grid = [], solution = [], chronoInterval = null, secondes = 0;
 
-// --- ALGORITHME DE GÉNÉRATION ALÉATOIRE (C'est ce qui manquait !) ---
+// --- DÉFINITION DE RENDERGRID() SANS PALETTE ---
+function renderGrid() {
+    if (typeof SIZE === 'undefined' || !grid.length) return;
+
+    const availableWidth = Math.min(600, window.innerWidth - 40);
+    const cellPx = availableWidth / SIZE;
+    
+    document.documentElement.style.setProperty('--cell-size', cellPx + 'px');
+    
+    const table = document.getElementById('grid');
+    table.innerHTML = '';
+    
+    // 1. ON REPERE LA POSITION EXACTE DE CHAQUE VOITURE
+    let positionsVoitures = [];
+    for (let i = 0; i < SIZE; i++) {
+        for (let j = 0; j < SIZE; j++) {
+            if (grid[i][j] && grid[i][j].hasCar) {
+                positionsVoitures.push({ r: i, c: j });
+            }
+        }
+    }
+
+    // 2. RECONSTRUCTION DE LA GRILLE
+    for (let i = 0; i < SIZE; i++) {
+        const tr = document.createElement('tr');
+        for (let j = 0; j < SIZE; j++) {
+            const td = document.createElement('td');
+            td.className = 'cell';
+            
+            const colorId = grid[i][j] ? grid[i][j].colorId : 0;
+            const rid = Math.abs(colorId) % TEXTURE_URLS.length;
+
+            // 3. ON CALCULE SI UNE TRACE PASSENT RÉELLEMENT SUR CETTE CASE PRECISE
+            let traceH = false;
+            let traceV = false;
+
+            for (let voiture of positionsVoitures) {
+                // Une trace horizontale part de la voiture et va vers les bords, SAUF sur la case de la voiture
+                if (voiture.r === i && voiture.c !== j) {
+                    traceH = true;
+                }
+                // Une trace verticale part de la voiture et va vers les bords, SAUF sur la case de la voiture
+                if (voiture.c === j && voiture.r !== i) {
+                    traceV = true;
+                }
+            }
+
+            // 4. APPLICATION DU RENDU VISUEL EN FONCTION DES VRAIES TRACES
+            if (traceH && traceV) {
+                // VRAI CROISEMENT : On met uniquement l'image de croisement
+                if (CROSS_IMAGES[rid]) {
+                    td.style.backgroundImage = `url('${CROSS_IMAGES[rid]}')`;
+                }
+            } else {
+                // RENDU NORMAL
+                if (TEXTURE_URLS[rid]) {
+                    td.style.backgroundImage = `url('${TEXTURE_URLS[rid]}')`;
+                }
+
+                // Affichage d'une trace simple si elle passe par là
+                if (traceH || traceV) {
+                    const pneuImg = PNEU_IMAGES[rid];
+                    if (pneuImg) {
+                        td.style.setProperty('--pneu-url', `url('${pneuImg}')`);
+                        if (traceH) td.classList.add('track-h');
+                        if (traceV) td.classList.add('track-v');
+                    }
+                }
+            }
+
+            // CONTENU DE LA CASE (VOITURE OU CROIX)
+            if (grid[i][j] && grid[i][j].hasCar) {
+                const img = document.createElement('img');
+                img.src = CAR_IMAGES[rid];
+                img.className = 'car-img';
+                td.appendChild(img);
+            } else if (grid[i][j] && grid[i][j].hasX) {
+                const xMark = document.createElement('span');
+                xMark.className = 'x-mark';
+                xMark.textContent = '✕';
+                td.appendChild(xMark);
+            }
+
+            td.dataset.r = i; td.dataset.c = j;
+            td.addEventListener('click', onCellClick);
+            tr.appendChild(td);
+        }
+        table.appendChild(tr);
+    }
+}
+
+// --- ALGORITHME DE GÉNÉRATION ALÉATOIRE ---
 function initGrid(size) {
     return Array.from({length: size}, () =>
         Array.from({length: size}, () => ({ colorId: -1, hasCar: false, hasX: false }))
