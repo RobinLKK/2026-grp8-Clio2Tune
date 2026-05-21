@@ -114,7 +114,29 @@ overlay.addEventListener("click", (e) => {
                 document.getElementById('chrono').textContent = `${m}:${s}`;
             }, 1000);
         }
-        function stopChrono() { clearInterval(chronoInterval); }
+        function stopChrono() {
+			clearInterval(chronoInterval);
+
+			// Calcul difficulté selon taille
+			const difficulte = SIZE <= 5 ? 1 : SIZE <= 6 ? 2 : SIZE <= 7 ? 3 : SIZE <= 8 ? 4 : 5;
+
+			fetch('../pages/save_score.php', {
+				method: 'POST',
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+				body: `action=save_score&difficulte=${difficulte}&chrono=${secondes}&id_niveau=0`
+			})
+			.then(r => r.json())
+			.then(data => {
+				if (data.ok) {
+					document.getElementById('msg').textContent =
+						`🎉 Bravo ! +${data.points} pts (base ${data.base} + bonus vitesse ${data.bonus})`;
+					document.getElementById('msg').className = 'win';
+				}
+			})
+			.catch(() => {
+				// Si pas connecté ou erreur réseau, pas grave
+			});
+		}
 
         /* ── Génération ── */
         function initGrid(size) {
@@ -234,7 +256,6 @@ overlay.addEventListener("click", (e) => {
             renderGrid();
             if (verifierVictoire(grid,SIZE)) {
                 stopChrono();
-                msg.textContent='🎉 Bravo, niveau résolu !';
                 msg.className='win';
             } else {
             }

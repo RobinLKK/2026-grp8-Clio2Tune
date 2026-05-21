@@ -20,7 +20,6 @@ session_start();
 
     <nav>
         <a href="index.php">Home</a>
-        <a href="rules.pgp">rules</a>
         <a href="leaderboard.php">Leaderboard</a>
 
         <?php if (isset($_SESSION["pseudo"])): ?>
