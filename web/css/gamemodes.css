@@ -8,12 +8,12 @@ body {
     font-family: Arial, sans-serif;
     background-size: cover;
     background-position: center;
-    color: rgba(226, 185, 111, 0.15);
+    color: #eee;
     min-height: 100vh;
 }
 
 header {
-    background: rgba(226, 185, 111, 0.15);
+    background: #16213e;
     padding: 20px 40px;
 
     display: flex;
@@ -187,5 +187,5 @@ footer {
     text-align: center;
     padding: 25px;
     background: rgba(0,0,0,0.3);
-    color: rgba(226, 185, 111, 0.15);
+    color: #888;
 }
