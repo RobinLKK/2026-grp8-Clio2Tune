@@ -91,7 +91,6 @@ session_start();
     <section class="editor-right">
 
         <div class="grid-preview" id="gridPreview"></div>
-        <div class="form-group"></div>
             <script>
                 const gridPreview = document.getElementById("gridPreview");
                 const gridSize = document.getElementById("gridSize");

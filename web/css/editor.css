@@ -1,4 +1,9 @@
 .editor-container {
+    max-width: 100%; 
+    flex-direction: row; 
+    align-items: stretch;
+    padding: 0;
+    margin: 0;
     width: 100%;
     min-height: calc(100vh - 90px);
     display: flex;
