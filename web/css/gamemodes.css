@@ -182,10 +182,3 @@ nav a:hover {
     transform: scale(1.05);
 }
 
-
-footer {
-    text-align: center;
-    padding: 25px;
-    background: rgba(0,0,0,0.3);
-    color: rgba(226, 185, 111, 0.15);
-}

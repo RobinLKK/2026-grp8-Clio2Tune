@@ -8,7 +8,7 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2Fast4U - Level Editor</title>
 
-    <link rel="stylesheet" href="../css/style.css">
+    <!-- <link rel="stylesheet" href="../css/style.css"> -->
     <link rel="stylesheet" href="../css/editor.css">
     <link rel="icon" href="../media/ico-car.ico" type="image/x-icon">
 </head>
@@ -16,7 +16,9 @@ session_start();
 <body>
 
 <header>
-    <h1>2Fast4U</h1>
+    <a href="index.php" class="logo">
+        <img src="../media/2fast.png" alt="2Fast4U" style="height: 40px;">
+    </a> 
 
     <nav>
         <a href="index.php">Home</a>

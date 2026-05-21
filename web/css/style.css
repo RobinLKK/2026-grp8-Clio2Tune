@@ -5,6 +5,9 @@
 }
 
 body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     font-family: Arial, sans-serif;
     color: #eee;
     background-color: #1a1a2e;
@@ -14,6 +17,20 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     overflow-y: auto;
+}
+
+main {
+    flex: 1;
+    max-width: 800px;
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 2rem 0;
 }
 
 header {
@@ -95,47 +112,6 @@ nav a::after , .nav-right a::after{
     transition: width 0.25s;
 }
 
-main {
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    padding: 2rem 0;
-}
-
-/* ── Index hero ── */
-main h1 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(5rem, 14vw, 10rem);
-    letter-spacing: 0.06em;
-    line-height: 1;
-    color: #f0ece3;
-    text-shadow: 0 3px 0 rgba(0,0,0,0.9), 0 0 40px rgba(0,0,0,0.5);
-    margin-bottom: 0.3rem;
-}
-
-.btn-play {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.2rem;
-    letter-spacing: 0.25em;
-    color: #f0ece3;
-    background: #e2b96f;
-    padding: 1.1rem 2rem;
-    text-decoration: none;
-    display: inline-block;
-    margin-top: 1rem;
-    transition: background 0.2s, transform 0.15s;
-    border-radius: 0;
-    margin-top: 12rem;
-}
-.btn-play:hover {
-    background: #c9a050;
-    transform: translateY(-2px);
-}
 
 /* ── Profile ── */
 .auth-box-title {
@@ -273,10 +249,17 @@ main h1 {
 
 .modal a:hover { color: #e2b96f; }
 
-footer{
-    text-align:center;
-    padding:10px;
-    background:rgba(10, 15, 30, 0.82);
-    color:#aaa;
-    margin-top:40px;
+footer {
+    text-align: center;
+    padding: 10px;
+    background: rgba(10, 15, 30, 0.82);
+    color: #aaa;
+    font-size: 0.75rem;
+    margin-top: auto;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
 }

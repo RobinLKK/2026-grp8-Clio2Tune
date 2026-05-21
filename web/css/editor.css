@@ -207,3 +207,9 @@ input[type="color"] {
     background: transparent;
     cursor: pointer;
 }
+
+.logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}

@@ -215,10 +215,7 @@ table td {
 }
 
 .logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.5rem;
-    letter-spacing: 0.1em;
-    color: #e2b96f;
+    display: flex;
+    align-items: center;
     text-decoration: none;
-    text-shadow: none;
 }

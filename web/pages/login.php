@@ -34,7 +34,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </head>
 <body>
     <header>
-    <a href="index.php" class="logo">2Fast4U</a>
+        <a href="index.php" class="logo">
+            <img src="../media/2fast.png" alt="2Fast4U" style="height: 40px;">
+        </a>   
     <nav>
         <a href="index.php">Home</a>
         <a href="leaderboard.php">Leaderboard</a>

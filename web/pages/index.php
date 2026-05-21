@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Queen's Game</title>
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/index.css">
     <script src="../js/regles.js" defer></script>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="icon" href="../media/ico-car.ico" type="image/x-icon">
@@ -14,8 +15,10 @@
 </head>
 <body>
     <header>
-    <a href="index.php" class="logo">2Fast4U</a>
-    <nav>
+    <a href="index.php" class="logo">
+        <img src="../media/2fast.png" alt="2Fast4U" style="height: 40px;">
+    </a>    
+<nav>
         <a href="index.php">Home</a>
         <a href="leaderboard.php">Leaderboard</a>
         <a href="#" id="openRules">Rules</a>

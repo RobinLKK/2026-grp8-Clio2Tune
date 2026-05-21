@@ -27,12 +27,15 @@ function afficherEtoiles(int $niveau): string
     <title>Choix des niveaux - 2Fast4U</title>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/levels.css">
+    <link rel="stylesheet" href="../css/style.css">
     <link rel="icon" href="../media/car-icon.ico" type="image/x-icon">
 </head>
 
 <body>
     <header>
-        <a href="index.php" class="logo">2Fast4U</a>
+            <a href="index.php" class="logo">
+                <img src="../media/2fast.png" alt="2Fast4U" style="height: 40px;">
+            </a>   
         <nav>
             <a href="index.php">Home</a>
             <a href="leaderboard.php">Leaderboard</a>
