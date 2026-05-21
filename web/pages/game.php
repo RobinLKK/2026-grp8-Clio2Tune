@@ -6,6 +6,7 @@
     <title>Jouer - 2Fast4U</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/game.css">
+    <script src="../js/game.js" defer></script>
     <script src="../js/regles.js" defer></script>
     <link rel="icon" href="../media/car-icon.ico" type="image/x-icon">
     <style>
@@ -228,5 +229,18 @@
         // Recalculer si on redimensionne la fenêtre
         window.addEventListener('resize', renderGrid);
     </script>
+
+    <div id="overlay" class="overlay">
+    <div class="modal">
+        <h2>Game Rules</h2>
+        <ul>
+            <li>One car per row</li>
+            <li>One car per column</li>
+            <li>No cars touching each other</li>
+            <li>Each color must contain one car</li>
+        </ul>
+        <a href="#" id="closeRules">Close</a>
+    </div>
+</div>
 </body>
 </html>

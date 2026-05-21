@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Queen's Game</title>
     <link rel="stylesheet" href="../css/style.css">
-    <script src="../js/game.js" defer></script>
     <script src="../js/regles.js" defer></script>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="icon" href="../media/ico-car.ico" type="image/x-icon">
@@ -37,19 +36,19 @@
         <a href="gamemodes.php" class="btn-play">Play</a>
         </main>
 
+        
+
     <div id="overlay" class="overlay">
-        <div class="modal">
-            <h2>Game Rules</h2>
-
-            <ul>
-                <li>One car per row</li>
-                <li>One car per column</li>
-                <li>No cars touching each other</li>
-                <li>Each color must contain one car</li>
-            </ul>
-
-            <a href="#" id="closeRules">Close</a>
-        </div>
+    <div class="modal">
+        <h2>Game Rules</h2>
+        <ul>
+            <li>One car per row</li>
+            <li>One car per column</li>
+            <li>No cars touching each other</li>
+            <li>Each color must contain one car</li>
+        </ul>
+        <a href="#" id="closeRules">Close</a>
+    </div>
     </div>
     <footer>
     © <?= date('Y') ?> 2Fast4U - Home
