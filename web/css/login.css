@@ -1,0 +1,224 @@
+/* login et register */ 
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 360px;
+    margin: 0 auto;
+}
+
+form input {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #444;
+    background: #16213e;
+    color: #eee;
+    font-size: 15px;
+}
+
+form button {
+    padding: 10px;
+    background: #e2b96f;
+    color: #1a1a2e;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background: #c9a050;
+}
+
+.erreur {
+    color: #e74c3c;
+    text-align: center;
+    margin-bottom: 10px;
+}
+form label {
+    text-align: left;
+    font-size: 14px;
+    color: #1a1a2e;
+}
+
+form p {
+    margin-top: 16px;
+    text-align: center;
+    font-size: 14px;
+    color: #aaa;
+}
+
+form p a {
+    color: #e2b96f;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+form p a:hover {
+    text-decoration: underline;
+}
+
+
+
+.btn-outline {
+    width: 100%;
+    padding: 10px;
+    background: transparent;
+    color: #e2b96f;
+    border: 2px solid #e2b96f;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-outline:hover {
+    background: #e2b96f;
+    color: #1a1a2e;
+}
+
+table {
+    width: 100%;
+    max-width: 360px;
+    margin: 20px auto;
+    border-collapse: collapse;
+}
+
+table th, table td {
+    padding: 10px;
+    border: 1px solid #444;
+    text-align: center;
+}
+
+table th {
+    background: #16213e;
+    color: #e2b96f;
+}
+
+table td {
+    background: #1a1a2e;
+}
+
+.succes {   /* profile php*/
+    color: #2ecc71;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+
+/* ── Auth pages (login + register) ── */
+.auth-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 64px);
+}
+
+.auth-box {
+    background: rgba(10, 15, 30, 0.82);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(226, 185, 111, 0.2);
+    padding: 2.5rem 2.5rem 2rem;
+    width: 100%;
+    max-width: 380px;
+    font-family: 'Barlow', sans-serif;
+}
+
+.auth-box h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 0.15em;
+    color: #e2b96f;
+    margin-bottom: 0.3rem;
+}
+
+.auth-box .auth-sub {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: rgba(240, 236, 227, 0.4);
+    text-transform: uppercase;
+    margin-bottom: 1.8rem;
+}
+
+.auth-box .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin-bottom: 1rem;
+}
+
+.auth-box .form-group label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(240, 236, 227, 0.5);
+}
+
+.auth-box .form-group input {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(226, 185, 111, 0.2);
+    color: #f0ece3;
+    padding: 0.7rem 0.9rem;
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    border-radius: 0;
+    transition: border-color 0.2s;
+}
+
+.auth-box .form-group input:focus {
+    border-color: rgba(226, 185, 111, 0.5);
+}
+
+.auth-box .btn-submit {
+    width: 100%;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 0.2em;
+    color: #1a1a2e;
+    background: #e2b96f;
+    border: none;
+    padding: 0.75rem;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: background 0.2s;
+}
+
+.auth-box .btn-submit:hover { background: #c9a050; }
+
+.auth-box .auth-footer {
+    margin-top: 1.2rem;
+    text-align: center;
+    font-size: 0.8rem;
+    color: rgba(240, 236, 227, 0.4);
+}
+
+.auth-box .auth-footer a {
+    color: #e2b96f;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.auth-box .auth-footer a:hover { text-decoration: underline; }
+
+.erreur {
+    font-size: 0.82rem;
+    color: #fca5a5;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    padding: 0.6rem 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 0.1em;
+    color: #e2b96f;
+    text-decoration: none;
+    text-shadow: none;
+}
