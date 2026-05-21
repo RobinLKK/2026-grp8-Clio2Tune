@@ -223,7 +223,6 @@ main p {
     transform: translate(-50%, -50%);
     pointer-events: none;
     z-index: 2;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6));
 }
 
 /* ── Croix ── */
