@@ -1,16 +1,17 @@
 <?php
 declare(strict_types=1);
 session_start();
+
+// Liste des niveaux prédéfinis (doit correspondre à l'ordre dans ton JS)
 $niveaux = [
-    ['id' => 1, 'nom' => 'nom niveau 1',    'difficulte' => 1, 'locked' => false],
-    ['id' => 2, 'nom' => 'nom niveau 2',      'difficulte' => 2, 'locked' => false],
-    ['id' => 3, 'nom' => 'nom niveau 3', 'difficulte' => 3, 'locked' => false],
-    ['id' => 4, 'nom' => 'nom niveau 4',        'difficulte' => 4, 'locked' => true],
-    ['id' => 5, 'nom' => 'nom niveau 5',    'difficulte' => 5, 'locked' => true],
+    ['id' => 0, 'nom' => 'Circuit de Départ', 'difficulte' => 1, 'locked' => false],
+    ['id' => 1, 'nom' => 'Virage Serré',      'difficulte' => 2, 'locked' => false],
+    ['id' => 2, 'nom' => 'Labyrinthe Urbain', 'difficulte' => 3, 'locked' => false],
+    ['id' => 3, 'nom' => 'Grand Prix Pro',    'difficulte' => 4, 'locked' => true],
+    ['id' => 4, 'nom' => 'L\'Ultime Défi',    'difficulte' => 5, 'locked' => true],
 ];
 
 $pseudo = $_SESSION['pseudo'] ?? 'Pilote invité';
-
 
 function afficherEtoiles(int $niveau): string
 {
@@ -25,32 +26,31 @@ function afficherEtoiles(int $niveau): string
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Choix des niveaux - 2Fast4U</title>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="../css/levels.css">
     <link rel="icon" href="../media/car-icon.ico" type="image/x-icon">
 </head>
 
 <body>
     <header>
-    <a href="index.php" class="logo">2Fast4U</a>
-    <nav>
-        <a href="index.php">Home</a>
-        <a href="leaderboard.php">Leaderboard</a>
-        <a href="#" id="openRules">Rules</a>
-    </nav>
-    <div class="nav-right">
-        <?php if (isset($_SESSION['pseudo'])): ?>
-            <a href="profile.php"><?= htmlspecialchars($_SESSION['pseudo']) ?></a>
-            <a href="logout.php">Logout</a>
-        <?php else: ?>
-            <a href="login.php">Login</a>
-            <a href="register.php">Register</a>
-        <?php endif; ?>
-    </div>
+        <a href="index.php" class="logo">2Fast4U</a>
+        <nav>
+            <a href="index.php">Home</a>
+            <a href="leaderboard.php">Leaderboard</a>
+            <a href="#" id="openRules">Rules</a>
+        </nav>
+        <div class="nav-right">
+            <?php if (isset($_SESSION['pseudo'])): ?>
+                <a href="profile.php"><?= htmlspecialchars($_SESSION['pseudo']) ?></a>
+                <a href="logout.php">Logout</a>
+            <?php else: ?>
+                <a href="login.php">Login</a>
+                <a href="register.php">Register</a>
+            <?php endif; ?>
+        </div>
     </header>
 
 <section class="hero">
-    <h2>Choisis ton circuit</h2>
+    <h2>Circuits Officiels</h2>
     <p>Bienvenue <strong><?= htmlspecialchars($pseudo) ?></strong> 🚗</p>
 </section>
 
@@ -60,7 +60,7 @@ function afficherEtoiles(int $niveau): string
     
     <div class="card <?= $niveau['locked'] ? 'locked' : '' ?>">
         
-        <h3>Niveau <?= $niveau['id'] ?> - <?= htmlspecialchars($niveau['nom']) ?></h3>
+        <h3>Niveau <?= $niveau['id'] + 1 ?> - <?= htmlspecialchars($niveau['nom']) ?></h3>
 
         <p class="difficulty">
             <?= afficherEtoiles($niveau['difficulte']) ?>
@@ -69,7 +69,8 @@ function afficherEtoiles(int $niveau): string
         <?php if ($niveau['locked']): ?>
             <span class="btn btn-lock">🔒 Verrouillé</span>
         <?php else: ?>
-            <a class="btn" href="game.php?level=<?= $niveau['id'] ?>">
+            <!-- On passe l'ID dans l'URL pour que game.php sache quel niveau charger -->
+            <a class="btn" href="game.php?type=fixed&id=<?= $niveau['id'] ?>">
                 ▶ Jouer
             </a>
         <?php endif; ?>
@@ -79,10 +80,3 @@ function afficherEtoiles(int $niveau): string
 <?php endforeach; ?>
 
 </section>
-
-<footer>
-    © <?= date('Y') ?> 2Fast4U - Niveaux
-</footer>
-
-</body>
-</html>
