@@ -38,6 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <title>2Fast4U – Register</title>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/register.css">
     <link rel="icon" href="../media/favicon.ico">
 </head>
 <body>
@@ -88,5 +89,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       </p>
     </div>
   </main>
+
+  <footer>
+    © <?= date('Y') ?> 2Fast4U - Register 
+</footer>
 </body>
 </html>

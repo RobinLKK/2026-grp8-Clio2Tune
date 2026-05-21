@@ -18,7 +18,6 @@
     <nav>
         <a href="index.php">Home</a>
         <a href="leaderboard.php">Leaderboard</a>
-        <a href="#" id="openRules">Rules</a>
     </nav>
     <div class="nav-right">
         <?php if (isset($_SESSION['pseudo'])): ?>
@@ -40,7 +39,7 @@
 
 <section class="modes-container">
 
-    <div class="mode-card">
+    <div class="mode-card story">
         <div class="mode-icon">🏁</div>
 
         <h2>Story Mode</h2>
@@ -55,7 +54,7 @@
         </a>
     </div>
 
-    <div class="mode-card">
+    <div class="mode-card random">
         <div class="mode-icon">🚗</div>
 
         <h2>Random Mode</h2>
@@ -70,7 +69,7 @@
         </a>
     </div>
 
-    <div class="mode-card">
+    <div class="mode-card create">
         <div class="mode-icon">🔧</div>
 
         <h2>Level Editor</h2>

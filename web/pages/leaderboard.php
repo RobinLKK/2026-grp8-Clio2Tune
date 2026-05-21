@@ -120,7 +120,7 @@ $classement = [
 </main>
 
 <footer>
-    © <?= date('Y') ?> 2Fast4U - Classement 
+    © <?= date('Y') ?> 2Fast4U - Leaderboard.
 </footer>
 
 </body>
