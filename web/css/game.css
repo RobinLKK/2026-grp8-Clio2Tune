@@ -9,124 +9,7 @@ body {
     overflow-x: hidden !important;
 }
 
-/* Override spécifique game page */
-main.game-main {
-    max-width: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 1.5rem 1rem;
-    justify-content: flex-start;
-    align-items: center;
-    text-align: center;
-}
 
-main h2 {
-    font-size: 42px;
-    margin-bottom: 8px;
-    color: #f0ece3;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.8);
-}
-
-main p {
-    color: rgba(240,236,227,0.75);
-    margin-bottom: 24px;
-    text-shadow: 0 1px 4px rgba(0,0,0,0.8);
-}
-
-.btn {
-    display: inline-block;
-    background: #e2b96f;
-    color: #1a1a2e;
-    padding: 12px 32px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.btn:hover {
-    background: #c9a050;
-}
-
-
-.overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.75);
-    backdrop-filter: blur(4px);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 100;
-	position: fixed;
-	inset: 0;
-	background: rgba(0,0,0,0.6);
-	display: none;
-	justify-content: center;
-	align-items: center;
-    z-index: 9999;
-}
-
-.overlay.active {
-    display: flex;
-}
-
-.modal {
-    background: linear-gradient(145deg, #0f0f1e, #16213e);
-    border: 1px solid rgba(226, 185, 111, 0.25);
-    padding: 2rem 2.5rem;
-    border-radius: 4px;
-    width: 340px;
-    color: #f0ece3;
-    position: relative;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-}
-
-.modal h2 {
-    font-family: 'Bebas Neue', Arial, sans-serif;
-    font-size: 1.5rem;
-    letter-spacing: 0.15em;
-    color: #e2b96f;
-    margin-bottom: 1.2rem;
-}
-
-.modal ul {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-    margin-bottom: 1.5rem;
-}
-
-.modal ul li {
-    font-size: 0.88rem;
-    color: rgba(240, 236, 227, 0.75);
-    padding-left: 1rem;
-    position: relative;
-    line-height: 1.5;
-}
-
-.modal ul li::before {
-    content: '—';
-    position: absolute;
-    left: 0;
-    color: #e2b96f;
-}
-
-.modal a {
-    display: inline-block;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: rgba(240, 236, 227, 0.5);
-    text-decoration: none;
-    margin-top: 0;
-    transition: color 0.2s;
-}
-
-.modal a:hover {
-    color: #e2b96f;
-}
 
 /* ── Boutons haut (reset + new) ── */
 #controls {
@@ -223,7 +106,6 @@ main p {
     transform: translate(-50%, -50%);
     pointer-events: none;
     z-index: 2;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6));
 }
 
 /* ── Croix ── */
@@ -358,7 +240,7 @@ main p {
     background: rgba(10, 15, 30, 0.72);
     backdrop-filter: blur(8px);
     border: 1px solid rgba(226, 185, 111, 0.15);
-    display: flex;
+    display: inline-block;
     flex-direction: column;
     align-items: center;
     color: #f0ece3;
