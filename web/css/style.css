@@ -13,7 +13,7 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    overflow-y: auto;  /* ← ajoute ça */
+    overflow-y: auto;  
 }
 
 header {
@@ -105,36 +105,6 @@ main {
     justify-content: center;
     gap: 1rem;
     padding: 2rem 0;
-}
-
-/* ── Index hero ── */
-main h1 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(5rem, 14vw, 10rem);
-    letter-spacing: 0.06em;
-    line-height: 1;
-    color: #f0ece3;
-    text-shadow: 0 3px 0 rgba(0,0,0,0.9), 0 0 40px rgba(0,0,0,0.5);
-    margin-bottom: 0.3rem;
-}
-
-.btn-play {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.2rem;
-    letter-spacing: 0.25em;
-    color: #f0ece3;
-    background: #e2b96f;
-    padding: 1.1rem 2rem;
-    text-decoration: none;
-    display: inline-block;
-    margin-top: 1rem;
-    transition: background 0.2s, transform 0.15s;
-    border-radius: 0;
-    margin-top: 12rem;
-}
-.btn-play:hover {
-    background: #c9a050;
-    transform: translateY(-2px);
 }
 
 footer{
