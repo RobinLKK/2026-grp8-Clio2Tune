@@ -1,9 +1,17 @@
 // --- ASSETS ET CONFIGURATION ---
-const TEXTURE_URLS = ['../image/bleu.png','../image/vert.png','../image/rouge.png','../image/jaune.png','../image/violet.png','../image/rose.png','../image/bleu_ciel.png','../image/marron.png','../image/orange.png','../image/gris.png'];
-const CAR_IMAGES = ['../image/bleu_voiture.png','../image/vert_voiture.png','../image/rouge_voiture.png','../image/jaune_voiture.png','../image/violet_voiture.png','../image/rose_voiture.png','../image/bleu_ciel_voiture.png','../image/marron_voiture.png','../image/orange_voiture.png','../image/gris_voiture.png'];
-const PNEU_IMAGES = ['../image/bleu_pneux.png','../image/vert_pneux.png','../image/rouge_pneux.png','../image/jaune_pneux.png','../image/violet_pneux.png','../image/rose_pneux.png','../image/bleu_ciel_pneux.png','../image/marron_pneux.png','../image/orange_pneux.png','../image/gris_pneux.png'];
-const CROSS_IMAGES = ['../image/bleu_croisement_pneux.png','../image/vert_croisement_pneux.png','../image/rouge_croisement_pneux.png','../image/jaune_croisement_pneux.png', '../image/violet_croisement_pneux.png',  '../image/rose_croisement_pneux.png' ,'../image/bleu_ciel_croisement_pneux.png','../image/marron_croisement_pneux.png','../image/orange_croisement_pneux.png','../image/gris_croisement_pneux.png'];
-
+// --- ASSETS ET CONFIGURATION BLINDÉE ---
+const CONFIG_COULEURS = [
+    { txt: '../image/bleu.png',      car: '../image/bleu_voiture.png',      pneu: '../image/bleu_pneux.png',      cross: '../image/bleu_croisement_pneux.png' },      // Index 0
+    { txt: '../image/vert.png',      car: '../image/vert_voiture.png',      pneu: '../image/vert_pneux.png',      cross: '../image/vert_croisement_pneux.png' },      // Index 1
+    { txt: '../image/rouge.png',     car: '../image/rouge_voiture.png',     pneu: '../image/rouge_pneux.png',     cross: '../image/rouge_croisement_pneux.png' },     // Index 2
+    { txt: '../image/jaune.png',     car: '../image/jaune_voiture.png',     pneu: '../image/jaune_pneux.png',     cross: '../image/jaune_croisement_pneux.png' },     // Index 3
+    { txt: '../image/violet.png',    car: '../image/violet_voiture.png',    pneu: '../image/violet_pneux.png',    cross: '../image/violet_croisement_pneux.png' },    // Index 4
+    { txt: '../image/rose.png',      car: '../image/rose_voiture.png',      pneu: '../image/rose_pneux.png',      cross: '../image/rose_croisement_pneux.png' },      // Index 5
+    { txt: '../image/bleu_ciel.png', car: '../image/bleu_ciel_voiture.png', pneu: '../image/bleu_ciel_pneux.png', cross: '../image/bleu_ciel_croisement_pneux.png' }, // Index 6
+    { txt: '../image/marron.png',    car: '../image/marron_voiture.png',    pneu: '../image/marron_pneux.png',    cross: '../image/marron_croisement_pneux.png' },    // Index 7
+    { txt: '../image/orange.png',    car: '../image/orange_voiture.png',    pneu: '../image/orange_pneux.png',    cross: '../image/orange_croisement_pneux.png' },    // Index 8
+    { txt: '../image/gris.png',      car: '../image/gris_voiture.png',      pneu: '../image/gris_pneux.png',      cross: '../image/gris_croisement_pneux.png' }       // Index 9
+];
 // --- TES NIVEAUX PRÉDÉFINIS ---
 const PREDEFINED_LEVELS = [
     {
@@ -33,7 +41,6 @@ function renderGrid() {
     const table = document.getElementById('grid');
     table.innerHTML = '';
     
-    // 1. ON REPERE LA POSITION EXACTE DE CHAQUE VOITURE
     let positionsVoitures = [];
     for (let i = 0; i < SIZE; i++) {
         for (let j = 0; j < SIZE; j++) {
@@ -43,7 +50,6 @@ function renderGrid() {
         }
     }
 
-    // 2. RECONSTRUCTION DE LA GRILLE
     for (let i = 0; i < SIZE; i++) {
         const tr = document.createElement('tr');
         for (let j = 0; j < SIZE; j++) {
@@ -51,50 +57,33 @@ function renderGrid() {
             td.className = 'cell';
             
             const colorId = grid[i][j] ? grid[i][j].colorId : 0;
-            const rid = Math.abs(colorId) % TEXTURE_URLS.length;
+            const rid = Math.abs(colorId) % CONFIG_COULEURS.length;
+            const cfg = CONFIG_COULEURS[rid];
 
-            // 3. ON CALCULE SI UNE TRACE PASSENT RÉELLEMENT SUR CETTE CASE PRECISE
-            let traceH = false;
-            let traceV = false;
-
+            let traceH = false, traceV = false;
             for (let voiture of positionsVoitures) {
-                // Une trace horizontale part de la voiture et va vers les bords, SAUF sur la case de la voiture
-                if (voiture.r === i && voiture.c !== j) {
-                    traceH = true;
-                }
-                // Une trace verticale part de la voiture et va vers les bords, SAUF sur la case de la voiture
-                if (voiture.c === j && voiture.r !== i) {
-                    traceV = true;
-                }
+                if (voiture.r === i && voiture.c !== j) traceH = true;
+                if (voiture.c === j && voiture.r !== i) traceV = true;
             }
 
-            // 4. APPLICATION DU RENDU VISUEL EN FONCTION DES VRAIES TRACES
+            // RENDU DES TEXTURES VIA NOTRE CONFIG UNIQUE
             if (traceH && traceV) {
-                // VRAI CROISEMENT : On met uniquement l'image de croisement
-                if (CROSS_IMAGES[rid]) {
-                    td.style.backgroundImage = `url('${CROSS_IMAGES[rid]}')`;
-                }
+                if (cfg.cross) td.style.backgroundImage = `url('${cfg.cross}')`;
             } else {
-                // RENDU NORMAL
-                if (TEXTURE_URLS[rid]) {
-                    td.style.backgroundImage = `url('${TEXTURE_URLS[rid]}')`;
-                }
+                if (cfg.txt) td.style.backgroundImage = `url('${cfg.txt}')`;
 
-                // Affichage d'une trace simple si elle passe par là
                 if (traceH || traceV) {
-                    const pneuImg = PNEU_IMAGES[rid];
-                    if (pneuImg) {
-                        td.style.setProperty('--pneu-url', `url('${pneuImg}')`);
+                    if (cfg.pneu) {
+                        td.style.setProperty('--pneu-url', `url('${cfg.pneu}')`);
                         if (traceH) td.classList.add('track-h');
                         if (traceV) td.classList.add('track-v');
                     }
                 }
             }
 
-            // CONTENU DE LA CASE (VOITURE OU CROIX)
             if (grid[i][j] && grid[i][j].hasCar) {
                 const img = document.createElement('img');
-                img.src = CAR_IMAGES[rid];
+                img.src = cfg.car;
                 img.className = 'car-img';
                 td.appendChild(img);
             } else if (grid[i][j] && grid[i][j].hasX) {
