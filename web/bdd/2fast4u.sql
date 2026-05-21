@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:3306
--- Généré le : ven. 15 mai 2026 à 13:34
+-- Généré le : jeu. 21 mai 2026 à 08:39
 -- Version du serveur : 5.7.24
 -- Version de PHP : 8.3.1
 
@@ -89,15 +89,16 @@ CREATE TABLE `utilisateur` (
   `Mot_de_passe` varchar(255) NOT NULL,
   `Admin` tinyint(1) NOT NULL DEFAULT '0',
   `Email` varchar(255) DEFAULT NULL,
-  `Nombre_niveau` int(11) NOT NULL DEFAULT '0'
+  `Nombre_niveau` int(11) NOT NULL DEFAULT '0',
+  `avatar` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `utilisateur`
 --
 
-INSERT INTO `utilisateur` (`ID`, `Pseudo`, `Mot_de_passe`, `Admin`, `Email`, `Nombre_niveau`) VALUES
-(1, 'Rob1', '$2y$10$Elbhc5mHX3YtdrK.2kELdu7/aDMOgaAInmiYIwMCg8P29JVSa6F7O', 1, 'rob@rob.fr', 0);
+INSERT INTO `utilisateur` (`ID`, `Pseudo`, `Mot_de_passe`, `Admin`, `Email`, `Nombre_niveau`, `avatar`) VALUES
+(1, 'Rob1', '$2y$10$Elbhc5mHX3YtdrK.2kELdu7/aDMOgaAInmiYIwMCg8P29JVSa6F7O', 1, 'rob@rob.fr', 0, 'media/avatars/avatar_1.jpg');
 
 --
 -- Index pour les tables déchargées
