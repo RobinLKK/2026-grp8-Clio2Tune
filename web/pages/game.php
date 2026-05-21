@@ -227,7 +227,6 @@
         function getCellStyle(colorId) {
             const idx = colorId % PALETTE.length;
             const userPng = TEXTURE_URLS[idx];
-    
             if (userPng) {
                 return { backgroundImage: `url('${userPng}')`, backgroundSize: 'cover', backgroundColor: PALETTE[idx] };
             } else {
@@ -235,38 +234,21 @@
             }
         }
 
-        let SIZE = 8, grid = [];
-
-        // --- VARIABLES DU CHRONOMÈTRE ---
-        let chronoTimer = null;
-        let secondesEcoulees = 0;
+        let SIZE = 8, grid = [], solutionGrid = []; 
+        let chronoTimer = null, secondesEcoulees = 0;
 
         function demarrerChrono() {
-            arreterChrono(); // Sécurité : évite d'empiler des timers
+            arreterChrono();
             secondesEcoulees = 0;
             mettreAJourAffichageChrono();
-            
-            chronoTimer = setInterval(() => {
-                secondesEcoulees++;
-                mettreAJourAffichageChrono();
-            }, 1000);
+            chronoTimer = setInterval(() => { secondesEcoulees++; mettreAJourAffichageChrono(); }, 1000);
         }
-
-        function arreterChrono() {
-            if (chronoTimer) {
-                clearInterval(chronoTimer);
-                chronoTimer = null;
-            }
-        }
-
+        function arreterChrono() { if (chronoTimer) { clearInterval(chronoTimer); chronoTimer = null; } }
         function mettreAJourAffichageChrono() {
             const minutes = Math.floor(secondesEcoulees / 60);
             const secondes = secondesEcoulees % 60;
-            const strMinutes = String(minutes).padStart(2, '0');
-            const strSecondes = String(secondes).padStart(2, '0');
-            document.getElementById('chrono').textContent = `${strMinutes}:${strSecondes}`;
+            document.getElementById('chrono').textContent = `${String(minutes).padStart(2, '0')}:${String(secondes).padStart(2, '0')}`;
         }
-        // --------------------------------
 
         function initGrid(size) {
             return Array.from({length: size}, () =>
@@ -292,9 +274,21 @@
             }
             return false;
         }
+        
         function genererNiveau(size) {
             let g = initGrid(size);
             while (!placerReinesAlea(g, 0, size)) g = initGrid(size);
+            
+            // SAUVEGARDE STRICTE DES EMPLACEMENTS DES VOITURES GÉNÉRÉES
+            solutionGrid = [];
+            for (let i = 0; i < size; i++) {
+                for (let j = 0; j < size; j++) {
+                    if (g[i][j].hasCar) {
+                        solutionGrid.push({ r: i, c: j });
+                    }
+                }
+            }
+
             let rest = size*size - size;
             const dr=[-1,1,0,0], dc=[0,0,-1,1];
             let iter = 0;
@@ -306,9 +300,11 @@
                     if (nr>=0&&nr<size&&nc>=0&&nc<size&&g[nr][nc].colorId===-1) { g[nr][nc].colorId=g[r][c].colorId; rest--; }
                 }
             }
+
             for (let i=0;i<size;i++) for(let j=0;j<size;j++) g[i][j].hasCar=false;
             return g;
         }
+
         function safeligne(g,r,c,size){for(let j=0;j<size;j++)if(g[r][j].hasCar)return false;for(let i=0;i<size;i++)if(g[i][c].hasCar)return false;return true;}
         function emptyregion(g,r,c,size){let col=g[r][c].colorId;for(let i=0;i<size;i++)for(let j=0;j<size;j++)if(!(i===r&&j===c)&&g[i][j].colorId===col&&g[i][j].hasCar)return false;return true;}
         function safearound(g,r,c,size){
@@ -339,7 +335,6 @@
                 for (let j = 0; j < SIZE; j++) {
                     const td = document.createElement('td');
                     td.className = 'cell';
-
                     const regionId = grid[i][j].colorId % TEXTURE_URLS.length;
             
                     const style = getCellStyle(regionId);
@@ -351,31 +346,19 @@
                         const pneuImg = PNEU_IMAGES[regionId];
                         if (pneuImg) {
                             td.style.setProperty('--pneu-url', `url('${pneuImg}')`);
-                    
-                            if (lignesAvecVoiture.has(i)) {
-                                td.classList.add('track-h');
-                            }
-                            if (colonnesAvecVoiture.has(j)) {
-                                td.classList.add('track-v');
-                            }
+                            if (lignesAvecVoiture.has(i)) td.classList.add('track-h');
+                            if (colonnesAvecVoiture.has(j)) td.classList.add('track-v');
                         }
                     }
 
                     if (grid[i][j].hasCar) {
                         td.classList.add('has-car');
-                
                         const img = document.createElement('img');
                         img.src = CAR_IMAGES[regionId] || '../image/gris_voiture.png';
                         img.className = 'car-img';
                         img.alt = 'Voiture';
-                
-                        img.onerror = function() {
-                            this.style.border = "2px dashed red";
-                        };
-                
                         td.appendChild(img);
-                    }
-                    else if (grid[i][j].hasX) {
+                    } else if (grid[i][j].hasX) {
                         td.classList.add('has-x');
                     }
             
@@ -386,6 +369,7 @@
                 table.appendChild(tr);
             }
         }
+
         function onCellClick(e) {
             const r=+e.currentTarget.dataset.r, c=+e.currentTarget.dataset.c;
             const tile=grid[r][c], msg=document.getElementById('msg');
@@ -403,11 +387,10 @@
             }
             renderGrid();
             if (verifierVictoire(grid,SIZE)) { 
-                arreterChrono(); // Arrêt du chrono à la victoire !
+                arreterChrono();
                 msg.textContent='🎉 Bravo, niveau résolu !'; 
                 msg.className='win'; 
-            }
-            else { msg.textContent=''; }
+            } else { msg.textContent=''; }
         }
         
         function newGame() { 
@@ -416,20 +399,42 @@
             document.getElementById('msg').textContent=''; 
             document.getElementById('msg').className=''; 
             renderGrid(); 
-            demarrerChrono(); // Le chrono démarre à chaque nouveau niveau !
+            demarrerChrono();
         }
         
         function resetGame() { 
             for(let i=0; i<SIZE; i++) {
-                for(let j=0; j<SIZE; j++) {
-                    grid[i][j].hasCar = false;
-                    grid[i][j].hasX = false;
-                }
+                for(let j=0; j<SIZE; j++) { grid[i][j].hasCar = false; grid[i][j].hasX = false; }
             } 
             document.getElementById('msg').textContent=''; 
             document.getElementById('msg').className=''; 
             renderGrid(); 
-            demarrerChrono(); // Le chrono redémarre à zéro !
+            demarrerChrono();
+        }
+
+        // APPLICATION DE LA VRAIE SOLUTION ENREGISTRÉE ÉTAPE PAR ÉTAPE
+        function afficherSolution() {
+            arreterChrono();
+            
+            // Étape 1 : On nettoie le plateau complet
+            for (let i = 0; i < SIZE; i++) {
+                for (let j = 0; j < SIZE; j++) {
+                    grid[i][j].hasCar = false;
+                    grid[i][j].hasX = false;
+                }
+            }
+            
+            // Étape 2 : On charge uniquement les positions gagnantes mémorisées
+            solutionGrid.forEach(pos => {
+                if (pos.r < SIZE && pos.c < SIZE) {
+                    grid[pos.r][pos.c].hasCar = true;
+                }
+            });
+            
+            renderGrid();
+            const msg = document.getElementById('msg');
+            msg.textContent = 'Solution affichée ! (Chrono arrêté)';
+            msg.className = '';
         }
 
         document.getElementById('btn-new').addEventListener('click', newGame);
@@ -437,7 +442,7 @@
         document.getElementById('size-select').addEventListener('change', newGame);
         
         document.getElementById('btn-hint')?.addEventListener('click', () => { alert('Indice demandé !'); });
-        document.getElementById('btn-solution')?.addEventListener('click', () => { alert('Solution demandée !'); });
+        document.getElementById('btn-solution')?.addEventListener('click', afficherSolution);
 
         newGame();
     </script>
