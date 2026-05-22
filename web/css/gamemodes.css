@@ -1,8 +1,23 @@
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
 }
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+footer {
+    margin-top: auto;
+    text-align: center;
+    padding: 10px;
+    background: rgba(10, 15, 30, 0.82);
+    color: #aaa;
+    font-size: 0.75rem;
+}
+
 .hero {
     text-align: center;
     padding-top: 60px;
@@ -34,10 +49,8 @@
 
 .modes-container {
     width: 100%;
-    min-height: 70vh;
-
+    flex: 1;
     display: flex;
-
     margin-top: 50px;
 }
 
