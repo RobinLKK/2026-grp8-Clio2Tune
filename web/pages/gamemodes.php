@@ -83,7 +83,7 @@
 </section>
 
 <footer>
-    <p>2Fast4U • Racing Puzzle Experience</p>
+    <p>© 2Fast4U • Racing Queen's Game</p>
 </footer>
 
 </body>

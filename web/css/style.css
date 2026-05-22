@@ -250,12 +250,16 @@ nav a::after , .nav-right a::after{
 .modal a:hover { color: #e2b96f; }
 
 footer {
-    text-align: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
     padding: 10px;
     background: rgba(10, 15, 30, 0.82);
     color: #aaa;
+    text-align: center;
     font-size: 0.75rem;
-    margin-top: auto;
+    z-index: 5;
 }
 
 .logo {

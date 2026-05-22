@@ -83,6 +83,7 @@ $scores = $stmt->fetchAll();
     <meta charset="UTF-8">
     <title>2Fast4U – Profil</title>
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/login.css">
     <link rel="icon" href="../media/ico-car.ico">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
@@ -106,7 +107,7 @@ $scores = $stmt->fetchAll();
         </div>
     </header>
 
-    <main>
+    <main class="auth-wrap">
         <div class="auth-box">
 
             <!-- Avatar affiché en haut -->
