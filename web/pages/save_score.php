@@ -32,15 +32,28 @@ if ($action === 'save_score') {
         }
     }
 
-    /* Points selon difficulté — pas de bonus temps */
-    $base = match($difficulte) {
-        1 => 10,
-        2 => 20,
-        3 => 30,
-        4 => 40,
-        5 => 50,
-        default => 10,
-    };
+    /* Points selon mode et difficulté */
+    if ($id_niveau > 0) {
+        // Mode histoire — points fixes par difficulté
+        $base = match($difficulte) {
+            1 => 10,
+            2 => 20,
+            3 => 30,
+            4 => 40,
+            5 => 50,
+            default => 10,
+        };
+    } else {
+        // Mode random — moitié moins, basé sur taille de grille
+        $base = match($difficulte) {
+            1 => 5,
+            2 => 10,
+            3 => 15,
+            4 => 20,
+            5 => 25,
+            default => 5,
+        };
+    }
 
     $bonus = 0;
     $points = $base;
