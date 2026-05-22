@@ -168,9 +168,29 @@ function onCellClick(e) {
     else {
         if (estPlacable(grid,r,c,SIZE)) { tile.hasCar=true; }
         else {
+            const exclamation = document.createElement('span');
+            exclamation.textContent = '!';
+            exclamation.style.color = '#ff3333';
+            exclamation.style.fontSize = '28px';
+            exclamation.style.fontWeight = 'bold';
+            exclamation.style.position = 'absolute';
+            exclamation.style.top = '50%';
+            exclamation.style.left = '50%';
+            exclamation.style.transform = 'translate(-50%, -50%)';
+            exclamation.style.zIndex = '10';
+            
+            e.currentTarget.appendChild(exclamation);
             e.currentTarget.classList.add('error-flash');
-            setTimeout(()=>e.currentTarget.classList.remove('error-flash'),400);
-            return;
+
+            setTimeout(() => {
+                e.currentTarget.classList.remove('error-flash');
+            }, 400);
+
+            setTimeout(() => {
+                exclamation.remove();
+            }, 1000);
+
+        return;
         }
     }
     renderGrid();
