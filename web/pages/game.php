@@ -140,62 +140,6 @@
     </main>
 
     <script>
-        function renderGrid() {
-            if (typeof SIZE === 'undefined' || !grid.length) return;
-
-            // ON CALCULE LA TAILLE POUR QUE LE PLATEAU FASSE 600PX MAX
-            // On s'adapte si l'écran est plus petit (mobile-friendly)
-            const availableWidth = Math.min(600, window.innerWidth - 40);
-            const cellPx = availableWidth / SIZE;
-            
-            document.documentElement.style.setProperty('--cell-size', cellPx + 'px');
-            
-            const table = document.getElementById('grid');
-            table.innerHTML = '';
-            
-            let lignesV = new Set(), colonnesV = new Set();
-            for (let i = 0; i < SIZE; i++) {
-                for (let j = 0; j < SIZE; j++) {
-                    if (grid[i][j].hasCar) { lignesV.add(i); colonnesV.add(j); }
-                }
-            }
-
-            for (let i = 0; i < SIZE; i++) {
-                const tr = document.createElement('tr');
-                for (let j = 0; j < SIZE; j++) {
-                    const td = document.createElement('td');
-                    td.className = 'cell';
-                    const rid = grid[i][j].colorId % TEXTURE_URLS.length;
-                    
-                    td.style.backgroundColor = PALETTE[rid];
-                    td.style.backgroundImage = `url('${TEXTURE_URLS[rid]}')`;
-
-                    if (lignesV.has(i) || colonnesV.has(j)) {
-                        const pneuImg = PNEU_IMAGES[rid];
-                        td.style.setProperty('--pneu-url', `url('${pneuImg}')`);
-                        if (lignesV.has(i)) td.classList.add('track-h');
-                        if (colonnesV.has(j)) td.classList.add('track-v');
-                    }
-
-                    if (grid[i][j].hasCar) {
-                        const img = document.createElement('img');
-                        img.src = CAR_IMAGES[rid];
-                        img.className = 'car-img';
-                        td.appendChild(img);
-                    } else if (grid[i][j].hasX) {
-                        const xMark = document.createElement('span');
-                        xMark.className = 'x-mark';
-                        xMark.textContent = '✕';
-                        td.appendChild(xMark);
-                    }
-
-                    td.dataset.r = i; td.dataset.c = j;
-                    td.addEventListener('click', onCellClick);
-                    tr.appendChild(td);
-                }
-                table.appendChild(tr);
-            }
-        }
 
         function newGame() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -214,10 +158,10 @@
                 if(btnNew) btnNew.classList.remove('hidden-mode');
                 if(sizeRow) sizeRow.classList.remove('hidden-mode');
                 SIZE = +document.getElementById('size-select').value;
-                grid = genererNiveau(SIZE);
+                grid = genererNiveau(SIZE); // Vient de game.js
             }
-            renderGrid();
-            startChrono();
+            renderGrid(); // Appellera la bonne version (celle de game.js)
+            startChrono(); // Vient de game.js
         }
 
         document.getElementById('btn-new').addEventListener('click', newGame);
@@ -228,7 +172,6 @@
         });
 
         window.addEventListener('DOMContentLoaded', newGame);
-        // Recalculer si on redimensionne la fenêtre
         window.addEventListener('resize', renderGrid);
     </script>
 
