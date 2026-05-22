@@ -44,6 +44,7 @@ if (isset($_SESSION['user_id'])) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Classement — 2Fast4U</title>
         <link rel="stylesheet" href="../css/style.css">
+        <link rel="stylesheet" href="../css/leaderboard.css">
         <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
         <link rel="icon" href="../media/ico-car.ico" type="image/x-icon">
     </head>

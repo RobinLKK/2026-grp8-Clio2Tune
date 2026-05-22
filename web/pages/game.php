@@ -1,4 +1,27 @@
-<?php session_start(); ?>
+<?php 
+session_start(); 
+
+// --- GÉNÉRATION DU FAUX LEADERBOARD ---
+$pseudos = ["DriftKing", "Turbo_J", "ApexPredator", "GearHead", "VroomVroom", "ShiftBoss", "PistonPete", "NightRider"];
+$scores_aleatoires = [];
+
+foreach ($pseudos as $pseudo) {
+    $min = rand(0, 3); // Entre 0 et 3 minutes
+    $sec = rand(0, 59); // Entre 0 et 59 secondes
+    $total_sec = ($min * 60) + $sec; // Converti en secondes pour le tri
+    
+    $scores_aleatoires[] = [
+        'nom' => $pseudo,
+        'temps_str' => sprintf("%02d:%02d", $min, $sec), // Format 00:00
+        'total_sec' => $total_sec
+    ];
+}
+
+// Tri du tableau : du plus rapide au plus lent
+usort($scores_aleatoires, function($a, $b) {
+    return $a['total_sec'] <=> $b['total_sec'];
+});
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -21,13 +44,13 @@
             width: 100%;
             display: flex;
             justify-content: center;
-            align-items: flex-start; /* EMPÊCHE L'ÉTIREMENT VERTICAL DES CASES */
+            align-items: flex-start;
             padding: 20px 0;
         }
 
         #grid {
             border-collapse: collapse;
-            table-layout: fixed; /* FORCE LE RESPECT DES TAILLES CALCULÉES */
+            table-layout: fixed;
             width: auto !important;
             height: auto !important;
             background-color: #222;
@@ -48,7 +71,7 @@
             box-sizing: border-box;
             
             background-repeat: no-repeat !important;
-            background-size: 100% 100% !important; /* STRETCH PARFAIT DE LA TEXTURE */
+            background-size: 100% 100% !important;
             background-position: center !important;
         }
 
@@ -60,13 +83,13 @@
             width: 100%; height: 100%;
             background-image: var(--pneu-url);
             background-repeat: no-repeat !important;
-            background-size: 100% 100% !important; /* STRETCH DES PNEUS SUR TOUTE LA CASE */
+            background-size: 100% 100% !important;
             z-index: 1;
             pointer-events: none;
             opacity: 0.8;
         }
-        .cell.track-h::before { transform: rotate(90deg); } /* Lignes */
-        .cell.track-v::before { transform: rotate(0deg); }  /* Colonnes */
+        .cell.track-h::before { transform: rotate(90deg); }
+        .cell.track-v::before { transform: rotate(0deg); }
 
         /* ----- VOITURES ET CROIX ----- */
         .car-img {
@@ -92,6 +115,66 @@
         }
 
         .hidden-mode { display: none !important; }
+
+        /* ----- GAME MIDDLE (Flexbox pour aligner grille et leaderboard) ----- */
+        .game-middle {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 30px;
+            flex-wrap: wrap; /* S'adapte sur les petits écrans */
+            margin-top: 20px;
+        }
+
+        /* ----- LEADERBOARD BOX ----- */
+        .leaderboard-box {
+            background-color: #222;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            font-family: 'Barlow', sans-serif;
+            color: white;
+            min-width: 250px;
+        }
+
+        .leaderboard-box h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            text-align: center;
+            color: #ff4500; 
+            font-size: 24px;
+            letter-spacing: 2px;
+            margin-top: 0;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #444;
+            padding-bottom: 10px;
+        }
+
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .leaderboard-table th, .leaderboard-table td {
+            padding: 8px 10px;
+            text-align: center;
+            border-bottom: 1px solid #333;
+        }
+
+        .leaderboard-table th {
+            color: #bbb;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        .leaderboard-table tr:nth-child(even) td {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .leaderboard-table tr:first-of-type td {
+            color: #ffd700;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body class="game-page">
@@ -120,7 +203,6 @@
                 <div id="size-row">
                     SÉLECTIONNE TA TAILLE :
                     <select id="size-select">
-                        <!-- TAILLES DE 5 À 12 -->
                         <option value="5">5×5</option>
                         <option value="6">6×6</option>
                         <option value="7">7×7</option>
@@ -135,6 +217,30 @@
                     <table id="grid"></table>
                 </div>
                 <p id="msg"></p>
+            </div>
+
+            <div class="leaderboard-box">
+                <h3>Meilleurs Pilotes</h3>
+                <table class="leaderboard-table">
+                    <tr>
+                        <th>Rang</th>
+                        <th>Pseudo</th>
+                        <th>Temps</th>
+                    </tr>
+                    <?php
+                    // Affichage des 5 meilleurs temps
+                    $rang = 1;
+                    $top5 = array_slice($scores_aleatoires, 0, 5);
+                    foreach($top5 as $score) {
+                        echo "<tr>";
+                        echo "<td>#" . $rang . "</td>";
+                        echo "<td>" . htmlspecialchars($score['nom']) . "</td>";
+                        echo "<td>" . $score['temps_str'] . "</td>";
+                        echo "</tr>";
+                        $rang++;
+                    }
+                    ?>
+                </table>
             </div>
         </div>
     </main>
@@ -188,7 +294,7 @@
     </div>
 </div>
 <footer>
-    <p>2Fast4U • Racing Queen's Game</p>
+    <p>2Fast4U • Racing Puzzle Experience</p>
 </footer>
 </body>
 </html>
