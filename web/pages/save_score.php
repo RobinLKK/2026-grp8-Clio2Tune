@@ -17,30 +17,33 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 $action = $_POST['action'] ?? '';
 
-/* ════════════════════════════════
-   Fin de partie : enregistre score
-   ════════════════════════════════ */
 if ($action === 'save_score') {
     $difficulte = (int)($_POST['difficulte'] ?? 1);
-    $chrono     = (int)($_POST['chrono']     ?? 0); // en secondes
-    $id_niveau  = (int)($_POST['id_niveau']  ?? 0); // 0 = niveau random
+    $chrono     = (int)($_POST['chrono']     ?? 0);
+    $id_niveau  = (int)($_POST['id_niveau']  ?? 0);
 
-    /* Points selon difficulté + bonus vitesse */
-    $base = match(true) {
-        $difficulte >= 5 => 1200,
-        $difficulte >= 4 => 800,
-        $difficulte >= 3 => 500,
-        $difficulte >= 2 => 250,
-        default          => 100,
-    };
-
-    /* Bonus si résolu rapidement (max +50% en moins de 30 sec) */
-    $bonus = 0;
-    if ($chrono > 0 && $chrono < 300) {
-        $bonus = (int)($base * 0.5 * max(0, 1 - $chrono / 300));
+    /* Vérifie si le joueur a déjà complété ce niveau (mode histoire uniquement) */
+    if ($id_niveau > 0) {
+        $check = $pdo->prepare("SELECT COUNT(*) FROM classement WHERE ID_utilisateur = ? AND ID_Niveau = ?");
+        $check->execute([$_SESSION['user_id'], $id_niveau]);
+        if ($check->fetchColumn() > 0) {
+            echo json_encode(['ok' => false, 'msg' => 'Niveau déjà complété', 'deja_fait' => true]);
+            exit;
+        }
     }
 
-    $points = $base + $bonus;
+    /* Points selon difficulté — pas de bonus temps */
+    $base = match($difficulte) {
+        1 => 10,
+        2 => 20,
+        3 => 30,
+        4 => 40,
+        5 => 50,
+        default => 10,
+    };
+
+    $bonus = 0;
+    $points = $base;
 
     /* Insert dans classement */
     $ins = $pdo->prepare("
@@ -49,14 +52,12 @@ if ($action === 'save_score') {
     ");
     $ins->execute([
         ':uid' => $_SESSION['user_id'],
-        ':niv' => $id_niveau > 0 ? $id_niveau : null,
+        ':niv' => $id_niveau > 0 ? $id_niveau : 1,
         ':pts' => $points,
     ]);
 
     /* Incrémente Nombre_niveau dans utilisateur */
-    $upd = $pdo->prepare("
-        UPDATE utilisateur SET Nombre_niveau = Nombre_niveau + 1 WHERE ID = ?
-    ");
+    $upd = $pdo->prepare("UPDATE utilisateur SET Nombre_niveau = Nombre_niveau + 1 WHERE ID = ?");
     $upd->execute([$_SESSION['user_id']]);
 
     echo json_encode([

@@ -196,8 +196,36 @@ function onCellClick(e) {
     renderGrid();
     if (verifierVictoire(grid,SIZE)) {
         clearInterval(chronoInterval);
-        msg.textContent='🎉 Bravo !';
-        msg.className='win';
+
+        const urlParams  = new URLSearchParams(window.location.search);
+        const type       = urlParams.get('type');
+        const idJS       = parseInt(urlParams.get('id') ?? '-1');
+        // Dans la BDD niveau_cree, les IDs commencent à 1 donc on fait +1
+        const id_niveau  = (type === 'fixed' && idJS >= 0) ? idJS + 1 : 0;
+        const difficulte = id_niveau > 0 
+            ? [1,2,3,4,5][idJS] ?? 1  // difficulté selon l'index
+            : (SIZE <= 5 ? 1 : SIZE <= 6 ? 2 : SIZE <= 7 ? 3 : SIZE <= 8 ? 4 : 5);
+
+        fetch('../pages/save_score.php', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: `action=save_score&difficulte=${difficulte}&chrono=${secondes}&id_niveau=${id_niveau}`
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.ok) {
+                msg.textContent = `🎉 Bravo ! +${data.points} pts`;
+            } else if (data.deja_fait) {
+                msg.textContent = '✓ Niveau déjà complété — aucun point supplémentaire';
+            } else {
+                msg.textContent = '🎉 Bravo !';
+            }
+            msg.className = 'win';
+        })
+        .catch(() => {
+            msg.textContent = '🎉 Bravo !';
+            msg.className = 'win';
+        });
     }
 }
 
