@@ -122,6 +122,14 @@ $scores = $stmt->fetchAll();
 
             <h2 class="auth-box-title"><?= htmlspecialchars($user["Pseudo"]) ?></h2>
 
+            <?php if ($user['Admin'] == 1): ?>
+                <div style="text-align:center; margin-bottom:1rem;">
+                    <a href="admin.php" class="btn-submit" style="text-decoration:none; display:inline-block;">
+                        ⚙ Panel Admin
+                    </a>
+                </div>
+            <?php endif; ?>
+
             <?php if ($erreur): ?>
                 <p class="erreur"><?= htmlspecialchars($erreur) ?></p>
             <?php endif; ?>

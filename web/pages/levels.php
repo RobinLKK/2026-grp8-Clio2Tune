@@ -3,18 +3,12 @@ declare(strict_types=1);
 session_start();
 
 // Liste des niveaux prédéfinis (doit correspondre à l'ordre dans ton JS)
-$niveaux = [
-    ['id' => 0, 'nom' => 'Circuit de Départ', 'difficulte' => 1, 'locked' => false],
-    ['id' => 1, 'nom' => 'Virage Serré',      'difficulte' => 2, 'locked' => false],
-    ['id' => 2, 'nom' => 'Labyrinthe Urbain', 'difficulte' => 3, 'locked' => false],
-    ['id' => 3, 'nom' => 'Grand Prix Pro',    'difficulte' => 4, 'locked' => true],
-    ['id' => 4, 'nom' => 'L\'Ultime Défi',    'difficulte' => 5, 'locked' => true],
-];
+require_once '../includes/db.php';
 
+$niveaux = $pdo->query("SELECT * FROM niveau_cree ORDER BY Difficulte ASC")->fetchAll();
 $pseudo = $_SESSION['pseudo'] ?? 'Pilote invité';
 
-function afficherEtoiles(int $niveau): string
-{
+function afficherEtoiles(int $niveau): string {
     return str_repeat('★', $niveau) . str_repeat('☆', 5 - $niveau);
 }
 ?>
@@ -58,27 +52,18 @@ function afficherEtoiles(int $niveau): string
 
 <section class="levels-container">
 
-<?php foreach ($niveaux as $niveau): ?>
-    
-    <div class="card <?= $niveau['locked'] ? 'locked' : '' ?>">
-        
-        <h3>Niveau <?= $niveau['id'] + 1 ?> - <?= htmlspecialchars($niveau['nom']) ?></h3>
-
-        <p class="difficulty">
-            <?= afficherEtoiles($niveau['difficulte']) ?>
-        </p>
-
-        <?php if ($niveau['locked']): ?>
-            <span class="btn btn-lock">🔒 Verrouillé</span>
-        <?php else: ?>
-            <!-- On passe l'ID dans l'URL pour que game.php sache quel niveau charger -->
-            <a class="btn" href="game.php?type=fixed&id=<?= $niveau['id'] ?>">
-                ▶ Jouer
-            </a>
-        <?php endif; ?>
-
-    </div>
-
+<?php foreach ($niveaux as $i => $niveau):
+    $isLocked = in_array($niveau['ID'], $_SESSION['locked_levels'] ?? []);
+?>
+<div class="card <?= $isLocked ? 'locked' : '' ?>">
+    <h3>Niveau <?= $i + 1 ?> — <?= htmlspecialchars($niveau['Nom_du_niveau']) ?></h3>
+    <p class="difficulty"><?= afficherEtoiles($niveau['Difficulte']) ?></p>
+    <?php if ($isLocked): ?>
+        <span class="btn btn-lock">🔒 Verrouillé</span>
+    <?php else: ?>
+        <a class="btn" href="game.php?type=fixed&id=<?= $i ?>">▶ Jouer</a>
+    <?php endif; ?>
+</div>
 <?php endforeach; ?>
 
 </section>
