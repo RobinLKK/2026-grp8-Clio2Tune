@@ -70,18 +70,18 @@ if (isset($_SESSION['user_id'])) {
         </header>
         <main>
             <div class="lb-hero">
-                <h2>Classement des pilotes</h2>
-                <p>Les meilleurs pilotes du circuit 🏁</p>
+                <h2>Driver rankings</h2>
+                <p>The best drivers on the circuit 🏁</p>
             </div>
 
             <?php if (isset($_SESSION['user_id']) && $myRank): ?>
             <div class="my-rank-bar">
-                Votre rang : <strong>#<?= $myRank ?></strong>
+                Your rank : <strong>#<?= $myRank ?></strong>
             </div>
             <?php endif; ?>
 
             <?php if (empty($classement)): ?>
-                <p class="lb-empty">Aucun score enregistré pour l'instant.</p>
+                <p class="lb-empty">No scores recorded yet.</p>
             <?php else: ?>
 
             <!-- Podium -->
@@ -103,7 +103,7 @@ if (isset($_SESSION['user_id'])) {
                     <?php endif; ?>
                     <div class="podium-pseudo"><?= htmlspecialchars($p['Pseudo']) ?></div>
                     <div class="podium-points"><?= number_format((int)$p['total_points']) ?> pts</div>
-                    <div class="podium-parties"><?= $p['nb_parties'] ?> partie<?= $p['nb_parties'] > 1 ? 's' : '' ?></div>
+                    <div class="podium-parties"><?= $p['nb_parties'] ?> game<?= $p['nb_parties'] > 1 ? 's' : '' ?></div>
                 </div>
                 <?php endforeach; ?>
             </div>
@@ -114,9 +114,9 @@ if (isset($_SESSION['user_id'])) {
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Pilote</th>
+                            <th>Driver</th>
                             <th>Points</th>
-                            <th>Parties</th>
+                            <th>Games</th>
                         </tr>
                     </thead>
                     <tbody>
