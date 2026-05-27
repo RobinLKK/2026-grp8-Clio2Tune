@@ -36,7 +36,7 @@ bool safeligne(Tile** p, int ligne, int colonne, int size) {
 }
 bool emptyregion(Tile** p, int ligne, int colonne, int size) {
 
-	int targetcolor = &p[ligne][colonne].ColorId;
+	int targetcolor = p[ligne][colonne].ColorId;
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size; j++) {
 			if (i == ligne && j == colonne) {
@@ -401,4 +401,15 @@ void afficherJeuCouleur(Tile** p, int size) {
 	printf("    +");
 	for (int j = 0; j < size; j++) printf("---");
 	printf("+\n");
+}
+bool moteur(Tile** p, int r, int size) {
+	if (r == size) return true;
+	for (int c = 0; c < size; c++) {
+		if (estPlacable(p, r, c, size)) {
+			p[r][c].hasCar = true;
+			if (moteur(p, r + 1, size)) return true;
+			p[r][c].hasCar = false;
+		}
+	}
+	return false;
 }

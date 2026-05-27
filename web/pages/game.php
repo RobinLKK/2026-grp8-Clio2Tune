@@ -196,6 +196,7 @@ usort($scores_aleatoires, function($a, $b) {
         <div id="controls">
             <button id="btn-reset">Réinitialiser</button>
             <button id="btn-new">Nouveau niveau</button>
+            <button id="btn-hint">Besoin d'un indice ?</button>
         </div>
 
         <div class="game-middle">

@@ -18,9 +18,6 @@
     <ClCompile Include="solveur.c">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="main.c">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="BiblioFonctions.c">
       <Filter>Fichiers sources</Filter>
     </ClCompile>

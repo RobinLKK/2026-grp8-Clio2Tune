@@ -1,17 +1,17 @@
 // --- ASSETS ET CONFIGURATION ---
-// --- ASSETS ET CONFIGURATION BLINDÉE ---
 const CONFIG_COULEURS = [
-    { txt: '../image/bleu.png',      car: '../image/bleu_voiture.png',      pneu: '../image/bleu_pneux.png',      cross: '../image/bleu_croisement_pneux.png' },      // Index 0
-    { txt: '../image/vert.png',      car: '../image/vert_voiture.png',      pneu: '../image/vert_pneux.png',      cross: '../image/vert_croisement_pneux.png' },      // Index 1
-    { txt: '../image/rouge.png',     car: '../image/rouge_voiture.png',     pneu: '../image/rouge_pneux.png',     cross: '../image/rouge_croisement_pneux.png' },     // Index 2
-    { txt: '../image/jaune.png',     car: '../image/jaune_voiture.png',     pneu: '../image/jaune_pneux.png',     cross: '../image/jaune_croisement_pneux.png' },     // Index 3
-    { txt: '../image/violet.png',    car: '../image/violet_voiture.png',    pneu: '../image/violet_pneux.png',    cross: '../image/violet_croisement_pneux.png' },    // Index 4
-    { txt: '../image/rose.png',      car: '../image/rose_voiture.png',      pneu: '../image/rose_pneux.png',      cross: '../image/rose_croisement_pneux.png' },      // Index 5
+    { txt: '../image/bleu.png', car: '../image/bleu_voiture.png', pneu: '../image/bleu_pneux.png', cross: '../image/bleu_croisement_pneux.png' },      // Index 0
+    { txt: '../image/vert.png', car: '../image/vert_voiture.png', pneu: '../image/vert_pneux.png', cross: '../image/vert_croisement_pneux.png' },      // Index 1
+    { txt: '../image/rouge.png', car: '../image/rouge_voiture.png', pneu: '../image/rouge_pneux.png', cross: '../image/rouge_croisement_pneux.png' },     // Index 2
+    { txt: '../image/jaune.png', car: '../image/jaune_voiture.png', pneu: '../image/jaune_pneux.png', cross: '../image/jaune_croisement_pneux.png' },     // Index 3
+    { txt: '../image/violet.png', car: '../image/violet_voiture.png', pneu: '../image/violet_pneux.png', cross: '../image/violet_croisement_pneux.png' },    // Index 4
+    { txt: '../image/rose.png', car: '../image/rose_voiture.png', pneu: '../image/rose_pneux.png', cross: '../image/rose_croisement_pneux.png' },      // Index 5
     { txt: '../image/bleu_ciel.png', car: '../image/bleu_ciel_voiture.png', pneu: '../image/bleu_ciel_pneux.png', cross: '../image/bleu_ciel_croisement_pneux.png' }, // Index 6
-    { txt: '../image/marron.png',    car: '../image/marron_voiture.png',    pneu: '../image/marron_pneux.png',    cross: '../image/marron_croisement_pneux.png' },    // Index 7
-    { txt: '../image/orange.png',    car: '../image/orange_voiture.png',    pneu: '../image/orange_pneux.png',    cross: '../image/orange_croisement_pneux.png' },    // Index 8
-    { txt: '../image/gris.png',      car: '../image/gris_voiture.png',      pneu: '../image/gris_pneux.png',      cross: '../image/gris_croisement_pneux.png' }       // Index 9
+    { txt: '../image/marron.png', car: '../image/marron_voiture.png', pneu: '../image/marron_pneux.png', cross: '../image/marron_croisement_pneux.png' },    // Index 7
+    { txt: '../image/orange.png', car: '../image/orange_voiture.png', pneu: '../image/orange_pneux.png', cross: '../image/orange_croisement_pneux.png' },    // Index 8
+    { txt: '../image/gris.png', car: '../image/gris_voiture.png', pneu: '../image/gris_pneux.png', cross: '../image/gris_croisement_pneux.png' }       // Index 9
 ];
+
 // --- TES NIVEAUX PRÉDÉFINIS ---
 const PREDEFINED_LEVELS = [
     {
@@ -23,7 +23,7 @@ const PREDEFINED_LEVELS = [
             [4, 4, 3, 3, 3],
             [4, 4, 3, 3, 3]
         ],
-        solution: [{r: 0, c: 0}, {r: 1, c: 2}, {r: 2, c: 4}, {r: 3, c: 1}, {r: 4, c: 3}]
+        solution: [{ r: 0, c: 0 }, { r: 1, c: 2 }, { r: 2, c: 4 }, { r: 3, c: 1 }, { r: 4, c: 3 }]
     },
     {
         size: 5,
@@ -34,197 +34,238 @@ const PREDEFINED_LEVELS = [
             [4, 2, 4, 4, 3],
             [4, 4, 4, 3, 3]
         ],
-        solution: [{r: 0, c: 0}, {r: 1, c: 3}, {r: 2, c: 1}, {r: 3, c: 4}, {r: 4, c: 2}]
+        solution: [{ r: 0, c: 0 }, { r: 1, c: 3 }, { r: 2, c: 1 }, { r: 3, c: 4 }, { r: 4, c: 2 }]
     },
     {
-    size: 6,
-    map: [
-        [0, 0, 0, 1, 1, 1],
-        [0, 0, 0, 1, 1, 1],
-        [2, 2, 2, 3, 3, 1],
-        [2, 4, 4, 3, 3, 3],
-        [4, 4, 4, 4, 3, 5],
-        [4, 4, 5, 5, 5, 5]
-    ],
-    solution: [{r: 0, c: 2}, {r: 1, c: 4}, {r: 2, c: 0}, {r: 3, c: 3}, {r: 4, c: 1}, {r: 5, c: 5}]
+        size: 6,
+        map: [
+            [0, 0, 0, 1, 1, 1],
+            [0, 0, 0, 1, 1, 1],
+            [2, 2, 2, 3, 3, 1],
+            [2, 4, 4, 3, 3, 3],
+            [4, 4, 4, 4, 3, 5],
+            [4, 4, 5, 5, 5, 5]
+        ],
+        solution: [{ r: 0, c: 2 }, { r: 1, c: 4 }, { r: 2, c: 0 }, { r: 3, c: 3 }, { r: 4, c: 1 }, { r: 5, c: 5 }]
     },
     {
-    size: 6,
-    map: [
-        [0, 0, 1, 1, 2, 2],
-        [0, 0, 1, 1, 1, 2],
-        [3, 4, 4, 4, 4, 2],
-        [3, 3, 4, 4, 5, 5],
-        [3, 3, 4, 5, 5, 5],
-        [3, 3, 5, 5, 5, 5]
-    ],
-    solution: [{r: 0, c: 1}, {r: 1, c: 3}, {r: 2, c: 5}, {r: 3, c: 0}, {r: 4, c: 2}, {r: 5, c: 4}]
+        size: 6,
+        map: [
+            [0, 0, 1, 1, 2, 2],
+            [0, 0, 1, 1, 1, 2],
+            [3, 4, 4, 4, 4, 2],
+            [3, 3, 4, 4, 5, 5],
+            [3, 3, 4, 5, 5, 5],
+            [3, 3, 5, 5, 5, 5]
+        ],
+        solution: [{ r: 0, c: 1 }, { r: 1, c: 3 }, { r: 2, c: 5 }, { r: 3, c: 0 }, { r: 4, c: 2 }, { r: 5, c: 4 }]
     },
     {
-    size: 7,
-    map: [
-        [0, 0, 0, 0, 1, 1, 1],
-        [2, 2, 0, 0, 1, 1, 1],
-        [2, 2, 2, 3, 3, 1, 1],
-        [2, 3, 3, 3, 3, 4, 4],
-        [5, 5, 3, 3, 6, 6, 4],
-        [5, 5, 5, 6, 6, 6, 4],
-        [5, 5, 6, 6, 6, 4, 4]
-    ],
-    solution: [ {r: 0, c: 2}, {r: 1, c: 5}, {r: 2, c: 0}, {r: 3, c: 3}, {r: 4, c: 6}, {r: 5, c: 1}, 
-            {r: 6, c: 4}]
+        size: 7,
+        map: [
+            [0, 0, 0, 0, 1, 1, 1],
+            [2, 2, 0, 0, 1, 1, 1],
+            [2, 2, 2, 3, 3, 1, 1],
+            [2, 3, 3, 3, 3, 4, 4],
+            [5, 5, 3, 3, 6, 6, 4],
+            [5, 5, 5, 6, 6, 6, 4],
+            [5, 5, 6, 6, 6, 4, 4]
+        ],
+        solution: [{ r: 0, c: 2 }, { r: 1, c: 5 }, { r: 2, c: 0 }, { r: 3, c: 3 }, { r: 4, c: 6 }, { r: 5, c: 1 }, { r: 6, c: 4 }]
     },
     {
-    size: 8,
-    map: [
-        [0, 0, 0, 0, 1, 1, 1, 1],
-        [2, 0, 0, 1, 1, 1, 1, 5],
-        [2, 2, 0, 3, 3, 1, 5, 5],
-        [2, 2, 3, 3, 3, 5, 5, 5],
-        [4, 4, 3, 3, 6, 6, 5, 5],
-        [4, 4, 4, 6, 6, 6, 6, 5],
-        [4, 4, 7, 6, 6, 6, 7, 7],
-        [4, 7, 7, 7, 7, 7, 7, 7]
-    ],
-    solution: [
-        {r: 0, c: 2},
-        {r: 1, c: 5},
-        {r: 2, c: 0},
-        {r: 3, c: 3},
-        {r: 4, c: 1},
-        {r: 5, c: 7},
-        {r: 6, c: 4},
-        {r: 7, c: 6}
-    ]
+        size: 8,
+        map: [
+            [0, 0, 0, 0, 1, 1, 1, 1],
+            [2, 0, 0, 1, 1, 1, 1, 5],
+            [2, 2, 0, 3, 3, 1, 5, 5],
+            [2, 2, 3, 3, 3, 5, 5, 5],
+            [4, 4, 3, 3, 6, 6, 5, 5],
+            [4, 4, 4, 6, 6, 6, 6, 5],
+            [4, 4, 7, 6, 6, 6, 7, 7],
+            [4, 7, 7, 7, 7, 7, 7, 7]
+        ],
+        solution: [{ r: 0, c: 2 }, { r: 1, c: 5 }, { r: 2, c: 0 }, { r: 3, c: 3 }, { r: 4, c: 1 }, { r: 5, c: 7 }, { r: 6, c: 4 }, { r: 7, c: 6 }]
     },
     {
-    size: 9,
-    map: [
-        [5, 5, 5, 5, 8, 8, 8, 8, 8],
-        [5, 5, 5, 5, 8, 8, 8, 8, 8],
-        [0, 0, 5, 5, 2, 2, 2, 8, 8],
-        [0, 0, 0, 2, 2, 2, 2, 7, 7],
-        [0, 0, 1, 2, 2, 2, 7, 7, 7],
-        [1, 1, 1, 2, 2, 4, 4, 4, 7],
-        [1, 1, 1, 3, 3, 4, 4, 4, 4],
-        [1, 1, 3, 3, 3, 3, 6, 6, 6],
-        [1, 3, 3, 3, 3, 6, 6, 6, 6]
-    ],
-    solution: [
-        {r: 0, c: 2},
-        {r: 1, c: 5},
-        {r: 2, c: 0},
-        {r: 3, c: 7},
-        {r: 4, c: 4},
-        {r: 5, c: 1},
-        {r: 6, c: 6},
-        {r: 7, c: 3},
-        {r: 8, c: 8}
-    ]
-    },   
-    {
-    size: 10,
-    map: [
-        [3, 3, 3, 8, 8, 8, 2, 2, 2, 2],
-        [3, 3, 3, 8, 8, 2, 2, 2, 2, 0],
-        [3, 5, 5, 8, 8, 7, 7, 2, 0, 0],
-        [5, 5, 5, 9, 9, 7, 7, 0, 0, 0],
-        [3, 9, 9, 9, 9, 7, 7, 0, 0, 0],
-        [3, 9, 9, 1, 1, 7, 4, 4, 4, 6],
-        [3, 3, 9, 1, 1, 1, 4, 4, 4, 6],
-        [3, 3, 3, 1, 1, 4, 4, 4, 6, 6],
-        [3, 3, 3, 1, 4, 4, 4, 6, 6, 6],
-        [3, 3, 3, 1, 4, 6, 6, 6, 6, 6]
-    ],
-    solution: [
-        {r: 0, c: 3},
-        {r: 1, c: 7},
-        {r: 2, c: 1},
-        {r: 3, c: 9},
-        {r: 4, c: 5},
-        {r: 5, c: 0},
-        {r: 6, c: 2},
-        {r: 7, c: 4},
-        {r: 8, c: 6},
-        {r: 9, c: 8}
-    ]
+        size: 9,
+        map: [
+            [5, 5, 5, 5, 8, 8, 8, 8, 8],
+            [5, 5, 5, 5, 8, 8, 8, 8, 8],
+            [0, 0, 5, 5, 2, 2, 2, 8, 8],
+            [0, 0, 0, 2, 2, 2, 2, 7, 7],
+            [0, 0, 1, 2, 2, 2, 7, 7, 7],
+            [1, 1, 1, 2, 2, 4, 4, 4, 7],
+            [1, 1, 1, 3, 3, 4, 4, 4, 4],
+            [1, 1, 3, 3, 3, 3, 6, 6, 6],
+            [1, 3, 3, 3, 3, 6, 6, 6, 6]
+        ],
+        solution: [{ r: 0, c: 2 }, { r: 1, c: 5 }, { r: 2, c: 0 }, { r: 3, c: 7 }, { r: 4, c: 4 }, { r: 5, c: 1 }, { r: 6, c: 6 }, { r: 7, c: 3 }, { r: 8, c: 8 }]
     },
     {
-    size: 11,
-    map: [
-        [7, 7, 2, 2, 2, 2, 5, 5, 5, 5, 5],
-        [7, 7, 2, 2, 2, 5, 5, 5, 5, 5, 8],
-        [0, 0, 2, 2, 3, 3, 6, 6, 8, 8, 8],
-        [0, 0, 0, 3, 3, 3, 6, 6, 8, 8, 8],
-        [0, 1, 1, 3, 3, 3, 6, 6, 9, 9, 9],
-        [1, 1, 1, 3, 4, 4, 6, 6, 9, 9, 9],
-        [1, 1, 1, 4, 4, 4, 6, 6, 9, 9, 9],
-        [1, 1, 4, 4, 4, 4, 7, 7, 7, 9, 10],
-        [1, 1, 4, 4, 4, 4, 7, 7, 7, 10, 10],
-        [1, 1, 4, 4, 7, 7, 7, 7, 7, 10, 10],
-        [1, 1, 4, 4, 7, 7, 7, 7, 10, 10, 10]
-    ],
-    solution: [
-        {r: 0, c: 2},
-        {r: 1, c: 5},
-        {r: 2, c: 8},
-        {r: 3, c: 0},
-        {r: 4, c: 3},
-        {r: 5, c: 6},
-        {r: 6, c: 9},
-        {r: 7, c: 1},
-        {r: 8, c: 4},
-        {r: 9, c: 7},
-        {r: 10, c: 10}
-    ]
+        size: 10,
+        map: [
+            [3, 3, 3, 8, 8, 8, 2, 2, 2, 2],
+            [3, 3, 3, 8, 8, 2, 2, 2, 2, 0],
+            [3, 5, 5, 8, 8, 7, 7, 2, 0, 0],
+            [5, 5, 5, 9, 9, 7, 7, 0, 0, 0],
+            [3, 9, 9, 9, 9, 7, 7, 0, 0, 0],
+            [3, 9, 9, 1, 1, 7, 4, 4, 4, 6],
+            [3, 3, 9, 1, 1, 1, 4, 4, 4, 6],
+            [3, 3, 3, 1, 1, 4, 4, 4, 6, 6],
+            [3, 3, 3, 1, 4, 4, 4, 6, 6, 6],
+            [3, 3, 3, 1, 4, 6, 6, 6, 6, 6]
+        ],
+        solution: [{ r: 0, c: 3 }, { r: 1, c: 7 }, { r: 2, c: 1 }, { r: 3, c: 9 }, { r: 4, c: 5 }, { r: 5, c: 0 }, { r: 6, c: 2 }, { r: 7, c: 4 }, { r: 8, c: 6 }, { r: 9, c: 8 }]
     },
     {
-    size: 12,
-    map: [
-        [4, 4, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2],
-        [4, 4, 4, 0, 0, 1, 1, 1, 2, 2, 2, 2],
-        [4, 4, 4, 5, 5, 5, 1, 2, 2, 2, 3, 3],
-        [8, 4, 4, 5, 5, 5, 6, 6, 2, 2, 3, 3],
-        [8, 4, 4, 5, 5, 5, 6, 6, 7, 7, 3, 3],
-        [8, 8, 5, 5, 5, 6, 6, 6, 7, 7, 3, 3],
-        [8, 8, 9, 9, 9, 6, 6, 6, 7, 7, 7, 3],
-        [8, 8, 9, 9, 9, 10, 10, 7, 7, 7, 7, 7],
-        [8, 8, 9, 9, 9, 10, 10, 10, 11, 11, 7, 7],
-        [8, 8, 9, 9, 9, 10, 10, 10, 11, 11, 11, 11],
-        [8, 8, 9, 10, 10, 10, 10, 10, 11, 11, 11, 11],
-        [8, 8, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11]
-    ],
-    solution: [
-        {r: 0, c: 2},
-        {r: 1, c: 5},
-        {r: 2, c: 8},
-        {r: 3, c: 11},
-        {r: 4, c: 1},
-        {r: 5, c: 4},
-        {r: 6, c: 7},
-        {r: 7, c: 10},
-        {r: 8, c: 0},
-        {r: 9, c: 3},
-        {r: 10, c: 6},
-        {r: 11, c: 9}
-    ]
+        size: 11,
+        map: [
+            [7, 7, 2, 2, 2, 2, 5, 5, 5, 5, 5],
+            [7, 7, 2, 2, 2, 5, 5, 5, 5, 5, 8],
+            [0, 0, 2, 2, 3, 3, 6, 6, 8, 8, 8],
+            [0, 0, 0, 3, 3, 3, 6, 6, 8, 8, 8],
+            [0, 1, 1, 3, 3, 3, 6, 6, 9, 9, 9],
+            [1, 1, 1, 3, 4, 4, 6, 6, 9, 9, 9],
+            [1, 1, 1, 4, 4, 4, 6, 6, 9, 9, 9],
+            [1, 1, 4, 4, 4, 4, 7, 7, 7, 9, 10],
+            [1, 1, 4, 4, 4, 4, 7, 7, 7, 10, 10],
+            [1, 1, 4, 4, 7, 7, 7, 7, 7, 10, 10],
+            [1, 1, 4, 4, 7, 7, 7, 7, 10, 10, 10]
+        ],
+        solution: [{ r: 0, c: 2 }, { r: 1, c: 5 }, { r: 2, c: 8 }, { r: 3, c: 0 }, { r: 4, c: 3 }, { r: 5, c: 6 }, { r: 6, c: 9 }, { r: 7, c: 1 }, { r: 8, c: 4 }, { r: 9, c: 7 }, { r: 10, c: 10 }]
+    },
+    {
+        size: 12,
+        map: [
+            [4, 4, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2],
+            [4, 4, 4, 0, 0, 1, 1, 1, 2, 2, 2, 2],
+            [4, 4, 4, 5, 5, 5, 1, 2, 2, 2, 3, 3],
+            [8, 4, 4, 5, 5, 5, 6, 6, 2, 2, 3, 3],
+            [8, 4, 4, 5, 5, 5, 6, 6, 7, 7, 3, 3],
+            [8, 8, 5, 5, 5, 6, 6, 6, 7, 7, 3, 3],
+            [8, 8, 9, 9, 9, 6, 6, 6, 7, 7, 7, 3],
+            [8, 8, 9, 9, 9, 10, 10, 7, 7, 7, 7, 7],
+            [8, 8, 9, 9, 9, 10, 10, 10, 11, 11, 7, 7],
+            [8, 8, 9, 9, 9, 10, 10, 10, 11, 11, 11, 11],
+            [8, 8, 9, 10, 10, 10, 10, 10, 11, 11, 11, 11],
+            [8, 8, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11]
+        ],
+        solution: [{ r: 0, c: 2 }, { r: 1, c: 5 }, { r: 2, c: 8 }, { r: 3, c: 11 }, { r: 4, c: 1 }, { r: 5, c: 4 }, { r: 6, c: 7 }, { r: 7, c: 10 }, { r: 8, c: 0 }, { r: 9, c: 3 }, { r: 10, c: 6 }, { r: 11, c: 9 }]
     }
 ];
 
 let SIZE = 8, grid = [], solution = [], chronoInterval = null, secondes = 0;
 
-// --- DÉFINITION DE RENDERGRID() SANS PALETTE ---
+// =============================================================================
+// --- SOLVEUR : COMPTE LE NOMBRE DE SOLUTIONS (s'arrête à 2 pour perf) ---
+// =============================================================================
+
+/**
+ * Extrait la carte des couleurs (colorId) depuis une grille d'objets.
+ * @param {Array} g - grille d'objets {colorId, hasCar, hasX}
+ * @param {number} size
+ * @returns {number[][]} carte 2D des colorId
+ */
+function extraireCartesCouleurs(g, size) {
+    return Array.from({ length: size }, (_, i) =>
+        Array.from({ length: size }, (_, j) => g[i][j].colorId)
+    );
+}
+
+/**
+ * Solveur récursif qui compte les solutions d'un puzzle.
+ * Il parcourt les lignes une par une et essaie chaque colonne.
+ * S'arrête dès que le compteur dépasse maxSolutions pour la performance.
+ *
+ * @param {number[][]} colorMap - carte 2D des couleurs
+ * @param {number} size
+ * @param {number} row - ligne courante à résoudre
+ * @param {boolean[]} colUsed - colonnes déjà occupées
+ * @param {boolean[]} colorUsed - couleurs déjà utilisées
+ * @param {number[][]} adjGrid - grille des voisinages (true si une voiture est adjacente)
+ * @param {number} maxSolutions - s'arrête dès que ce nombre est atteint
+ * @returns {number} nombre de solutions trouvées (jusqu'à maxSolutions)
+ */
+function _countSolutions(colorMap, size, row, colUsed, colorUsed, carPositions, maxSolutions) {
+    if (row === size) return 1; // Toutes les lignes sont placées → 1 solution
+
+    let count = 0;
+
+    for (let col = 0; col < size; col++) {
+        if (colUsed[col]) continue;
+
+        const colorId = colorMap[row][col];
+
+        // Contrainte : couleur déjà utilisée dans une autre ligne
+        if (colorUsed[colorId]) continue;
+
+        // Contrainte : adjacence (pas de voiture voisine en diagonale / côté)
+        let adjacent = false;
+        for (const [pr, pc] of carPositions) {
+            if (Math.abs(pr - row) <= 1 && Math.abs(pc - col) <= 1) {
+                adjacent = true;
+                break;
+            }
+        }
+        if (adjacent) continue;
+
+        // Placement valide → on recurse
+        colUsed[col] = true;
+        colorUsed[colorId] = true;
+        carPositions.push([row, col]);
+
+        count += _countSolutions(colorMap, size, row + 1, colUsed, colorUsed, carPositions, maxSolutions);
+
+        // Backtrack
+        carPositions.pop();
+        colUsed[col] = false;
+        colorUsed[colorId] = false;
+
+        // Optimisation : dès qu'on dépasse le seuil, on remonte
+        if (count >= maxSolutions) return count;
+    }
+
+    return count;
+}
+
+/**
+ * Vérifie qu'un puzzle a exactement 1 solution.
+ * @param {Array} g - grille d'objets
+ * @param {number} size
+ * @returns {boolean} true si et seulement si 1 solution unique
+ */
+function aUneSolutionUnique(g, size) {
+    const colorMap = extraireCartesCouleurs(g, size);
+
+    // Vérifie que chaque cellule a bien un colorId assigné (pas de -1 restant)
+    for (let i = 0; i < size; i++)
+        for (let j = 0; j < size; j++)
+            if (colorMap[i][j] === -1) return false;
+
+    const colUsed = new Array(size).fill(false);
+    const colorUsed = new Array(size).fill(false);
+    const carPositions = [];
+
+    const count = _countSolutions(colorMap, size, 0, colUsed, colorUsed, carPositions, 2);
+    return count === 1;
+}
+
+// =============================================================================
+// --- RENDU DE LA GRILLE ---
+// =============================================================================
+
 function renderGrid() {
     if (typeof SIZE === 'undefined' || !grid.length) return;
 
     const availableWidth = Math.min(600, window.innerWidth - 40);
     const cellPx = availableWidth / SIZE;
-    
+
     document.documentElement.style.setProperty('--cell-size', cellPx + 'px');
-    
+
     const table = document.getElementById('grid');
     table.innerHTML = '';
-    
+
     let positionsVoitures = [];
     for (let i = 0; i < SIZE; i++) {
         for (let j = 0; j < SIZE; j++) {
@@ -239,7 +280,7 @@ function renderGrid() {
         for (let j = 0; j < SIZE; j++) {
             const td = document.createElement('td');
             td.className = 'cell';
-            
+
             const colorId = grid[i][j] ? grid[i][j].colorId : 0;
             const rid = Math.abs(colorId) % CONFIG_COULEURS.length;
             const cfg = CONFIG_COULEURS[rid];
@@ -250,12 +291,10 @@ function renderGrid() {
                 if (voiture.c === j && voiture.r !== i) traceV = true;
             }
 
-            // RENDU DES TEXTURES VIA NOTRE CONFIG UNIQUE
             if (traceH && traceV) {
                 if (cfg.cross) td.style.backgroundImage = `url('${cfg.cross}')`;
             } else {
                 if (cfg.txt) td.style.backgroundImage = `url('${cfg.txt}')`;
-
                 if (traceH || traceV) {
                     if (cfg.pneu) {
                         td.style.setProperty('--pneu-url', `url('${cfg.pneu}')`);
@@ -277,7 +316,8 @@ function renderGrid() {
                 td.appendChild(xMark);
             }
 
-            td.dataset.r = i; td.dataset.c = j;
+            td.dataset.r = i;
+            td.dataset.c = j;
             td.addEventListener('click', onCellClick);
             tr.appendChild(td);
         }
@@ -285,73 +325,181 @@ function renderGrid() {
     }
 }
 
+// =============================================================================
 // --- ALGORITHME DE GÉNÉRATION ALÉATOIRE ---
+// =============================================================================
+
 function initGrid(size) {
-    return Array.from({length: size}, () =>
-        Array.from({length: size}, () => ({ colorId: -1, hasCar: false, hasX: false }))
+    return Array.from({ length: size }, () =>
+        Array.from({ length: size }, () => ({ colorId: -1, hasCar: false, hasX: false }))
     );
 }
 
 function peutPlacerGen(g, r, c, size) {
     for (let i = 0; i < r; i++)
         for (let j = 0; j < size; j++)
-            if (g[i][j].hasCar && (j === c || (Math.abs(i-r) <= 1 && Math.abs(j-c) <= 1))) return false;
+            if (g[i][j].hasCar && (j === c || (Math.abs(i - r) <= 1 && Math.abs(j - c) <= 1))) return false;
     return true;
 }
 
 function placerReinesAlea(g, r, size) {
     if (r === size) return true;
-    let cols = Array.from({length: size}, (_, i) => i);
-    for (let i = size-1; i > 0; i--) { 
-        let j = Math.floor(Math.random()*(i+1)); 
-        [cols[i],cols[j]]=[cols[j],cols[i]]; 
+    let cols = Array.from({ length: size }, (_, i) => i);
+    for (let i = size - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [cols[i], cols[j]] = [cols[j], cols[i]];
     }
     for (let c of cols) {
         if (peutPlacerGen(g, r, c, size)) {
-            g[r][c].hasCar = true; g[r][c].colorId = r;
-            if (placerReinesAlea(g, r+1, size)) return true;
-            g[r][c].hasCar = false; g[r][c].colorId = -1;
+            g[r][c].hasCar = true;
+            g[r][c].colorId = r;
+            if (placerReinesAlea(g, r + 1, size)) return true;
+            g[r][c].hasCar = false;
+            g[r][c].colorId = -1;
         }
     }
     return false;
 }
 
-function genererNiveau(size) {
-    let g = initGrid(size);
-    while (!placerReinesAlea(g, 0, size)) g = initGrid(size);
-    let rest = size*size - size;
-    const dr=[-1,1,0,0], dc=[0,0,-1,1];
+/**
+ * Propage les couleurs via flood fill depuis les positions des reines,
+ * en remplissant toutes les cellules non colorées.
+ * Retourne false si des cellules restent non colorées après plusieurs passes.
+ */
+function propagerCouleurs(g, size) {
+    const dr = [-1, 1, 0, 0];
+    const dc = [0, 0, -1, 1];
+    let reste = 0;
+
+    // Compte les cellules non colorées
+    for (let i = 0; i < size; i++)
+        for (let j = 0; j < size; j++)
+            if (g[i][j].colorId === -1) reste++;
+
     let iter = 0;
-    while (rest > 0 && iter < 100000) {
+    const maxIter = size * size * 20;
+
+    while (reste > 0 && iter < maxIter) {
         iter++;
-        let r = Math.floor(Math.random()*size), c = Math.floor(Math.random()*size);
+        const r = Math.floor(Math.random() * size);
+        const c = Math.floor(Math.random() * size);
         if (g[r][c].colorId !== -1) {
-            let d = Math.floor(Math.random()*4), nr=r+dr[d], nc=c+dc[d];
-            if (nr>=0&&nr<size&&nc>=0&&nc<size&&g[nr][nc].colorId===-1) { 
-                g[nr][nc].colorId = g[r][c].colorId; 
-                rest--; 
+            const d = Math.floor(Math.random() * 4);
+            const nr = r + dr[d];
+            const nc = c + dc[d];
+            if (nr >= 0 && nr < size && nc >= 0 && nc < size && g[nr][nc].colorId === -1) {
+                g[nr][nc].colorId = g[r][c].colorId;
+                reste--;
             }
         }
     }
-    for (let i=0;i<size;i++) for(let j=0;j<size;j++) g[i][j].hasCar=false;
+
+    return reste === 0;
+}
+
+/**
+ * Génère un niveau aléatoire avec solution UNIQUE.
+ * Relance la génération tant que le puzzle a plusieurs solutions.
+ * Affiche la progression dans la console pour le debug.
+ *
+ * @param {number} size
+ * @returns {Array} grille d'objets valide à solution unique
+ */
+function genererNiveau(size) {
+    let tentatives = 0;
+    const MAX_TENTATIVES = 500; // Sécurité pour ne pas boucler indéfiniment
+
+    while (tentatives < MAX_TENTATIVES) {
+        tentatives++;
+
+        // 1. Créer une grille vide et placer les reines (solution cachée)
+        let g = initGrid(size);
+        if (!placerReinesAlea(g, 0, size)) continue;
+
+        // 2. Propager les couleurs pour créer les régions
+        if (!propagerCouleurs(g, size)) continue;
+
+        // 3. Effacer les voitures (elles ne servent qu'à la génération)
+        for (let i = 0; i < size; i++)
+            for (let j = 0; j < size; j++)
+                g[i][j].hasCar = false;
+
+        // 4. Vérifier l'unicité de la solution via le solveur
+        if (aUneSolutionUnique(g, size)) {
+            console.log(`✅ Niveau généré en ${tentatives} tentative(s) — solution unique confirmée.`);
+            return g;
+        }
+
+        // Sinon, on relance
+        console.log(`⚠️ Tentative ${tentatives} : plusieurs solutions détectées, regénération...`);
+    }
+
+    // Fallback de sécurité : on retourne le dernier niveau généré même s'il n'est pas unique
+    console.warn(`⚠️ Impossible de trouver un niveau à solution unique après ${MAX_TENTATIVES} tentatives. Utilisation du dernier niveau généré.`);
+    let g = initGrid(size);
+    while (!placerReinesAlea(g, 0, size)) g = initGrid(size);
+    propagerCouleurs(g, size);
+    for (let i = 0; i < size; i++)
+        for (let j = 0; j < size; j++)
+            g[i][j].hasCar = false;
     return g;
 }
 
+// =============================================================================
 // --- LOGIQUE DE JEU ---
-function safeligne(g,r,c,size){for(let j=0;j<size;j++)if(g[r][j].hasCar)return false;for(let i=0;i<size;i++)if(g[i][c].hasCar)return false;return true;}
-function emptyregion(g,r,c,size){let col=g[r][c].colorId;for(let i=0;i<size;i++)for(let j=0;j<size;j++)if(!(i===r&&j===c)&&g[i][j].colorId===col&&g[i][j].hasCar)return false;return true;}
-function safearound(g,r,c,size){for(let di=-1;di<=1;di++)for(let dj=-1;dj<=1;dj++){if(!di&&!dj)continue;let ni=r+di,nj=c+dj;if(ni>=0&&ni<size&&nj>=0&&nj<size&&g[ni][nj].hasCar)return false;}return true;}
-function estPlacable(g,r,c,size){return safeligne(g,r,c,size)&&emptyregion(g,r,c,size)&&safearound(g,r,c,size);}
-function verifierVictoire(g,size){let n=0;for(let i=0;i<size;i++)for(let j=0;j<size;j++)if(g[i][j].hasCar)n++;return n===size;}
+// =============================================================================
+
+function safeligne(g, r, c, size) {
+    for (let j = 0; j < size; j++) if (g[r][j].hasCar) return false;
+    for (let i = 0; i < size; i++) if (g[i][c].hasCar) return false;
+    return true;
+}
+
+function emptyregion(g, r, c, size) {
+    const col = g[r][c].colorId;
+    for (let i = 0; i < size; i++)
+        for (let j = 0; j < size; j++)
+            if (!(i === r && j === c) && g[i][j].colorId === col && g[i][j].hasCar) return false;
+    return true;
+}
+
+function safearound(g, r, c, size) {
+    for (let di = -1; di <= 1; di++)
+        for (let dj = -1; dj <= 1; dj++) {
+            if (!di && !dj) continue;
+            const ni = r + di, nj = c + dj;
+            if (ni >= 0 && ni < size && nj >= 0 && nj < size && g[ni][nj].hasCar) return false;
+        }
+    return true;
+}
+
+function estPlacable(g, r, c, size) {
+    return safeligne(g, r, c, size) && emptyregion(g, r, c, size) && safearound(g, r, c, size);
+}
+
+function verifierVictoire(g, size) {
+    let n = 0;
+    for (let i = 0; i < size; i++)
+        for (let j = 0; j < size; j++)
+            if (g[i][j].hasCar) n++;
+    return n === size;
+}
 
 function onCellClick(e) {
-    const r=+e.currentTarget.dataset.r, c=+e.currentTarget.dataset.c;
-    const tile=grid[r][c], msg=document.getElementById('msg');
-    if (tile.hasCar) { tile.hasCar=false; tile.hasX=true; }
-    else if (tile.hasX) { tile.hasX=false; }
-    else {
-        if (estPlacable(grid,r,c,SIZE)) { tile.hasCar=true; }
-        else {
+    const r = +e.currentTarget.dataset.r;
+    const c = +e.currentTarget.dataset.c;
+    const tile = grid[r][c];
+    const msg = document.getElementById('msg');
+
+    if (tile.hasCar) {
+        tile.hasCar = false;
+        tile.hasX = true;
+    } else if (tile.hasX) {
+        tile.hasX = false;
+    } else {
+        if (estPlacable(grid, r, c, SIZE)) {
+            tile.hasCar = true;
+        } else {
             const exclamation = document.createElement('span');
             exclamation.textContent = '!';
             exclamation.style.color = '#ff3333';
@@ -362,63 +510,144 @@ function onCellClick(e) {
             exclamation.style.left = '50%';
             exclamation.style.transform = 'translate(-50%, -50%)';
             exclamation.style.zIndex = '10';
-            
+
             e.currentTarget.appendChild(exclamation);
             e.currentTarget.classList.add('error-flash');
 
-            setTimeout(() => {
-                e.currentTarget.classList.remove('error-flash');
-            }, 400);
-
-            setTimeout(() => {
-                exclamation.remove();
-            }, 1000);
-
-        return;
+            setTimeout(() => e.currentTarget.classList.remove('error-flash'), 400);
+            setTimeout(() => exclamation.remove(), 1000);
+            return;
         }
     }
+
     renderGrid();
-    if (verifierVictoire(grid,SIZE)) {
+
+    if (verifierVictoire(grid, SIZE)) {
         clearInterval(chronoInterval);
 
-        const urlParams  = new URLSearchParams(window.location.search);
-        const type       = urlParams.get('type');
-        const idJS       = parseInt(urlParams.get('id') ?? '-1');
-        // Dans la BDD niveau_cree, les IDs commencent à 1 donc on fait +1
-        const id_niveau  = (type === 'fixed' && idJS >= 0) ? idJS + 1 : 0;
-        const difficulte = id_niveau > 0 
-            ? [1,2,3,4,5][idJS] ?? 1  // difficulté selon l'index
+        const urlParams = new URLSearchParams(window.location.search);
+        const type = urlParams.get('type');
+        const idJS = parseInt(urlParams.get('id') ?? '-1');
+        const id_niveau = (type === 'fixed' && idJS >= 0) ? idJS + 1 : 0;
+        const difficulte = id_niveau > 0
+            ? [1, 2, 3, 4, 5][idJS] ?? 1
             : (SIZE <= 5 ? 1 : SIZE <= 6 ? 2 : SIZE <= 7 ? 3 : SIZE <= 8 ? 4 : 5);
 
         fetch('../pages/save_score.php', {
             method: 'POST',
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: `action=save_score&difficulte=${difficulte}&chrono=${secondes}&id_niveau=${id_niveau}`
         })
-        .then(r => r.json())
-        .then(data => {
-            if (data.ok) {
-                msg.textContent = `🎉 Bravo ! +${data.points} pts`;
-            } else if (data.deja_fait) {
-                msg.textContent = '✓ Niveau déjà complété — aucun point supplémentaire';
-            } else {
+            .then(r => r.json())
+            .then(data => {
+                if (data.ok) {
+                    msg.textContent = `🎉 Bravo ! +${data.points} pts`;
+                } else if (data.deja_fait) {
+                    msg.textContent = '✓ Niveau déjà complété — aucun point supplémentaire';
+                } else {
+                    msg.textContent = '🎉 Bravo !';
+                }
+                msg.className = 'win';
+            })
+            .catch(() => {
                 msg.textContent = '🎉 Bravo !';
-            }
-            msg.className = 'win';
-        })
-        .catch(() => {
-            msg.textContent = '🎉 Bravo !';
-            msg.className = 'win';
-        });
+                msg.className = 'win';
+            });
     }
 }
 
 function startChrono() {
-    clearInterval(chronoInterval); secondes = 0;
+    clearInterval(chronoInterval);
+    secondes = 0;
     chronoInterval = setInterval(() => {
         secondes++;
-        const m = String(Math.floor(secondes/60)).padStart(2,'0');
-        const s = String(secondes%60).padStart(2,'0');
+        const m = String(Math.floor(secondes / 60)).padStart(2, '0');
+        const s = String(secondes % 60).padStart(2, '0');
         document.getElementById('chrono').textContent = `${m}:${s}`;
     }, 1000);
 }
+
+// =============================================================================
+// --- GESTION DE L'INDICE (VERSION NETTOYAGE TESTÉE) ---
+// =============================================================================
+document.addEventListener('DOMContentLoaded', () => {
+    const btnHint = document.getElementById('btn-hint');
+    if (!btnHint) return;
+
+    btnHint.addEventListener('click', () => {
+        const msg = document.getElementById('msg');
+        msg.textContent = "Recherche d'un indice... 🔍";
+
+        // 1. Préparer les données
+        let mapString = "";
+        let carsString = "";
+
+        for (let i = 0; i < SIZE; i++) {
+            for (let j = 0; j < SIZE; j++) {
+                let id = grid[i][j].colorId;
+                // Convertit 0-9 en "0-9" et 10+ en "A-Z"
+                mapString += (id < 10) ? id.toString() : String.fromCharCode(65 + (id - 10));
+                // État des voitures
+                carsString += grid[i][j].hasCar ? "1" : "0";
+            }
+        }
+
+        let fd = new FormData();
+        fd.append('size', SIZE);
+        fd.append('map', mapString);
+        fd.append('cars', carsString);
+
+        // 2. Appel au PHP
+        fetch('hint.php', { method: 'POST', body: fd })
+            .then(response => {
+                if (!response.ok) throw new Error("Erreur serveur");
+                return response.json();
+            })
+            .then(data => {
+                if (data.error) {
+                    msg.textContent = "💡 " + data.error;
+                    return;
+                }
+
+                if (data.r !== undefined && data.c !== undefined) {
+                    const hR = parseInt(data.r);
+                    const hC = parseInt(data.c);
+                    const hColor = grid[hR][hC].colorId;
+
+                    // --- NETTOYAGE DES CONFLITS ---
+                    for (let i = 0; i < SIZE; i++) {
+                        for (let j = 0; j < SIZE; j++) {
+                            if (i === hR && j === hC) continue; // On ignore la case cible
+
+                            if (grid[i][j].hasCar) {
+                                let conflit = false;
+
+                                // Règle 1: Ligne ou Colonne
+                                if (i === hR || j === hC) conflit = true;
+                                // Règle 2: Zone de couleur
+                                if (grid[i][j].colorId === hColor) conflit = true;
+                                // Règle 3: Adjacence (les 8 cases autour)
+                                if (Math.abs(i - hR) <= 1 && Math.abs(j - hC) <= 1) conflit = true;
+
+                                if (conflit) {
+                                    grid[i][j].hasCar = false;
+                                    grid[i][j].hasX = true; // Transforme l'erreur en croix
+                                }
+                            }
+                        }
+                    }
+
+                    // --- PLACEMENT DE L'INDICE ---
+                    grid[hR][hC].hasCar = true;
+                    grid[hR][hC].hasX = false;
+
+                    renderGrid();
+                    msg.innerHTML = `💡 <span style="color: #ff8c00;">Indice :</span> Voiture placée en <b>Ligne ${hR}, Colonne ${hC}</b> !`;
+                }
+            })
+            .catch(err => {
+                console.error("Erreur Indice:", err);
+                msg.textContent = "Le solveur est indisponible.";
+            });
+    });
+});
