@@ -247,40 +247,79 @@ usort($scores_aleatoires, function($a, $b) {
     </main>
 
     <script>
+    // On définit newGame de manière globale pour qu'elle soit accessible
+    function newGame() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const type = urlParams.get('type');
+        const id = urlParams.get('id');
+        const btnNew = document.getElementById('btn-new');
+        const sizeRow = document.getElementById('size-row');
 
-        function newGame() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const type = urlParams.get('type');
-            const id = urlParams.get('id');
-            const btnNew = document.getElementById('btn-new');
-            const sizeRow = document.getElementById('size-row');
+        // Vérification de sécurité : si game.js n'est pas encore là
+        if (typeof lancerAleatoire !== 'function') {
+            console.warn("game.js n'est pas encore prêt...");
+            return;
+        }
 
-            if (type === 'fixed' && id !== null) {
-                if(btnNew) btnNew.classList.add('hidden-mode');
-                if(sizeRow) sizeRow.classList.add('hidden-mode');
+        if (type === 'db' && id !== null) {
+            if(btnNew) btnNew.classList.add('hidden-mode');
+            if(sizeRow) sizeRow.classList.add('hidden-mode');
+            loadLevelFromDB(id); 
+        } 
+        else if (type === 'fixed' && id !== null) {
+            if(btnNew) btnNew.classList.add('hidden-mode');
+            if(sizeRow) sizeRow.classList.add('hidden-mode');
+            
+            if (typeof PREDEFINED_LEVELS !== 'undefined' && PREDEFINED_LEVELS[id]) {
                 const data = PREDEFINED_LEVELS[parseInt(id)];
                 SIZE = data.size;
                 grid = data.map.map(row => row.map(cid => ({ colorId: cid, hasCar: false, hasX: false })));
-            } else {
-                if(btnNew) btnNew.classList.remove('hidden-mode');
-                if(sizeRow) sizeRow.classList.remove('hidden-mode');
-                SIZE = +document.getElementById('size-select').value;
-                grid = genererNiveau(SIZE); // Vient de game.js
+                renderGrid();
+                startChrono();
             }
-            renderGrid(); // Appellera la bonne version (celle de game.js)
-            startChrono(); // Vient de game.js
+        } 
+        else {
+            if(btnNew) btnNew.classList.remove('hidden-mode');
+            if(sizeRow) sizeRow.classList.remove('hidden-mode');
+            lancerAleatoire(); 
+        }
+    }
+
+    // ON ATTEND QUE TOUT (Y COMPRIS game.js) SOIT CHARGÉ
+    window.addEventListener('load', () => {
+        console.log("Page chargée, initialisation des boutons...");
+
+        // On branche les fonctions de game.js aux boutons seulement MAINTENANT
+        const btnNew = document.getElementById('btn-new');
+        const sizeSelect = document.getElementById('size-select');
+        const btnReset = document.getElementById('btn-reset');
+
+        if (btnNew) btnNew.addEventListener('click', lancerAleatoire);
+        
+        if (sizeSelect) sizeSelect.addEventListener('change', lancerAleatoire);
+
+        if (btnReset) {
+            btnReset.addEventListener('click', () => {
+                for(let i=0; i<SIZE; i++) {
+                    for(let j=0; j<SIZE; j++) { 
+                        grid[i][j].hasCar = false; 
+                        grid[i][j].hasX = false; 
+                    }
+                }
+                const msg = document.getElementById('msg');
+                if(msg) msg.textContent = "";
+                renderGrid();
+            });
         }
 
-        document.getElementById('btn-new').addEventListener('click', newGame);
-        document.getElementById('size-select').addEventListener('change', newGame);
-        document.getElementById('btn-reset').addEventListener('click', () => {
-            for(let i=0;i<SIZE;i++) for(let j=0;j<SIZE;j++) { grid[i][j].hasCar=false; grid[i][j].hasX=false; }
-            renderGrid();
-        });
+        // Enfin, on lance la logique de démarrage
+        newGame();
+    });
 
-        window.addEventListener('DOMContentLoaded', newGame);
-        window.addEventListener('resize', renderGrid);
-    </script>
+    window.addEventListener('resize', () => {
+        if (typeof renderGrid === 'function') renderGrid();
+    });
+</script>
 
     <div id="overlay" class="overlay">
     <div class="modal">

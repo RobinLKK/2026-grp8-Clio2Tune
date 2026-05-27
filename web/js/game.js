@@ -485,6 +485,47 @@ function verifierVictoire(g, size) {
     return n === size;
 }
 
+function lancerAleatoire() {
+    const msg = document.getElementById('msg');
+    const sizeSelect = document.getElementById('size-select');
+    const chosenSize = sizeSelect ? sizeSelect.value : 8;
+
+    if (msg) msg.textContent = "Le moteur C génère un circuit unique... 🏎️";
+
+    fetch(`get_random_level.php?size=${chosenSize}`)
+        .then(r => r.json())
+        .then(data => {
+            console.log("Données reçues du C:", data); // AJOUTE ÇA POUR VOIR
+
+            SIZE = parseInt(data.size);
+            grid = [];
+            for (let i = 0; i < SIZE; i++) {
+                grid[i] = [];
+                for (let j = 0; j < SIZE; j++) {
+                    // map_data est une string comme "001122..."
+                    let char = data.map_data[i * SIZE + j];
+
+                    // On transforme le caractère en nombre
+                    let colorId;
+                    if (char >= '0' && char <= '9') {
+                        colorId = parseInt(char);
+                    } else {
+                        // A=10, B=11...
+                        colorId = char.charCodeAt(0) - 55;
+                    }
+
+                    grid[i][j] = { colorId: colorId, hasCar: false, hasX: false };
+                }
+            }
+
+            renderGrid();
+        })
+        .catch(err => {
+            console.error("Erreur génération C:", err);
+            if (msg) msg.textContent = "⚠️ Erreur du moteur de génération.";
+        });
+}
+
 function onCellClick(e) {
     const r = +e.currentTarget.dataset.r;
     const c = +e.currentTarget.dataset.c;
@@ -568,7 +609,7 @@ function startChrono() {
 }
 
 // =============================================================================
-// --- GESTION DE L'INDICE (VERSION NETTOYAGE TESTÉE) ---
+// --- INDICE ---
 // =============================================================================
 document.addEventListener('DOMContentLoaded', () => {
     const btnHint = document.getElementById('btn-hint');
@@ -614,10 +655,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     const hC = parseInt(data.c);
                     const hColor = grid[hR][hC].colorId;
 
-                    // --- NETTOYAGE DES CONFLITS ---
+
                     for (let i = 0; i < SIZE; i++) {
                         for (let j = 0; j < SIZE; j++) {
-                            if (i === hR && j === hC) continue; // On ignore la case cible
+                            if (i === hR && j === hC) continue;
 
                             if (grid[i][j].hasCar) {
                                 let conflit = false;
@@ -643,6 +684,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     renderGrid();
                     msg.innerHTML = `💡 <span style="color: #ff8c00;">Indice :</span> Voiture placée en <b>Ligne ${hR}, Colonne ${hC}</b> !`;
+                    if (verifierVictoire(grid, SIZE)) {
+                        clearInterval(chronoInterval);
+
+                        const urlParams = new URLSearchParams(window.location.search);
+                        const type = urlParams.get('type');
+                        const idJS = parseInt(urlParams.get('id') ?? '-1');
+                        const id_niveau = (type === 'fixed' && idJS >= 0) ? idJS + 1 : 0;
+                        const difficulte = id_niveau > 0
+                            ? [1, 2, 3, 4, 5][idJS] ?? 1
+                            : (SIZE <= 5 ? 1 : SIZE <= 6 ? 2 : SIZE <= 7 ? 3 : SIZE <= 8 ? 4 : 5);
+
+                        fetch('../pages/save_score.php', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                            body: `action=save_score&difficulte=${difficulte}&chrono=${secondes}&id_niveau=${id_niveau}`
+                        })
+                            .then(r => r.json())
+                            .then(data => {
+                                if (data.ok) {
+                                    msg.textContent = `🎉 Bravo ! +${data.points} pts`;
+                                } else if (data.deja_fait) {
+                                    msg.textContent = '✓ Niveau déjà complété — aucun point supplémentaire';
+                                } else {
+                                    msg.textContent = '🎉 Bravo !';
+                                }
+                                msg.className = 'win';
+                            })
+                            .catch(() => {
+                                msg.textContent = '🎉 Bravo !';
+                                msg.className = 'win';
+                            });
+                    }
                 }
             })
             .catch(err => {
