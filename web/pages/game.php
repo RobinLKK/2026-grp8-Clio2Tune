@@ -1,26 +1,27 @@
 <?php 
-session_start(); 
+session_start();
+require_once '../includes/db.php';
 
-// --- GÉNÉRATION DU FAUX LEADERBOARD ---
-$pseudos = ["DriftKing", "Turbo_J", "ApexPredator", "GearHead", "VroomVroom", "ShiftBoss", "PistonPete", "NightRider"];
-$scores_aleatoires = [];
+// --- LEADERBOARD DYNAMIQUE PAR NIVEAU (mode histoire uniquement) ---
+$id_niveau_param = null;
+$top5 = [];
 
-foreach ($pseudos as $pseudo) {
-    $min = rand(0, 3); // Entre 0 et 3 minutes
-    $sec = rand(0, 59); // Entre 0 et 59 secondes
-    $total_sec = ($min * 60) + $sec; // Converti en secondes pour le tri
-    
-    $scores_aleatoires[] = [
-        'nom' => $pseudo,
-        'temps_str' => sprintf("%02d:%02d", $min, $sec), // Format 00:00
-        'total_sec' => $total_sec
-    ];
+$type_param = $_GET['type'] ?? '';
+if ($type_param === 'fixed' && isset($_GET['id'])) {
+    // JS est 0-indexé (0, 1, 2...), la BDD commence à 1
+    $id_niveau_param = intval($_GET['id']) + 1; 
+
+    $stmt = $pdo->prepare("
+        SELECT u.Pseudo, s.Chrono
+        FROM score s
+        JOIN utilisateur u ON u.ID = s.ID_Utilisateur
+        WHERE s.ID_Niveau = :niv
+        ORDER BY s.Chrono ASC
+        LIMIT 5
+    ");
+    $stmt->execute([':niv' => $id_niveau_param]);
+    $top5 = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
-
-// Tri du tableau : du plus rapide au plus lent
-usort($scores_aleatoires, function($a, $b) {
-    return $a['total_sec'] <=> $b['total_sec'];
-});
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -116,13 +117,13 @@ usort($scores_aleatoires, function($a, $b) {
 
         .hidden-mode { display: none !important; }
 
-        /* ----- GAME MIDDLE (Flexbox pour aligner grille et leaderboard) ----- */
+        /* ----- GAME MIDDLE ----- */
         .game-middle {
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            gap: 30px;
-            flex-wrap: wrap; /* S'adapte sur les petits écrans */
+            gap: 40px;
+            flex-wrap: nowrap; /* Force l'alignement côte à côte sur PC */
             margin-top: 20px;
         }
 
@@ -134,7 +135,7 @@ usort($scores_aleatoires, function($a, $b) {
             box-shadow: 0 0 20px rgba(0,0,0,0.5);
             font-family: 'Barlow', sans-serif;
             color: white;
-            min-width: 250px;
+            min-width: 280px;
         }
 
         .leaderboard-box h3 {
@@ -155,7 +156,7 @@ usort($scores_aleatoires, function($a, $b) {
         }
 
         .leaderboard-table th, .leaderboard-table td {
-            padding: 8px 10px;
+            padding: 10px 12px;
             text-align: center;
             border-bottom: 1px solid #333;
         }
@@ -175,14 +176,23 @@ usort($scores_aleatoires, function($a, $b) {
             color: #ffd700;
             font-weight: bold;
         }
+
+        /* Version Mobile / Écrans fins */
+        @media (max-width: 900px) {
+            .game-middle {
+                flex-wrap: wrap; /* Aligné en dessous si pas assez de place */
+                flex-direction: column;
+                align-items: center;
+            }
+        }
     </style>
 </head>
 <body class="game-page">
 
     <header>
-    <a href="index.php" class="logo">
-        <img src="../media/2fast.png" alt="2Fast4U" style="height: 40px;">
-    </a>  
+        <a href="index.php" class="logo">
+            <img src="../media/2fast.png" alt="2Fast4U" style="height: 40px;">
+        </a>  
         <nav>
             <a href="index.php">Home</a>
             <a href="leaderboard.php">Leaderboard</a>
@@ -220,34 +230,45 @@ usort($scores_aleatoires, function($a, $b) {
                 <p id="msg"></p>
             </div>
 
+            <?php if ($id_niveau_param !== null): ?>
             <div class="leaderboard-box">
-                <h3>Meilleurs Pilotes</h3>
+                <h3>Meilleurs Temps</h3>
                 <table class="leaderboard-table">
-                    <tr>
-                        <th>Rang</th>
-                        <th>Pseudo</th>
-                        <th>Temps</th>
-                    </tr>
-                    <?php
-                    // Affichage des 5 meilleurs temps
-                    $rang = 1;
-                    $top5 = array_slice($scores_aleatoires, 0, 5);
-                    foreach($top5 as $score) {
-                        echo "<tr>";
-                        echo "<td>#" . $rang . "</td>";
-                        echo "<td>" . htmlspecialchars($score['nom']) . "</td>";
-                        echo "<td>" . $score['temps_str'] . "</td>";
-                        echo "</tr>";
-                        $rang++;
-                    }
-                    ?>
+                    <thead>
+                        <tr>
+                            <th>Rang</th>
+                            <th>Pseudo</th>
+                            <th>Temps</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php if (empty($top5)): ?>
+                        <tr>
+                            <td colspan="3" style="color:#888; font-style:italic;">
+                                Sois le premier à finir ce niveau !
+                            </td>
+                        </tr>
+                    <?php else: ?>
+                        <?php $rang = 1; foreach ($top5 as $score):
+                            $min = str_pad(floor($score['Chrono'] / 60), 2, '0', STR_PAD_LEFT);
+                            $sec = str_pad($score['Chrono'] % 60, 2, '0', STR_PAD_LEFT);
+                        ?>
+                        <tr>
+                            <td>#<?= $rang++ ?></td>
+                            <td><?= htmlspecialchars($score['Pseudo']) ?></td>
+                            <td><?= $min ?>:<?= $sec ?></td>
+                        </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                    </tbody>
                 </table>
             </div>
+            <?php endif; ?>
+
         </div>
     </main>
 
     <script>
-
         function newGame() {
             const urlParams = new URLSearchParams(window.location.search);
             const type = urlParams.get('type');
@@ -265,10 +286,10 @@ usort($scores_aleatoires, function($a, $b) {
                 if(btnNew) btnNew.classList.remove('hidden-mode');
                 if(sizeRow) sizeRow.classList.remove('hidden-mode');
                 SIZE = +document.getElementById('size-select').value;
-                grid = genererNiveau(SIZE); // Vient de game.js
+                grid = genererNiveau(SIZE);
             }
-            renderGrid(); // Appellera la bonne version (celle de game.js)
-            startChrono(); // Vient de game.js
+            renderGrid();
+            startChrono();
         }
 
         document.getElementById('btn-new').addEventListener('click', newGame);
@@ -283,19 +304,19 @@ usort($scores_aleatoires, function($a, $b) {
     </script>
 
     <div id="overlay" class="overlay">
-    <div class="modal">
-        <h2>Game Rules</h2>
-        <ul>
-            <li>One car per row</li>
-            <li>One car per column</li>
-            <li>No cars touching each other</li>
-            <li>Each color must contain one car</li>
-        </ul>
-        <a href="#" id="closeRules">Close</a>
+        <div class="modal">
+            <h2>Game Rules</h2>
+            <ul>
+                <li>One car per row</li>
+                <li>One car per column</li>
+                <li>No cars touching each other</li>
+                <li>Each color must contain one car</li>
+            </ul>
+            <a href="#" id="closeRules">Close</a>
+        </div>
     </div>
-</div>
-<footer>
-    <p>2Fast4U • Racing Puzzle Experience</p>
-</footer>
+    <footer>
+        <p>2Fast4U • Racing Puzzle Experience</p>
+    </footer>
 </body>
 </html>
