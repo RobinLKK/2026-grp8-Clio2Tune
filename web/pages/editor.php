@@ -54,6 +54,8 @@ session_start();
                     <option value="8">8 x 8</option>
                     <option value="9">9 x 9</option>
                     <option value="10">10 x 10</option>
+                    <option value="11">11 x 11</option>
+                    <option value="12">12 x 12</option>
                 </select>
             </div>
 
@@ -61,9 +63,11 @@ session_start();
                 <h3>Difficulty</h3>
 
                 <select>
-                    <option>Easy</option>
-                    <option>Medium</option>
-                    <option>Hard</option>
+                    <option>★☆☆☆☆</option>
+                    <option>★★☆☆☆</option>
+                    <option>★★★☆☆</option>
+                    <option>★★★★☆</option>
+                    <option>★★★★★</option>
                 </select>
             </div>
             <div class="option-card">
@@ -75,6 +79,11 @@ session_start();
                     <option value="#b22222">Red</option>
                     <option value="#555555">Gray</option>
                     <option value="#9f02befb">Purple</option>
+                    <option value="#ff6600f3">orange</option>
+                    <option value="#ff660063">brown</option>
+                    <option value="#fff098bb">Beige</option>
+                    <option value="#ff00aa">pink</option>
+                    <option value="#ffffff">white</option>
                     <option value="#00ffff">Cyan</option>
                 </select>
             </div>
@@ -123,7 +132,7 @@ session_start();
                 {
                     createGrid(gridSize.value);
                 });
-                createGrid(5);
+                createGrid(8);
 
             </script>
 
