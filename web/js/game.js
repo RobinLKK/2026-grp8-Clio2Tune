@@ -9,10 +9,12 @@ const CONFIG_COULEURS = [
     { txt: '../image/bleu_ciel.png', car: '../image/bleu_ciel_voiture.png', pneu: '../image/bleu_ciel_pneux.png', cross: '../image/bleu_ciel_croisement_pneux.png' }, // Index 6
     { txt: '../image/marron.png', car: '../image/marron_voiture.png', pneu: '../image/marron_pneux.png', cross: '../image/marron_croisement_pneux.png' },    // Index 7
     { txt: '../image/orange.png', car: '../image/orange_voiture.png', pneu: '../image/orange_pneux.png', cross: '../image/orange_croisement_pneux.png' },    // Index 8
-    { txt: '../image/gris.png', car: '../image/gris_voiture.png', pneu: '../image/gris_pneux.png', cross: '../image/gris_croisement_pneux.png' }       // Index 9
+    { txt: '../image/gris.png', car: '../image/gris_voiture.png', pneu: '../image/gris_pneux.png', cross: '../image/gris_croisement_pneux.png' },      // Index 9
+    { txt: '../image/blanc.png', car: '../image/blanc_blanc.png', pneu: '../image/blanc_pneux.png', cross: '../image/blanc_croisement.png' } ,      // Index 10
+    { txt: '../image/beige.png', car: '../image/beige_voiture.png', pneu: '../image/beige_pneux.png', cross: '../image/beige_croisement.png' },       // Index 11  
 ];
 
-// --- TES NIVEAUX PRÉDÉFINIS ---
+// --- NIVEAUX PRÉDÉFINIS ---
 const PREDEFINED_LEVELS = [
     {
         size: 5,
@@ -158,49 +160,23 @@ const PREDEFINED_LEVELS = [
 let SIZE = 8, grid = [], solution = [], chronoInterval = null, secondes = 0;
 
 // =============================================================================
-// --- SOLVEUR : COMPTE LE NOMBRE DE SOLUTIONS (s'arrête à 2 pour perf) ---
+// --- SOLVEUR LOCAL (BACKUP / SECURITE) ---
 // =============================================================================
-
-/**
- * Extrait la carte des couleurs (colorId) depuis une grille d'objets.
- * @param {Array} g - grille d'objets {colorId, hasCar, hasX}
- * @param {number} size
- * @returns {number[][]} carte 2D des colorId
- */
 function extraireCartesCouleurs(g, size) {
     return Array.from({ length: size }, (_, i) =>
         Array.from({ length: size }, (_, j) => g[i][j].colorId)
     );
 }
 
-/**
- * Solveur récursif qui compte les solutions d'un puzzle.
- * Il parcourt les lignes une par une et essaie chaque colonne.
- * S'arrête dès que le compteur dépasse maxSolutions pour la performance.
- *
- * @param {number[][]} colorMap - carte 2D des couleurs
- * @param {number} size
- * @param {number} row - ligne courante à résoudre
- * @param {boolean[]} colUsed - colonnes déjà occupées
- * @param {boolean[]} colorUsed - couleurs déjà utilisées
- * @param {number[][]} adjGrid - grille des voisinages (true si une voiture est adjacente)
- * @param {number} maxSolutions - s'arrête dès que ce nombre est atteint
- * @returns {number} nombre de solutions trouvées (jusqu'à maxSolutions)
- */
 function _countSolutions(colorMap, size, row, colUsed, colorUsed, carPositions, maxSolutions) {
-    if (row === size) return 1; // Toutes les lignes sont placées → 1 solution
-
+    if (row === size) return 1;
     let count = 0;
 
     for (let col = 0; col < size; col++) {
         if (colUsed[col]) continue;
-
         const colorId = colorMap[row][col];
-
-        // Contrainte : couleur déjà utilisée dans une autre ligne
         if (colorUsed[colorId]) continue;
 
-        // Contrainte : adjacence (pas de voiture voisine en diagonale / côté)
         let adjacent = false;
         for (const [pr, pc] of carPositions) {
             if (Math.abs(pr - row) <= 1 && Math.abs(pc - col) <= 1) {
@@ -210,35 +186,23 @@ function _countSolutions(colorMap, size, row, colUsed, colorUsed, carPositions, 
         }
         if (adjacent) continue;
 
-        // Placement valide → on recurse
         colUsed[col] = true;
         colorUsed[colorId] = true;
         carPositions.push([row, col]);
 
         count += _countSolutions(colorMap, size, row + 1, colUsed, colorUsed, carPositions, maxSolutions);
 
-        // Backtrack
         carPositions.pop();
         colUsed[col] = false;
         colorUsed[colorId] = false;
 
-        // Optimisation : dès qu'on dépasse le seuil, on remonte
         if (count >= maxSolutions) return count;
     }
-
     return count;
 }
 
-/**
- * Vérifie qu'un puzzle a exactement 1 solution.
- * @param {Array} g - grille d'objets
- * @param {number} size
- * @returns {boolean} true si et seulement si 1 solution unique
- */
 function aUneSolutionUnique(g, size) {
     const colorMap = extraireCartesCouleurs(g, size);
-
-    // Vérifie que chaque cellule a bien un colorId assigné (pas de -1 restant)
     for (let i = 0; i < size; i++)
         for (let j = 0; j < size; j++)
             if (colorMap[i][j] === -1) return false;
@@ -254,7 +218,6 @@ function aUneSolutionUnique(g, size) {
 // =============================================================================
 // --- RENDU DE LA GRILLE ---
 // =============================================================================
-
 function renderGrid() {
     if (typeof SIZE === 'undefined' || !grid.length) return;
 
@@ -326,133 +289,64 @@ function renderGrid() {
 }
 
 // =============================================================================
-// --- ALGORITHME DE GÉNÉRATION ALÉATOIRE ---
+// --- MOTEUR DE GÉNÉRATION (Appel Externe C) ---
 // =============================================================================
+function lancerAleatoire() {
+    const msg = document.getElementById('msg');
+    const sizeSelect = document.getElementById('size-select');
+    const chosenSize = sizeSelect ? sizeSelect.value : 8;
 
+    if (msg) msg.textContent = "Le moteur C génère un circuit unique... 🏎️";
+
+    fetch(`get_random_level.php?size=${chosenSize}`)
+        .then(r => r.json())
+        .then(data => {
+            console.log("Données reçues du C:", data);
+
+            SIZE = parseInt(data.size);
+            grid = [];
+            for (let i = 0; i < SIZE; i++) {
+                grid[i] = [];
+                for (let j = 0; j < SIZE; j++) {
+                    let char = data.map_data[i * SIZE + j];
+                    let colorId;
+                    if (char >= '0' && char <= '9') {
+                        colorId = parseInt(char);
+                    } else {
+                        colorId = char.charCodeAt(0) - 55; // A=10, B=11...
+                    }
+                    grid[i][j] = { colorId: colorId, hasCar: false, hasX: false };
+                }
+            }
+            renderGrid();
+            startChrono();
+        })
+        .catch(err => {
+            console.error("Erreur génération C:", err);
+            if (msg) msg.textContent = "⚠️ Erreur du moteur de génération.";
+        });
+}
+
+// Optionnel: Gardé en backup JS au cas où
 function initGrid(size) {
     return Array.from({ length: size }, () =>
         Array.from({ length: size }, () => ({ colorId: -1, hasCar: false, hasX: false }))
     );
 }
 
-function peutPlacerGen(g, r, c, size) {
-    for (let i = 0; i < r; i++)
-        for (let j = 0; j < size; j++)
-            if (g[i][j].hasCar && (j === c || (Math.abs(i - r) <= 1 && Math.abs(j - c) <= 1))) return false;
-    return true;
-}
-
-function placerReinesAlea(g, r, size) {
-    if (r === size) return true;
-    let cols = Array.from({ length: size }, (_, i) => i);
-    for (let i = size - 1; i > 0; i--) {
-        let j = Math.floor(Math.random() * (i + 1));
-        [cols[i], cols[j]] = [cols[j], cols[i]];
-    }
-    for (let c of cols) {
-        if (peutPlacerGen(g, r, c, size)) {
-            g[r][c].hasCar = true;
-            g[r][c].colorId = r;
-            if (placerReinesAlea(g, r + 1, size)) return true;
-            g[r][c].hasCar = false;
-            g[r][c].colorId = -1;
-        }
-    }
-    return false;
-}
-
-/**
- * Propage les couleurs via flood fill depuis les positions des reines,
- * en remplissant toutes les cellules non colorées.
- * Retourne false si des cellules restent non colorées après plusieurs passes.
- */
-function propagerCouleurs(g, size) {
-    const dr = [-1, 1, 0, 0];
-    const dc = [0, 0, -1, 1];
-    let reste = 0;
-
-    // Compte les cellules non colorées
-    for (let i = 0; i < size; i++)
-        for (let j = 0; j < size; j++)
-            if (g[i][j].colorId === -1) reste++;
-
-    let iter = 0;
-    const maxIter = size * size * 20;
-
-    while (reste > 0 && iter < maxIter) {
-        iter++;
-        const r = Math.floor(Math.random() * size);
-        const c = Math.floor(Math.random() * size);
-        if (g[r][c].colorId !== -1) {
-            const d = Math.floor(Math.random() * 4);
-            const nr = r + dr[d];
-            const nc = c + dc[d];
-            if (nr >= 0 && nr < size && nc >= 0 && nc < size && g[nr][nc].colorId === -1) {
-                g[nr][nc].colorId = g[r][c].colorId;
-                reste--;
-            }
-        }
-    }
-
-    return reste === 0;
-}
-
-/**
- * Génère un niveau aléatoire avec solution UNIQUE.
- * Relance la génération tant que le puzzle a plusieurs solutions.
- * Affiche la progression dans la console pour le debug.
- *
- * @param {number} size
- * @returns {Array} grille d'objets valide à solution unique
- */
-function genererNiveau(size) {
-    let tentatives = 0;
-    const MAX_TENTATIVES = 500; // Sécurité pour ne pas boucler indéfiniment
-
-    while (tentatives < MAX_TENTATIVES) {
-        tentatives++;
-
-        // 1. Créer une grille vide et placer les reines (solution cachée)
-        let g = initGrid(size);
-        if (!placerReinesAlea(g, 0, size)) continue;
-
-        // 2. Propager les couleurs pour créer les régions
-        if (!propagerCouleurs(g, size)) continue;
-
-        // 3. Effacer les voitures (elles ne servent qu'à la génération)
-        for (let i = 0; i < size; i++)
-            for (let j = 0; j < size; j++)
-                g[i][j].hasCar = false;
-
-        // 4. Vérifier l'unicité de la solution via le solveur
-        if (aUneSolutionUnique(g, size)) {
-            console.log(`✅ Niveau généré en ${tentatives} tentative(s) — solution unique confirmée.`);
-            return g;
-        }
-
-        // Sinon, on relance
-        console.log(`⚠️ Tentative ${tentatives} : plusieurs solutions détectées, regénération...`);
-    }
-
-    // Fallback de sécurité : on retourne le dernier niveau généré même s'il n'est pas unique
-    console.warn(`⚠️ Impossible de trouver un niveau à solution unique après ${MAX_TENTATIVES} tentatives. Utilisation du dernier niveau généré.`);
-    let g = initGrid(size);
-    while (!placerReinesAlea(g, 0, size)) g = initGrid(size);
-    propagerCouleurs(g, size);
-    for (let i = 0; i < size; i++)
-        for (let j = 0; j < size; j++)
-            g[i][j].hasCar = false;
-    return g;
-}
-
 // =============================================================================
 // --- LOGIQUE DE JEU ---
 // =============================================================================
-
 function safeligne(g, r, c, size) {
     for (let j = 0; j < size; j++) if (g[r][j].hasCar) return false;
     for (let i = 0; i < size; i++) if (g[i][c].hasCar) return false;
     return true;
+}
+
+// Ajout pour le mode de récupération DB du collègue
+function loadLevelFromDB(id) {
+    console.log("Chargement du niveau depuis la BDD ID:", id);
+    // Logique à implémenter si nécessaire pour fetch la bdd
 }
 
 function emptyregion(g, r, c, size) {
@@ -485,52 +379,98 @@ function verifierVictoire(g, size) {
     return n === size;
 }
 
-function lancerAleatoire() {
+function gererFinDePartie() {
+    clearInterval(chronoInterval);
     const msg = document.getElementById('msg');
-    const sizeSelect = document.getElementById('size-select');
-    const chosenSize = sizeSelect ? sizeSelect.value : 8;
 
-    if (msg) msg.textContent = "Le moteur C génère un circuit unique... 🏎️";
+    const urlParams = new URLSearchParams(window.location.search);
+    const type = urlParams.get('type');
+    const idJS = parseInt(urlParams.get('id') ?? '-1');
+    const id_niveau = (type === 'fixed' && idJS >= 0) ? idJS + 1 : 0;
+    const difficulte = id_niveau > 0
+        ? [1, 2, 3, 4, 5][idJS] ?? 1
+        : (SIZE <= 5 ? 1 : SIZE <= 6 ? 2 : SIZE <= 7 ? 3 : SIZE <= 8 ? 4 : 5);
 
-    fetch(`get_random_level.php?size=${chosenSize}`)
-        .then(r => r.json())
+    // Envoi des scores globaux
+    fetch('../pages/save_score.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `action=save_score&difficulte=${difficulte}&chrono=${secondes}&id_niveau=${id_niveau}`
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.ok) {
+            msg.textContent = `🎉 Bravo ! +${data.points} pts`;
+        } else if (data.deja_fait) {
+            msg.textContent = '✓ Niveau déjà complété — aucun point supplémentaire';
+        } else {
+            msg.textContent = '🎉 Bravo !';
+        }
+        msg.className = 'win';
+    })
+    .catch(() => {
+        msg.textContent = '🎉 Bravo !';
+        msg.className = 'win';
+    });
+
+    // Envoi des chronos mode histoire
+    if (type === 'fixed' && idJS >= 0) {
+        fetch('../pages/save_chrono.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `id_niveau=${id_niveau}&chrono=${secondes}`
+        })
+        .then(res => res.json())
         .then(data => {
-            console.log("Données reçues du C:", data); // AJOUTE ÇA POUR VOIR
+            const tbody = document.querySelector('.leaderboard-table tbody');
+            if (!tbody) return;
 
-            SIZE = parseInt(data.size);
-            grid = [];
-            for (let i = 0; i < SIZE; i++) {
-                grid[i] = [];
-                for (let j = 0; j < SIZE; j++) {
-                    // map_data est une string comme "001122..."
-                    let char = data.map_data[i * SIZE + j];
-
-                    // On transforme le caractère en nombre
-                    let colorId;
-                    if (char >= '0' && char <= '9') {
-                        colorId = parseInt(char);
-                    } else {
-                        // A=10, B=11...
-                        colorId = char.charCodeAt(0) - 55;
-                    }
-
-                    grid[i][j] = { colorId: colorId, hasCar: false, hasX: false };
-                }
+            if (tbody.innerHTML.includes('colspan="3"')) {
+                tbody.innerHTML = '';
             }
 
-            renderGrid();
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+            const scoresExistants = rows.map(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length < 3) return null;
+                const tParts = cells[2].textContent.split(':');
+                return {
+                    element: row,
+                    pseudo: cells[1].textContent,
+                    chrono: parseInt(tParts[0]) * 60 + parseInt(tParts[1])
+                };
+            }).filter(x => x !== null);
+
+            scoresExistants.push({ pseudo: "Moi", chrono: secondes, nouveau: true });
+            scoresExistants.sort((a, b) => a.chrono - b.chrono);
+
+            tbody.innerHTML = '';
+            scoresExistants.slice(0, 5).forEach((item, index) => {
+                const rowMin = String(Math.floor(item.chrono / 60)).padStart(2, '0');
+                const rowSec = String(Math.floor(item.chrono % 60)).padStart(2, '0');
+                
+                const tr = document.createElement('tr');
+                if (item.nouveau) {
+                    tr.style.backgroundColor = 'rgba(255, 69, 0, 0.2)';
+                    tr.style.fontWeight = 'bold';
+                }
+                
+                tr.innerHTML = `
+                    <td>#${index + 1}</td>
+                    <td>${item.nouveau ? 'Moi' : item.pseudo}</td>
+                    <td>${rowMin}:${rowSec}</td>
+                `;
+                tbody.appendChild(tr);
+            });
         })
-        .catch(err => {
-            console.error("Erreur génération C:", err);
-            if (msg) msg.textContent = "⚠️ Erreur du moteur de génération.";
-        });
+        .catch(err => console.error("Erreur enregistrement classement:", err));
+    }
 }
 
 function onCellClick(e) {
     const r = +e.currentTarget.dataset.r;
     const c = +e.currentTarget.dataset.c;
     const tile = grid[r][c];
-    const msg = document.getElementById('msg');
 
     if (tile.hasCar) {
         tile.hasCar = false;
@@ -564,36 +504,7 @@ function onCellClick(e) {
     renderGrid();
 
     if (verifierVictoire(grid, SIZE)) {
-        clearInterval(chronoInterval);
-
-        const urlParams = new URLSearchParams(window.location.search);
-        const type = urlParams.get('type');
-        const idJS = parseInt(urlParams.get('id') ?? '-1');
-        const id_niveau = (type === 'fixed' && idJS >= 0) ? idJS + 1 : 0;
-        const difficulte = id_niveau > 0
-            ? [1, 2, 3, 4, 5][idJS] ?? 1
-            : (SIZE <= 5 ? 1 : SIZE <= 6 ? 2 : SIZE <= 7 ? 3 : SIZE <= 8 ? 4 : 5);
-
-        fetch('../pages/save_score.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `action=save_score&difficulte=${difficulte}&chrono=${secondes}&id_niveau=${id_niveau}`
-        })
-            .then(r => r.json())
-            .then(data => {
-                if (data.ok) {
-                    msg.textContent = `🎉 Bravo ! +${data.points} pts`;
-                } else if (data.deja_fait) {
-                    msg.textContent = '✓ Niveau déjà complété — aucun point supplémentaire';
-                } else {
-                    msg.textContent = '🎉 Bravo !';
-                }
-                msg.className = 'win';
-            })
-            .catch(() => {
-                msg.textContent = '🎉 Bravo !';
-                msg.className = 'win';
-            });
+        gererFinDePartie();
     }
 }
 
@@ -609,7 +520,7 @@ function startChrono() {
 }
 
 // =============================================================================
-// --- INDICE ---
+// --- GESTION DE L'INDICE ---
 // =============================================================================
 document.addEventListener('DOMContentLoaded', () => {
     const btnHint = document.getElementById('btn-hint');
@@ -619,16 +530,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const msg = document.getElementById('msg');
         msg.textContent = "Recherche d'un indice... 🔍";
 
-        // 1. Préparer les données
         let mapString = "";
         let carsString = "";
 
         for (let i = 0; i < SIZE; i++) {
             for (let j = 0; j < SIZE; j++) {
                 let id = grid[i][j].colorId;
-                // Convertit 0-9 en "0-9" et 10+ en "A-Z"
                 mapString += (id < 10) ? id.toString() : String.fromCharCode(65 + (id - 10));
-                // État des voitures
                 carsString += grid[i][j].hasCar ? "1" : "0";
             }
         }
@@ -638,7 +546,6 @@ document.addEventListener('DOMContentLoaded', () => {
         fd.append('map', mapString);
         fd.append('cars', carsString);
 
-        // 2. Appel au PHP
         fetch('hint.php', { method: 'POST', body: fd })
             .then(response => {
                 if (!response.ok) throw new Error("Erreur serveur");
@@ -655,66 +562,31 @@ document.addEventListener('DOMContentLoaded', () => {
                     const hC = parseInt(data.c);
                     const hColor = grid[hR][hC].colorId;
 
-
                     for (let i = 0; i < SIZE; i++) {
                         for (let j = 0; j < SIZE; j++) {
                             if (i === hR && j === hC) continue;
-
                             if (grid[i][j].hasCar) {
                                 let conflit = false;
-
-                                // Règle 1: Ligne ou Colonne
                                 if (i === hR || j === hC) conflit = true;
-                                // Règle 2: Zone de couleur
                                 if (grid[i][j].colorId === hColor) conflit = true;
-                                // Règle 3: Adjacence (les 8 cases autour)
                                 if (Math.abs(i - hR) <= 1 && Math.abs(j - hC) <= 1) conflit = true;
 
                                 if (conflit) {
                                     grid[i][j].hasCar = false;
-                                    grid[i][j].hasX = true; // Transforme l'erreur en croix
+                                    grid[i][j].hasX = true;
                                 }
                             }
                         }
                     }
 
-                    // --- PLACEMENT DE L'INDICE ---
                     grid[hR][hC].hasCar = true;
                     grid[hR][hC].hasX = false;
 
                     renderGrid();
                     msg.innerHTML = `💡 <span style="color: #ff8c00;">Indice :</span> Voiture placée en <b>Ligne ${hR}, Colonne ${hC}</b> !`;
+                    
                     if (verifierVictoire(grid, SIZE)) {
-                        clearInterval(chronoInterval);
-
-                        const urlParams = new URLSearchParams(window.location.search);
-                        const type = urlParams.get('type');
-                        const idJS = parseInt(urlParams.get('id') ?? '-1');
-                        const id_niveau = (type === 'fixed' && idJS >= 0) ? idJS + 1 : 0;
-                        const difficulte = id_niveau > 0
-                            ? [1, 2, 3, 4, 5][idJS] ?? 1
-                            : (SIZE <= 5 ? 1 : SIZE <= 6 ? 2 : SIZE <= 7 ? 3 : SIZE <= 8 ? 4 : 5);
-
-                        fetch('../pages/save_score.php', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                            body: `action=save_score&difficulte=${difficulte}&chrono=${secondes}&id_niveau=${id_niveau}`
-                        })
-                            .then(r => r.json())
-                            .then(data => {
-                                if (data.ok) {
-                                    msg.textContent = `🎉 Bravo ! +${data.points} pts`;
-                                } else if (data.deja_fait) {
-                                    msg.textContent = '✓ Niveau déjà complété — aucun point supplémentaire';
-                                } else {
-                                    msg.textContent = '🎉 Bravo !';
-                                }
-                                msg.className = 'win';
-                            })
-                            .catch(() => {
-                                msg.textContent = '🎉 Bravo !';
-                                msg.className = 'win';
-                            });
+                        gererFinDePartie();
                     }
                 }
             })
