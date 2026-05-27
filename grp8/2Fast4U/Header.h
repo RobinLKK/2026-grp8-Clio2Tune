@@ -67,6 +67,6 @@ void genererNiveauGagnable(Tile** p, int size);
 
 //fonction d'affichage coloré (non faites à la main et probablement temporaire) 
 void afficherJeuCouleur(Tile** p, int size);
-
-bool moteurSolveur(Tile** p, int r, int size, int* total);
+//moteur du solveur
+bool moteur(Tile** p, int r, int size);
 

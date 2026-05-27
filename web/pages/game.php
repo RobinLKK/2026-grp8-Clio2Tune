@@ -123,7 +123,7 @@ if ($type_param === 'fixed' && isset($_GET['id'])) {
             justify-content: center;
             align-items: flex-start;
             gap: 40px;
-            flex-wrap: nowrap; /* Force l'alignement côte à côte sur PC */
+            flex-wrap: nowrap; 
             margin-top: 20px;
         }
 
@@ -177,10 +177,9 @@ if ($type_param === 'fixed' && isset($_GET['id'])) {
             font-weight: bold;
         }
 
-        /* Version Mobile / Écrans fins */
         @media (max-width: 900px) {
             .game-middle {
-                flex-wrap: wrap; /* Aligné en dessous si pas assez de place */
+                flex-wrap: wrap; 
                 flex-direction: column;
                 align-items: center;
             }
@@ -276,31 +275,67 @@ if ($type_param === 'fixed' && isset($_GET['id'])) {
             const btnNew = document.getElementById('btn-new');
             const sizeRow = document.getElementById('size-row');
 
-            if (type === 'fixed' && id !== null) {
+            if (typeof lancerAleatoire !== 'function') {
+                console.warn("game.js n'est pas encore prêt...");
+                return;
+            }
+
+            if (type === 'db' && id !== null) {
                 if(btnNew) btnNew.classList.add('hidden-mode');
                 if(sizeRow) sizeRow.classList.add('hidden-mode');
-                const data = PREDEFINED_LEVELS[parseInt(id)];
-                SIZE = data.size;
-                grid = data.map.map(row => row.map(cid => ({ colorId: cid, hasCar: false, hasX: false })));
-            } else {
+                loadLevelFromDB(id); 
+            } 
+            else if (type === 'fixed' && id !== null) {
+                if(btnNew) btnNew.classList.add('hidden-mode');
+                if(sizeRow) sizeRow.classList.add('hidden-mode');
+                
+                if (typeof PREDEFINED_LEVELS !== 'undefined' && PREDEFINED_LEVELS[id]) {
+                    const data = PREDEFINED_LEVELS[parseInt(id)];
+                    SIZE = data.size;
+                    grid = data.map.map(row => row.map(cid => ({ colorId: cid, hasCar: false, hasX: false })));
+
+                    renderGrid();
+                    startChrono();
+                }
+            } 
+            else {
                 if(btnNew) btnNew.classList.remove('hidden-mode');
                 if(sizeRow) sizeRow.classList.remove('hidden-mode');
-                SIZE = +document.getElementById('size-select').value;
-                grid = genererNiveau(SIZE);
+                lancerAleatoire(); 
             }
-            renderGrid();
-            startChrono();
         }
 
-        document.getElementById('btn-new').addEventListener('click', newGame);
-        document.getElementById('size-select').addEventListener('change', newGame);
-        document.getElementById('btn-reset').addEventListener('click', () => {
-            for(let i=0;i<SIZE;i++) for(let j=0;j<SIZE;j++) { grid[i][j].hasCar=false; grid[i][j].hasX=false; }
-            renderGrid();
+        // On initialise les écouteurs une fois que tout le DOM et game.js sont chargés
+        window.addEventListener('load', () => {
+            console.log("Initialisation des contrôles de jeu...");
+
+            const btnNew = document.getElementById('btn-new');
+            const sizeSelect = document.getElementById('size-select');
+            const btnReset = document.getElementById('btn-reset');
+
+            if (btnNew) btnNew.addEventListener('click', lancerAleatoire);
+            if (sizeSelect) sizeSelect.addEventListener('change', lancerAleatoire);
+
+            if (btnReset) {
+                btnReset.addEventListener('click', () => {
+                    for(let i=0; i<SIZE; i++) {
+                        for(let j=0; j<SIZE; j++) { 
+                            grid[i][j].hasCar = false; 
+                            grid[i][j].hasX = false; 
+                        }
+                    }
+                    const msg = document.getElementById('msg');
+                    if(msg) msg.textContent = "";
+                    renderGrid();
+                });
+            }
+
+            newGame();
         });
 
-        window.addEventListener('DOMContentLoaded', newGame);
-        window.addEventListener('resize', renderGrid);
+        window.addEventListener('resize', () => {
+            if (typeof renderGrid === 'function') renderGrid();
+        });
     </script>
 
     <div id="overlay" class="overlay">
