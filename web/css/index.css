@@ -27,3 +27,59 @@ main h1 {
     background: #c9a050;
     transform: translateY(-2px);
 }
+.features-section {
+    width: 100%;
+    max-width: 1400px;
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 20px;
+
+    padding: 0 0px 40px;
+
+    margin-top: auto;       
+    margin-left: auto;     
+    margin-right: auto;
+}
+
+.feature-card {
+    background: rgba(10, 15, 30, 0.45);
+
+    border: 1px solid rgba(255,255,255,0.08);
+
+    border-radius: 22px;
+
+    padding: 28px 22px;
+
+    text-align: center;
+
+    backdrop-filter: none;
+
+    transition: 0.25s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-6px);
+    background: rgba(10,15,30,0.58);
+    border-color: rgba(226,185,111,0.25);
+}
+
+.feature-icon {
+    font-size: 2rem;
+    margin-bottom: 14px;
+}
+
+.feature-card h3 {
+    color: #e2b96f;
+    font-size: 1.8rem;
+    margin-bottom: 12px;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0.06em;
+}
+
+.feature-card p {
+    color: rgba(240,236,227,0.82);
+    line-height: 1.6;
+    font-size: 0.95rem;
+}

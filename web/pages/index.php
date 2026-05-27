@@ -53,6 +53,34 @@
         <a href="#" id="closeRules">Close</a>
     </div>
     </div>
+    <!-- FEATURES -->
+<section class="features-section">
+
+    <div class="feature-card">
+        <div class="feature-icon">🏁</div>
+        <h3>Puzzle Racing</h3>
+        <p>Solve strategic racing grids and complete the track.</p>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">🧠</div>
+        <h3>Strategic Gameplay</h3>
+        <p>Every placement matters. Think before you move.</p>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>Time Challenge</h3>
+        <p>Beat the timer and improve your best score.</p>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">🏆</div>
+        <h3>Global Leaderboard</h3>
+        <p>Compete against the best players worldwide.</p>
+    </div>
+
+</section>
     <footer>
     © <?= date('Y') ?> 2Fast4U - Home
   </footer>
