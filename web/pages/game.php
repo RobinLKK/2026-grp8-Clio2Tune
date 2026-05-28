@@ -184,6 +184,104 @@ if ($type_param === 'fixed' && isset($_GET['id'])) {
                 align-items: center;
             }
         }
+        /* ── OVERLAY DE VICTOIRE ── */
+.victory-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 120vw; height: 120vh;
+    background: rgba(6, 10, 20, 0.55);
+    backdrop-filter: blur(3px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 99999;
+}
+.victory-overlay.active {
+    display: flex !important;
+    opacity: 1;
+}
+.victory-box {
+    position: relative;
+    background: linear-gradient(160deg, #0d1525 0%, #1a2a4a 50%, #0d1525 100%);
+    border: 1px solid rgba(226,185,111,0.5);
+    border-radius: 16px;
+    padding: 50px 70px;
+    text-align: center;
+    box-shadow:
+        0 0 0 1px rgba(226,185,111,0.1),
+        0 0 40px rgba(226,185,111,0.08),
+        0 30px 80px rgba(0,0,0,0.7);
+    animation: popVictory 0.4s ease;
+}
+.victory-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 5rem;
+    letter-spacing: 0.18em;
+    color: #e2b96f;
+    margin-bottom: 20px;
+    text-shadow:
+        0 0 20px rgba(226,185,111,0.6),
+        0 0 60px rgba(226,185,111,0.2),
+        0 4px 10px rgba(0,0,0,0.8);
+}
+.victory-time {
+    font-family: 'Barlow', sans-serif;
+    font-size: 1.4rem;
+    color: #f0ece3;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(226,185,111,0.15);
+}
+.victory-points {
+    font-family: 'Barlow', sans-serif;
+    font-weight: bold;
+    margin-bottom: 35px;
+}
+
+.victory-points.new-points {
+    font-size: 2rem;
+    color: #4dff88;
+    text-shadow: 0 0 12px rgba(77,255,136,0.3);
+}
+
+.victory-points.already-done {
+    font-size: 1rem;
+    color: rgba(240,236,227,0.45);
+    font-style: italic;
+    letter-spacing: 0.05em;
+}
+.victory-btn {
+    font-family: 'Barlow', sans-serif;
+    padding: 14px 34px;
+    border: none;
+    border-radius: 12px;
+    background: #e2b96f;
+    color: #111;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.victory-close {
+    position: absolute;
+    top: 14px; right: 18px;
+    background: none;
+    border: none;
+    color: rgba(240,236,227,0.4);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: color 0.2s;
+    line-height: 1;
+}
+.victory-close:hover { color: #e2b96f; }
+
+.victory-btn:hover { transform: scale(1.05); background: #c9a050; }
+@keyframes popVictory {
+    0%   { transform: scale(0.7); opacity: 0; }
+    100% { transform: scale(1);   opacity: 1; }
+}
     </style>
 </head>
 <body class="game-page">
@@ -335,8 +433,20 @@ if ($type_param === 'fixed' && isset($_GET['id'])) {
 
         window.addEventListener('resize', () => {
             if (typeof renderGrid === 'function') renderGrid();
+            document.getElementById('victoryOverlay').addEventListener('click', function(e) {
+            if (e.target === this) this.classList.remove('active');
+        });
         });
     </script>
+    <div id="victoryOverlay" class="victory-overlay">
+    <div class="victory-box">
+        <button class="victory-close" onclick="document.getElementById('victoryOverlay').classList.remove('active')">✕</button>
+        <div class="victory-title">🏆 VICTORY 🏆</div>
+        <div class="victory-time" id="victoryTime">Time : 00:00</div>
+        <div class="victory-points" id="victoryPoints">+0 points</div>
+        <button class="victory-btn" onclick="location.reload()">REPLAY</button>
+    </div>
+    </div>
 
     <div id="overlay" class="overlay">
         <div class="modal">

@@ -379,6 +379,27 @@ function verifierVictoire(g, size) {
     return n === size;
 }
 
+function afficherVictory(points, dejaFait = false) {
+    const overlay  = document.getElementById('victoryOverlay');
+    const timeEl   = document.getElementById('victoryTime');
+    const pointsEl = document.getElementById('victoryPoints');
+
+    const minutes = String(Math.floor(secondes / 60)).padStart(2, '0');
+    const secs    = String(secondes % 60).padStart(2, '0');
+
+    timeEl.textContent   = `Time : ${minutes}:${secs}`;
+    if (dejaFait) {
+        pointsEl.textContent = '⚑ Already completed — no bonus points';
+        pointsEl.classList.add('already-done');
+        pointsEl.classList.remove('new-points');
+    } else {
+        pointsEl.textContent = `+${points} points`;
+        pointsEl.classList.add('new-points');
+        pointsEl.classList.remove('already-done');
+    }
+        overlay.classList.add('active');
+    }
+
 function gererFinDePartie() {
     clearInterval(chronoInterval);
     const msg = document.getElementById('msg');
@@ -400,17 +421,15 @@ function gererFinDePartie() {
     .then(r => r.json())
     .then(data => {
         if (data.ok) {
-            msg.textContent = `🎉 Bravo ! +${data.points} pts`;
-        } else if (data.deja_fait) {
-            msg.textContent = '✓ Niveau déjà complété — aucun point supplémentaire';
+            afficherVictory(data.points ?? data.base ?? 0);
         } else {
-            msg.textContent = '🎉 Bravo !';
+            afficherVictory(0, data.deja_fait ?? false);
         }
+        const msg = document.getElementById('msg');
         msg.className = 'win';
     })
     .catch(() => {
-        msg.textContent = '🎉 Bravo !';
-        msg.className = 'win';
+        afficherVictory(0, false);
     });
 
     // Envoi des chronos mode histoire
