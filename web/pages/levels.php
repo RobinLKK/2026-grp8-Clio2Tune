@@ -46,8 +46,8 @@ function afficherEtoiles(int $niveau): string {
     </header>
 
 <section class="hero">
-    <h2>Circuits Officiels</h2>
-    <p>Bienvenue <strong><?= htmlspecialchars($pseudo) ?></strong> 🚗</p>
+    <h2>Official Races</h2>
+    <p>Welcome <strong><?= htmlspecialchars($pseudo) ?></strong> 🚗</p>
 </section>
 
 <section class="levels-container">
@@ -56,12 +56,12 @@ function afficherEtoiles(int $niveau): string {
     $isLocked = in_array($niveau['ID'], $_SESSION['locked_levels'] ?? []);
 ?>
 <div class="card <?= $isLocked ? 'locked' : '' ?>">
-    <h3>Niveau <?= $i + 1 ?> — <?= htmlspecialchars($niveau['Nom_du_niveau']) ?></h3>
+    <h3>Level <?= $i + 1 ?> — <?= htmlspecialchars($niveau['Nom_du_niveau']) ?></h3>
     <p class="difficulty"><?= afficherEtoiles($niveau['Difficulte']) ?></p>
     <?php if ($isLocked): ?>
-        <span class="btn btn-lock">🔒 Verrouillé</span>
+        <span class="btn btn-lock">🔒 Locked</span>
     <?php else: ?>
-        <a class="btn" href="game.php?type=fixed&id=<?= $i ?>">▶ Jouer</a>
+        <a class="btn" href="game.php?type=fixed&id=<?= $i ?>">▶ Play</a>
     <?php endif; ?>
 </div>
 <?php endforeach; ?>
