@@ -55,7 +55,7 @@ session_start();
                     <option value="9">9 x 9</option>
                     <option value="10">10 x 10</option>
                     <option value="11">11 x 11</option>
-                    <option value="12">12 x 12</option>
+                    
                 </select>
             </div>
 

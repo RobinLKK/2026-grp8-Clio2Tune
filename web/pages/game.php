@@ -318,7 +318,7 @@ if ($type_param === 'fixed' && isset($_GET['id'])) {
                         <option value="9">9×9</option>
                         <option value="10">10×10</option>
                         <option value="11">11×11</option>
-                        <option value="12">12×12</option>
+                        
                     </select>
                 </div>
                 <div id="grid-container">
