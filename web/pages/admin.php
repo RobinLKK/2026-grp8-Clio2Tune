@@ -29,9 +29,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id = (int)$_POST['user_id'];
         if ($id !== (int)$_SESSION['user_id']) {
             $pdo->prepare("DELETE FROM utilisateur WHERE ID = ?")->execute([$id]);
-            $message = "Utilisateur supprimé.";
+            $message = "User deleted.";
         } else {
-            $erreur = "Vous ne pouvez pas vous supprimer vous-même.";
+            $erreur = "You can't delete your own user !";
         }
     }
 
@@ -41,32 +41,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $diff = max(1, min(5, (int)$_POST['difficulte']));
         $pdo->prepare("UPDATE niveau_cree SET Nom_du_niveau = ?, Difficulte = ? WHERE ID = ?")
             ->execute([$nom, $diff, $id]);
-        $message = "Niveau mis à jour.";
+        $message = "Level updated";
     }
 
     // Bannir / débannir (on réutilise Admin = -1 pour banni)
     if ($action === 'ban_user') {
         $id = (int)$_POST['user_id'];
         $pdo->prepare("UPDATE utilisateur SET Admin = -1 WHERE ID = ? AND ID != ?")->execute([$id, $_SESSION['user_id']]);
-        $message = "Utilisateur banni.";
+        $message = "User banned.";
     }
     if ($action === 'unban_user') {
         $id = (int)$_POST['user_id'];
         $pdo->prepare("UPDATE utilisateur SET Admin = 0 WHERE ID = ?")->execute([$id]);
-        $message = "Utilisateur débanni.";
+        $message = "User unban.";
     }
 
     // Promouvoir / rétrograder admin
     if ($action === 'make_admin') {
         $id = (int)$_POST['user_id'];
         $pdo->prepare("UPDATE utilisateur SET Admin = 1 WHERE ID = ?")->execute([$id]);
-        $message = "Utilisateur promu admin.";
+        $message = "User prometted admin.";
     }
     if ($action === 'remove_admin') {
         $id = (int)$_POST['user_id'];
         if ($id !== (int)$_SESSION['user_id']) {
             $pdo->prepare("UPDATE utilisateur SET Admin = 0 WHERE ID = ?")->execute([$id]);
-            $message = "Droits admin retirés.";
+            $message = "Admin permission retired.";
         }
     }
 
@@ -89,9 +89,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($action === 'toggle_level') {
         $id     = (int)$_POST['level_id'];
         $locked = (int)$_POST['locked'];
-        // On stocke dans la col Difficulte un flag négatif pour locked (hack simple)
-        // En vrai on devrait avoir une col locked, mais on va ajouter ça proprement
-        // Pour l'instant on utilise une session pour stocker les niveaux locked
         $_SESSION['locked_levels'] = $_SESSION['locked_levels'] ?? [];
         if ($locked) {
             $_SESSION['locked_levels'][] = $id;
@@ -99,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $_SESSION['locked_levels'] = array_diff($_SESSION['locked_levels'], [$id]);
         }
-        $message = "Niveau mis à jour.";
+        $message = "Level updated.";
     }
 
     header("Location: admin.php?msg=" . urlencode($message ?: $erreur));
@@ -164,8 +161,8 @@ $lockedLevels = $_SESSION['locked_levels'] ?? [];
     <main style="max-width:100%; padding:0;">
     <div class="admin-wrap">
 
-        <div class="admin-title">⚙ Panel Admin</div>
-        <div class="admin-sub">2Fast4U — Gestion du site</div>
+        <div class="admin-title">⚙ Admin Panel</div>
+        <div class="admin-sub">2Fast4U — Website </div>
 
         <?php if ($message): ?>
             <div class="admin-msg"><?= htmlspecialchars($message) ?></div>
@@ -175,33 +172,33 @@ $lockedLevels = $_SESSION['locked_levels'] ?? [];
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-value"><?= $stats['nb_users'] ?></div>
-                <div class="stat-label">Joueurs</div>
+                <div class="stat-label">Players</div>
             </div>
             <div class="stat-card">
                 <div class="stat-value"><?= $stats['nb_parties'] ?></div>
-                <div class="stat-label">Parties jouées</div>
+                <div class="stat-label">Game played</div>
             </div>
             <div class="stat-card">
                 <div class="stat-value"><?= number_format((int)$stats['total_points']) ?></div>
-                <div class="stat-label">Points totaux</div>
+                <div class="stat-label">Total points</div>
             </div>
             <div class="stat-card">
                 <div class="stat-value"><?= $stats['best_score'] ?? 0 ?></div>
-                <div class="stat-label">Meilleur score</div>
+                <div class="stat-label">Best score</div>
             </div>
         </div>
 
         <!-- GESTION UTILISATEURS -->
         <div class="admin-section">
-            <h2>👥 Utilisateurs</h2>
+            <h2>👥 Users</h2>
             <table class="admin-table">
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Joueur</th>
+                        <th>Player</th>
                         <th>Email</th>
                         <th>Statut</th>
-                        <th>Parties</th>
+                        <th>Games</th>
                         <th>Points</th>
                         <th>Actions</th>
                     </tr>
@@ -218,7 +215,7 @@ $lockedLevels = $_SESSION['locked_levels'] ?? [];
                             <?php endif; ?>
                             <?= htmlspecialchars($u['Pseudo']) ?>
                             <?php if ($u['ID'] == $_SESSION['user_id']): ?>
-                                <span style="color:#e2b96f;font-size:0.7rem">(vous)</span>
+                                <span style="color:#e2b96f;font-size:0.7rem">(you)</span>
                             <?php endif; ?>
                         </td>
                         <td><?= htmlspecialchars($u['Email'] ?? '—') ?></td>
@@ -226,9 +223,9 @@ $lockedLevels = $_SESSION['locked_levels'] ?? [];
                             <?php if ($u['Admin'] == 1): ?>
                                 <span class="badge badge-admin">Admin</span>
                             <?php elseif ($u['Admin'] == -1): ?>
-                                <span class="badge badge-banni">Banni</span>
+                                <span class="badge badge-banni">Banned</span>
                             <?php else: ?>
-                                <span class="badge badge-user">Joueur</span>
+                                <span class="badge badge-user">Player</span>
                             <?php endif; ?>
                         </td>
                         <td><?= $u['nb_parties'] ?></td>
@@ -248,7 +245,7 @@ $lockedLevels = $_SESSION['locked_levels'] ?? [];
                                     <form method="POST">
                                         <input type="hidden" name="action" value="unban_user">
                                         <input type="hidden" name="user_id" value="<?= $u['ID'] ?>">
-                                        <button class="btn-action btn-success">Débannir</button>
+                                        <button class="btn-action btn-success">Unban</button>
                                     </form>
                                 <?php else: ?>
                                     <form method="POST">
@@ -263,13 +260,13 @@ $lockedLevels = $_SESSION['locked_levels'] ?? [];
                                     <form method="POST">
                                         <input type="hidden" name="action" value="make_admin">
                                         <input type="hidden" name="user_id" value="<?= $u['ID'] ?>">
-                                        <button class="btn-action btn-neutral">Promouvoir</button>
+                                        <button class="btn-action btn-neutral">Promote</button>
                                     </form>
                                 <?php else: ?>
                                     <form method="POST">
                                         <input type="hidden" name="action" value="remove_admin">
                                         <input type="hidden" name="user_id" value="<?= $u['ID'] ?>">
-                                        <button class="btn-action btn-warn">Rétrograder</button>
+                                        <button class="btn-action btn-warn">Remove</button>
                                     </form>
                                 <?php endif; ?>
 
@@ -277,7 +274,7 @@ $lockedLevels = $_SESSION['locked_levels'] ?? [];
                                 <form method="POST">
                                     <input type="hidden" name="action" value="delete_user">
                                     <input type="hidden" name="user_id" value="<?= $u['ID'] ?>">
-                                    <button class="btn-action btn-danger" onclick="return confirm('Supprimer définitivement <?= htmlspecialchars($u['Pseudo']) ?> ?')">Supprimer</button>
+                                    <button class="btn-action btn-danger" onclick="return confirm('Supprimer définitivement <?= htmlspecialchars($u['Pseudo']) ?> ?')">Delete</button>
                                 </form>
 
                             <?php else: ?>
@@ -292,28 +289,28 @@ $lockedLevels = $_SESSION['locked_levels'] ?? [];
 
         <!-- GESTION NIVEAUX -->
         <div class="admin-section">
-            <h2>🏁 Niveaux</h2>
+            <h2>🏁 Levels</h2>
             <div class="levels-grid">
                 <?php foreach ($niveaux as $niv):
                     $isLocked = in_array($niv['ID'], $lockedLevels);
                 ?>
                 <div class="level-card <?= $isLocked ? 'level-locked' : '' ?>">
                     <h3><?= htmlspecialchars($niv['Nom_du_niveau'] ?? 'Niveau '.$niv['ID']) ?></h3>
-                    <div class="diff">Taille : <?= $niv['Taille'] ?>×<?= $niv['Taille'] ?> — Diff : <?= str_repeat('★', $niv['Difficulte']) ?></div>
+                    <div class="diff">Size : <?= $niv['Taille'] ?>×<?= $niv['Taille'] ?> — Diff : <?= str_repeat('★', $niv['Difficulte']) ?></div>
 
                     <!-- Formulaire édition -->
                     <form method="POST" style="margin-top:0.8rem; text-align:left;">
                         <input type="hidden" name="action" value="edit_level">
                         <input type="hidden" name="level_id" value="<?= $niv['ID'] ?>">
                         <div style="margin-bottom:0.4rem;">
-                            <label style="font-size:0.65rem;color:rgba(240,236,227,0.4);text-transform:uppercase;letter-spacing:0.1em;">Nom</label>
+                            <label style="font-size:0.65rem;color:rgba(240,236,227,0.4);text-transform:uppercase;letter-spacing:0.1em;">Name</label>
                             <input type="text" name="nom" value="<?= htmlspecialchars($niv['Nom_du_niveau']) ?>" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(226,185,111,0.2);color:#f0ece3;padding:4px 8px;font-size:0.8rem;">
                         </div>
                         <div style="margin-bottom:0.8rem;">
-                            <label style="font-size:0.65rem;color:rgba(240,236,227,0.4);text-transform:uppercase;letter-spacing:0.1em;">Difficulté (1-5)</label>
+                            <label style="font-size:0.65rem;color:rgba(240,236,227,0.4);text-transform:uppercase;letter-spacing:0.1em;">Difficulty (1-5)</label>
                             <input type="number" name="difficulte" min="1" max="5" value="<?= $niv['Difficulte'] ?>" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(226,185,111,0.2);color:#f0ece3;padding:4px 8px;font-size:0.8rem;">
                         </div>
-                        <button class="btn-action btn-neutral" style="width:100%;">Sauvegarder</button>
+                        <button class="btn-action btn-neutral" style="width:100%;">Save</button>
                     </form>
 
                     <!-- Lock/Unlock -->
@@ -322,7 +319,7 @@ $lockedLevels = $_SESSION['locked_levels'] ?? [];
                         <input type="hidden" name="level_id" value="<?= $niv['ID'] ?>">
                         <input type="hidden" name="locked" value="<?= $isLocked ? 0 : 1 ?>">
                         <button class="btn-action <?= $isLocked ? 'btn-success' : 'btn-warn' ?>" style="width:100%;">
-                            <?= $isLocked ? '🔓 Déverrouiller' : '🔒 Verrouiller' ?>
+                            <?= $isLocked ? '🔓 Unlocked' : '🔒 Locked' ?>
                         </button>
                     </form>
                 </div>
@@ -332,10 +329,10 @@ $lockedLevels = $_SESSION['locked_levels'] ?? [];
 
         <!-- RESET GLOBAL -->
         <div class="admin-section">
-            <h2>⚠ Zone dangereuse</h2>
-            <form method="POST" onsubmit="return confirm('Remettre TOUS les scores à zéro ? Cette action est irréversible.')">
+            <h2>⚠ Dangerous Zone</h2>
+            <form method="POST" onsubmit="return confirm('Put EVERY scores to zero ? Cannot be undone.')">
                 <input type="hidden" name="action" value="reset_all_scores">
-                <button class="btn-full-danger">🗑 Réinitialiser tous les scores</button>
+                <button class="btn-full-danger">🗑 Reset all scores (at your own risk)</button>
             </form>
         </div>
 

@@ -125,7 +125,7 @@ $scores = $stmt->fetchAll();
             <?php if ($user['Admin'] == 1): ?>
                 <div style="text-align:center; margin-bottom:1rem;">
                     <a href="admin.php" class="btn-submit" style="text-decoration:none; display:inline-block;">
-                        ⚙ Panel Admin
+                        ⚙ Admin Panel ⚙
                     </a>
                 </div>
             <?php endif; ?>
@@ -140,7 +140,7 @@ $scores = $stmt->fetchAll();
             <!-- Un seul form avec enctype -->
             <form method="POST" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label>Pseudo</label>
+                    <label>Nickname</label>
                     <input type="text" name="pseudo"
                            value="<?= htmlspecialchars($user["Pseudo"]) ?>" required>
                 </div>
@@ -150,24 +150,24 @@ $scores = $stmt->fetchAll();
                            value="<?= htmlspecialchars($user["Email"] ?? '') ?>">
                 </div>
                 <div class="form-group">
-                    <label>Photo de profil</label>
+                    <label>Profile Picture</label>
                     <input type="file" name="avatar" accept=".jpg,.jpeg,.png,.gif">
                 </div>
                 <div class="form-group">
-                    <label>Nouveau mot de passe</label>
+                    <label>New password</label>
                     <input type="password" name="mot_de_passe"
-                           placeholder="Laisser vide = inchangé">
+                           placeholder="Leave blank = unchanged">
                 </div>
                 <div class="form-group">
-                    <label>Confirmer le mot de passe</label>
+                    <label>Confirm password</label>
                     <input type="password" name="confirmer">
                 </div>
-                <button type="submit" class="btn-submit">Sauvegarder</button>
+                <button type="submit" class="btn-submit">Save</button>
             </form>
 
             <!-- Scores -->
             <div class="profile-scores">
-                <h3 class="profile-scores-title">Meilleurs scores</h3>
+                <h3 class="profile-scores-title">Best Scores</h3>
                 <?php if ($scores): ?>
                     <table>
                         <thead>
@@ -189,7 +189,7 @@ $scores = $stmt->fetchAll();
 
             <div class="profile-logout">
                 <a href="logout.php" class="btn-submit btn-submit-outline">
-                    Se déconnecter
+                    Logout
                 </a>
             </div>
 
