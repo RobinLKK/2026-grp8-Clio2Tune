@@ -68,7 +68,7 @@ function afficherEtoiles(int $niveau): string {
 
 </section>
         <footer>
-            © <?= date('Y') ?> 2Fast4U - Leaderboard.
+            © <?= date('Y') ?> 2Fast4U - Levels.
         </footer>
 </body>
 </html>
