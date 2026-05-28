@@ -420,10 +420,10 @@ function gererFinDePartie() {
     })
     .then(r => r.json())
     .then(data => {
-        if (data.ok) {
-            afficherVictory(data.points ?? data.base ?? 0);
+        if (data.already_done) {
+            afficherVictory(0, true);
         } else {
-            afficherVictory(0, data.deja_fait ?? false);
+            afficherVictory(data.points ?? data.base ?? 0, false);
         }
         const msg = document.getElementById('msg');
         msg.className = 'win';
