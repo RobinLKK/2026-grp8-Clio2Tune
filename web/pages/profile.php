@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             move_uploaded_file($_FILES['avatar']['tmp_name'], $destination);
             $avatar_path = 'media/avatars/' . $filename;
         } else {
-            $erreur = "Image invalide (JPG/PNG/GIF, max 2Mo).";
+            $erreur = "Invalid image (JPG/PNG/GIF, max 2MB).";
         }
     }
 
@@ -46,9 +46,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $chk = $pdo->prepare("SELECT ID FROM utilisateur WHERE Pseudo = ? AND ID != ?");
         $chk->execute([$nouveau_pseudo, $_SESSION["user_id"]]);
         if ($chk->fetch()) {
-            $erreur = "Ce pseudo est déjà pris.";
+            $erreur = "This username is already taken.";
         } elseif ($nouveau_mdp && $nouveau_mdp !== $confirmer) {
-            $erreur = "Les mots de passe ne correspondent pas.";
+            $erreur = "Passwords do not match.";
         }
     }
 
@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $upd->execute([$nouveau_pseudo, $email, $avatar_path, $_SESSION["user_id"]]);
         }
         $_SESSION["pseudo"] = $nouveau_pseudo;
-        $succes = "Profil mis à jour !";
+        $succes = "Profile updated!";
 
         /* Refresh user après update */
         $stmt = $pdo->prepare("SELECT * FROM utilisateur WHERE ID = ?");
@@ -81,7 +81,7 @@ $scores = $stmt->fetchAll();
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>2Fast4U – Profil</title>
+    <title>2Fast4U – Profile</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/login.css">
     <link rel="icon" href="../media/ico-car.ico">
@@ -183,7 +183,7 @@ $scores = $stmt->fetchAll();
                         </tbody>
                     </table>
                 <?php else: ?>
-                    <p class="profile-no-score">Aucun score pour l'instant.</p>
+                        <p class="profile-no-score">No scores yet.</p>
                 <?php endif; ?>
             </div>
 

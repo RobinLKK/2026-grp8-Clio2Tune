@@ -14,7 +14,7 @@ const CONFIG_COULEURS = [
     { txt: '../image/beige.png', car: '../image/beige_voiture.png', pneu: '../image/beige_pneux.png', cross: '../image/beige_croisement.png' },       // Index 11  
 ];
 
-// --- NIVEAUX PRÉDÉFINIS ---
+// --- PREDEFINED LEVELS ---
 const PREDEFINED_LEVELS = [
     {
         size: 5,
@@ -322,8 +322,8 @@ function lancerAleatoire() {
             startChrono();
         })
         .catch(err => {
-            console.error("Erreur génération C:", err);
-            if (msg) msg.textContent = "⚠️ Erreur du moteur de génération.";
+            console.error("Generation error:", err);
+            if (msg) msg.textContent = "⚠️ Generation engine error.";
         });
 }
 
@@ -412,7 +412,7 @@ function gererFinDePartie() {
         ? [1, 2, 3, 4, 5][idJS] ?? 1
         : (SIZE <= 5 ? 1 : SIZE <= 6 ? 2 : SIZE <= 7 ? 3 : SIZE <= 8 ? 4 : 5);
 
-    // Envoi des scores globaux
+    // Sending global scores
     fetch('../pages/save_score.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -460,7 +460,7 @@ function gererFinDePartie() {
                 };
             }).filter(x => x !== null);
 
-            scoresExistants.push({ username: "Moi", chrono: secondes, nouveau: true });
+            scoresExistants.push({ username: "Me", chrono: secondes, nouveau: true });
             scoresExistants.sort((a, b) => a.chrono - b.chrono);
 
             tbody.innerHTML = '';
@@ -476,13 +476,13 @@ function gererFinDePartie() {
                 
                 tr.innerHTML = `
                     <td>#${index + 1}</td>
-                    <td>${item.nouveau ? 'Moi' : item.pseudo}</td>
+                    <td>${item.nouveau ? 'Me' : item.pseudo}</td>
                     <td>${rowMin}:${rowSec}</td>
                 `;
                 tbody.appendChild(tr);
             });
         })
-        .catch(err => console.error("Erreur enregistrement classement:", err));
+        .catch(err => console.error("Error saving leaderboard:", err));
     }
 }
 
@@ -539,7 +539,7 @@ function startChrono() {
 }
 
 // =============================================================================
-// --- GESTION DE L'INDICE ---
+// --- HINT MANAGEMENT ---
 // =============================================================================
 document.addEventListener('DOMContentLoaded', () => {
     const btnHint = document.getElementById('btn-hint');
@@ -567,7 +567,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         fetch('hint.php', { method: 'POST', body: fd })
             .then(response => {
-                if (!response.ok) throw new Error("Erreur serveur");
+                if (!response.ok) throw new Error("Server error");
                 return response.json();
             })
             .then(data => {
@@ -602,7 +602,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     grid[hR][hC].hasX = false;
 
                     renderGrid();
-                    msg.innerHTML = `💡 <span style="color: #ff8c00;">Indice :</span> Voiture placée en <b>Ligne ${hR}, Colonne ${hC}</b> !`;
+                    msg.innerHTML = `💡 <span style="color: #ff8c00;">Hint:</span> Car placed at <b>Row ${hR}, Column ${hC}</b> !`;
                     
                     if (verifierVictoire(grid, SIZE)) {
                         gererFinDePartie();
@@ -610,7 +610,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             })
             .catch(err => {
-                console.error("Erreur Indice:", err);
+                console.error("Error fetching hint:", err);
                 msg.textContent = "Le solveur est indisponible.";
             });
     });

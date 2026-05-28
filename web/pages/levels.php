@@ -2,11 +2,11 @@
 declare(strict_types=1);
 session_start();
 
-// Liste des niveaux prédéfinis (doit correspondre à l'ordre dans ton JS)
+// Predefined levels list (must match order in JS)
 require_once '../includes/db.php';
 
 $niveaux = $pdo->query("SELECT * FROM niveau_cree ORDER BY Difficulte ASC")->fetchAll();
-$pseudo = $_SESSION['pseudo'] ?? 'Pilote invité';
+$pseudo = $_SESSION['pseudo'] ?? 'Guest driver';
 
 function afficherEtoiles(int $niveau): string {
     return str_repeat('★', $niveau) . str_repeat('☆', 5 - $niveau);
@@ -18,7 +18,7 @@ function afficherEtoiles(int $niveau): string {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Choix des niveaux - 2Fast4U</title>
+    <title>Level Selection - 2Fast4U</title>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/levels.css">
     <link rel="stylesheet" href="../css/style.css">

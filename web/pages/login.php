@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         header("Location: index.php");
         exit;
     } else {
-        $erreur = "Pseudo ou mot de passe incorrect.";
+        $erreur = "Incorrect username or password.";
     }
 }
 ?>
@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>2Fast4U – Connexion</title>
+      <title>2Fast4U – Login</title>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/login.css">
@@ -68,9 +68,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         letter-spacing: 0.15em;
         color: #e2b96f;
         margin-bottom: 0.3rem;
-      ">Connexion</h2>
+        ">Login</h2>
       <p style="font-size:0.75rem; letter-spacing:0.1em; color:rgba(240,236,227,0.4); text-transform:uppercase; margin-bottom:1.8rem;">
-        Bienvenue sur 2Fast4U
+          Welcome to 2Fast4U
       </p>
 
       <?php if ($erreur): ?>

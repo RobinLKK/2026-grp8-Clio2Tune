@@ -27,7 +27,7 @@ if ($action === 'save_score') {
         $check = $pdo->prepare("SELECT COUNT(*) FROM classement WHERE ID_utilisateur = ? AND ID_Niveau = ?");
         $check->execute([$_SESSION['user_id'], $id_niveau]);
         if ($check->fetchColumn() > 0) {
-            echo json_encode(['ok' => false, 'msg' => 'Niveau déjà complété', 'deja_fait' => true]);
+            echo json_encode(['ok' => false, 'msg' => 'Level already completed', 'already_done' => true]);
             exit;
         }
     }

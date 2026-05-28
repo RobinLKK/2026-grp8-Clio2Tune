@@ -69,5 +69,5 @@ try {
     // Au cas où ça plante au milieu, on s'assure de réactiver la sécurité
     $pdo->exec("SET FOREIGN_KEY_CHECKS = 1;");
     http_response_code(500);
-    exit(json_encode(['error' => 'Erreur SQL : ' . $e->getMessage()]));
+    exit(json_encode(['error' => 'SQL Error: ' . $e->getMessage()]));
 }

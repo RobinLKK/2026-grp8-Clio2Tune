@@ -10,14 +10,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $confirm = trim($_POST["confirmer"]);
 
     if ($mdp !== $confirm) {
-        $erreur = "Les mots de passe ne correspondent pas.";
+        $erreur = "Passwords do not match.";
     } else {
         // Vérifie si le pseudo existe déjà
         $stmt = $pdo->prepare("SELECT ID FROM utilisateur WHERE Pseudo = ?");
         $stmt->execute([$pseudo]);
 
         if ($stmt->fetch()) {
-            $erreur = "Ce pseudo est déjà pris.";
+            $erreur = "This username is already taken.";
         } else {
             $hash = password_hash($mdp, PASSWORD_DEFAULT);
             $stmt = $pdo->prepare("INSERT INTO utilisateur (Pseudo, Mot_de_passe, Admin) VALUES (?, ?, 0)");

@@ -27,7 +27,7 @@ if ($type_param === 'fixed' && isset($_GET['id'])) {
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Jouer - 2Fast4U</title>
+    <title>Play - 2Fast4U</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/game.css">
     <script src="../js/game.js" defer></script>
