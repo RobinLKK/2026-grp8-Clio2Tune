@@ -63,7 +63,7 @@ try {
         ]);
     }
 
-    echo json_encode(['success' => true, 'message' => 'Chrono enregistré avec succès !']);
+    echo json_encode(['success' => true, 'message' => 'Chrono successfully recorded!']);
 
 } catch (PDOException $e) {
     // Au cas où ça plante au milieu, on s'assure de réactiver la sécurité

@@ -301,15 +301,15 @@ if ($type_param === 'fixed' && isset($_GET['id'])) {
         <div id="chrono">00:00</div>
         
         <div id="controls">
-            <button id="btn-reset">Réinitialiser</button>
-            <button id="btn-new">Nouveau niveau</button>
-            <button id="btn-hint">Besoin d'un indice ?</button>
+            <button id="btn-reset">Reset</button>
+            <button id="btn-new">New level</button>
+            <button id="btn-hint">Need a hint ?</button>
         </div>
 
         <div class="game-middle">
             <div id="game-wrap">
                 <div id="size-row">
-                    SÉLECTIONNE TA TAILLE :
+                    SELECT YOUR SIZE:
                     <select id="size-select">
                         <option value="5">5×5</option>
                         <option value="6">6×6</option>
@@ -329,20 +329,20 @@ if ($type_param === 'fixed' && isset($_GET['id'])) {
 
             <?php if ($id_niveau_param !== null): ?>
             <div class="leaderboard-box">
-                <h3>Meilleurs Temps</h3>
+                <h3>Best Time</h3>
                 <table class="leaderboard-table">
                     <thead>
                         <tr>
-                            <th>Rang</th>
-                            <th>Pseudo</th>
-                            <th>Temps</th>
+                            <th>Rank</th>
+                            <th>Username</th>
+                            <th>Time</th>
                         </tr>
                     </thead>
                     <tbody>
                     <?php if (empty($top5)): ?>
                         <tr>
                             <td colspan="3" style="color:#888; font-style:italic;">
-                                Sois le premier à finir ce niveau !
+                                No scores yet... Be the first to set a record! 🚀
                             </td>
                         </tr>
                     <?php else: ?>

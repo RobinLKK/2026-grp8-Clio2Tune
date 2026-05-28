@@ -455,12 +455,12 @@ function gererFinDePartie() {
                 const tParts = cells[2].textContent.split(':');
                 return {
                     element: row,
-                    pseudo: cells[1].textContent,
+                    username: cells[1].textContent,
                     chrono: parseInt(tParts[0]) * 60 + parseInt(tParts[1])
                 };
             }).filter(x => x !== null);
 
-            scoresExistants.push({ pseudo: "Moi", chrono: secondes, nouveau: true });
+            scoresExistants.push({ username: "Moi", chrono: secondes, nouveau: true });
             scoresExistants.sort((a, b) => a.chrono - b.chrono);
 
             tbody.innerHTML = '';
@@ -547,7 +547,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     btnHint.addEventListener('click', () => {
         const msg = document.getElementById('msg');
-        msg.textContent = "Recherche d'un indice... 🔍";
+        msg.textContent = "Searching for a clue...🔍";
 
         let mapString = "";
         let carsString = "";
