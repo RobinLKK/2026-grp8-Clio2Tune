@@ -160,7 +160,7 @@ session_start();
 
    
     saveBtn.addEventListener("click", () => {
-        targetUrl = `http://localhost/grp8-2026/grp8/web/pages/game.php?type=fixed&id=${currentLevelId}`;
+        targetUrl = `http://localhost/bim/hello/web/pages/game.php?type=fixed&id=${currentLevelId}`;
         
        
         modalLevelLink.textContent = targetUrl;
