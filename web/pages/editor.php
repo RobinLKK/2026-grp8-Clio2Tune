@@ -126,7 +126,7 @@ session_start();
     const gridSize = document.getElementById("gridSize");
     const cellColor = document.getElementById("cellColor");
 
-    let currentLevelId = 11;
+    let currentLevelId = 10;
 
     function createGrid(size) {
         gridPreview.innerHTML = "";
@@ -155,17 +155,16 @@ session_start();
     const modalCopyBtn = document.getElementById("modalCopyBtn");
     const modalLevelLink = document.getElementById("modalLevelLink");
 
-    // Variable pour stocker l'URL actuelle
+  
     let targetUrl = "";
 
-    // Ouvrir la modale au clic sur Save
+   
     saveBtn.addEventListener("click", () => {
         targetUrl = `http://localhost/grp8-2026/grp8/web/pages/game.php?type=fixed&id=${currentLevelId}`;
         
-        // On affiche l'URL sous forme de texte brut
+       
         modalLevelLink.textContent = targetUrl;
 
-        // Réinitialiser le texte du bouton si besoin
         modalCopyBtn.textContent = "Copy";
         modalCopyBtn.classList.remove("copied");
 
