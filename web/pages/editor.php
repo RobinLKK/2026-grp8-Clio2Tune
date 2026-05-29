@@ -155,32 +155,24 @@ session_start();
     const modalCopyBtn = document.getElementById("modalCopyBtn");
     const modalLevelLink = document.getElementById("modalLevelLink");
 
-  
     let targetUrl = "";
 
-   
     saveBtn.addEventListener("click", () => {
         targetUrl = `http://localhost/bim/hello/web/pages/game.php?type=fixed&id=${currentLevelId}`;
         
-       
         modalLevelLink.textContent = targetUrl;
-
         modalCopyBtn.textContent = "Copy";
         modalCopyBtn.classList.remove("copied");
 
-        // Afficher la modale
         saveModal.style.display = "flex";
         
         currentLevelId++;
     });
 
-    // Événement pour copier le lien dans le presse-papiers
     modalCopyBtn.addEventListener("click", () => {
         navigator.clipboard.writeText(targetUrl).then(() => {
-            // Changement d'état visuel du bouton
             modalCopyBtn.textContent = "Copied !";
             modalCopyBtn.classList.add("copied");
-            
             
             setTimeout(() => {
                 modalCopyBtn.textContent = "Copy";
@@ -191,7 +183,6 @@ session_start();
         });
     });
 
-    
     function hideModal() {
         saveModal.style.display = "none";
     }

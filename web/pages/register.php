@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($mdp !== $confirm) {
         $erreur = "Passwords do not match.";
     } else {
-        // Vérifie si le pseudo existe déjà
+        
         $stmt = $pdo->prepare("SELECT ID FROM utilisateur WHERE Pseudo = ?");
         $stmt->execute([$pseudo]);
 

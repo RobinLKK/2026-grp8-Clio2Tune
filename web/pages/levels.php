@@ -2,7 +2,7 @@
 declare(strict_types=1);
 session_start();
 
-// Predefined levels list (must match order in JS)
+
 require_once '../includes/db.php';
 
 $niveaux = $pdo->query("SELECT * FROM niveau_cree ORDER BY Difficulte ASC")->fetchAll();

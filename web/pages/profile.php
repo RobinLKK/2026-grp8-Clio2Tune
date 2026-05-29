@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_SESSION["pseudo"] = $nouveau_pseudo;
         $succes = "Profile updated!";
 
-        /* Refresh user après update */
+        
         $stmt = $pdo->prepare("SELECT * FROM utilisateur WHERE ID = ?");
         $stmt->execute([$_SESSION["user_id"]]);
         $user = $stmt->fetch();
@@ -110,7 +110,7 @@ $scores = $stmt->fetchAll();
     <main class="auth-wrap">
         <div class="auth-box">
 
-            <!-- Avatar affiché en haut -->
+            
             <div class="profile-avatar-wrap">
                 <?php if (!empty($user['avatar'])): ?>
                     <img src="../<?= htmlspecialchars($user['avatar']) ?>"
@@ -137,7 +137,7 @@ $scores = $stmt->fetchAll();
                 <p class="succes"><?= htmlspecialchars($succes) ?></p>
             <?php endif; ?>
 
-            <!-- Un seul form avec enctype -->
+            
             <form method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <label>Nickname</label>

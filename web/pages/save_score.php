@@ -22,7 +22,7 @@ if ($action === 'save_score') {
     $chrono     = (int)($_POST['chrono']     ?? 0);
     $id_niveau  = (int)($_POST['id_niveau']  ?? 0);
 
-    /* Vérifie si le joueur a déjà complété ce niveau (mode histoire uniquement) */
+   
     if ($id_niveau > 0) {
         $check = $pdo->prepare("SELECT COUNT(*) FROM classement WHERE ID_utilisateur = ? AND ID_Niveau = ?");
         $check->execute([$_SESSION['user_id'], $id_niveau]);
@@ -32,9 +32,9 @@ if ($action === 'save_score') {
         }
     }
 
-    /* Points selon mode et difficulté */
+    
     if ($id_niveau > 0) {
-        // Mode histoire — points fixes par difficulté
+        
         $base = match($difficulte) {
             1 => 10,
             2 => 20,
@@ -44,7 +44,7 @@ if ($action === 'save_score') {
             default => 10,
         };
     } else {
-        // Mode random — moitié moins, basé sur taille de grille
+        
         $base = match($difficulte) {
             1 => 5,
             2 => 10,
@@ -58,7 +58,7 @@ if ($action === 'save_score') {
     $bonus = 0;
     $points = $base;
 
-    /* Insert dans classement */
+    
     $ins = $pdo->prepare("
         INSERT INTO classement (ID_utilisateur, ID_Niveau, Points)
         VALUES (:uid, :niv, :pts)
@@ -69,7 +69,7 @@ if ($action === 'save_score') {
         ':pts' => $points,
     ]);
 
-    /* Incrémente Nombre_niveau dans utilisateur */
+    
     $upd = $pdo->prepare("UPDATE utilisateur SET Nombre_niveau = Nombre_niveau + 1 WHERE ID = ?");
     $upd->execute([$_SESSION['user_id']]);
 

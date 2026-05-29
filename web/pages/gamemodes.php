@@ -41,7 +41,6 @@
 
 <section class="modes-container">
 
-    <!-- Story Mode (Niveaux prédéfinis) -->
     <div class="mode-card story">
         <div class="mode-icon">🏁</div>
         <h2>Story Mode</h2>
@@ -54,7 +53,6 @@
         </a>
     </div>
 
-    <!-- Random Mode (Niveaux aléatoires / non fixés) -->
     <div class="mode-card random">
         <div class="mode-icon">🚗</div>
         <h2>Random Mode</h2>
@@ -62,7 +60,6 @@
             Play a randomly generated
             puzzle every game.
         </p>
-        <!-- MODIFICATION ICI : On ajoute ?type=random -->
         <a href="game.php?type=random" class="btn">
             Play
         </a>

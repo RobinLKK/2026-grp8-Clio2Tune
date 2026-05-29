@@ -1,17 +1,17 @@
 // --- ASSETS ET CONFIGURATION ---
 const CONFIG_COULEURS = [
-    { txt: '../image/bleu.png', car: '../image/bleu_voiture.png', pneu: '../image/bleu_pneux.png', cross: '../image/bleu_croisement_pneux.png' },      // Index 0
-    { txt: '../image/vert.png', car: '../image/vert_voiture.png', pneu: '../image/vert_pneux.png', cross: '../image/vert_croisement_pneux.png' },      // Index 1
-    { txt: '../image/rouge.png', car: '../image/rouge_voiture.png', pneu: '../image/rouge_pneux.png', cross: '../image/rouge_croisement_pneux.png' },     // Index 2
-    { txt: '../image/jaune.png', car: '../image/jaune_voiture.png', pneu: '../image/jaune_pneux.png', cross: '../image/jaune_croisement_pneux.png' },     // Index 3
-    { txt: '../image/violet.png', car: '../image/violet_voiture.png', pneu: '../image/violet_pneux.png', cross: '../image/violet_croisement_pneux.png' },    // Index 4
-    { txt: '../image/rose.png', car: '../image/rose_voiture.png', pneu: '../image/rose_pneux.png', cross: '../image/rose_croisement_pneux.png' },      // Index 5
-    { txt: '../image/bleu_ciel.png', car: '../image/bleu_ciel_voiture.png', pneu: '../image/bleu_ciel_pneux.png', cross: '../image/bleu_ciel_croisement_pneux.png' }, // Index 6
-    { txt: '../image/marron.png', car: '../image/marron_voiture.png', pneu: '../image/marron_pneux.png', cross: '../image/marron_croisement_pneux.png' },    // Index 7
-    { txt: '../image/orange.png', car: '../image/orange_voiture.png', pneu: '../image/orange_pneux.png', cross: '../image/orange_croisement_pneux.png' },    // Index 8
-    { txt: '../image/gris.png', car: '../image/gris_voiture.png', pneu: '../image/gris_pneux.png', cross: '../image/gris_croisement_pneux.png' },      // Index 9
-    { txt: '../image/blanc.png', car: '../image/blanc_blanc.png', pneu: '../image/blanc_pneux.png', cross: '../image/blanc_croisement.png' } ,      // Index 10
-    { txt: '../image/beige.png', car: '../image/beige_voiture.png', pneu: '../image/beige_pneux.png', cross: '../image/beige_croisement.png' },       // Index 11  
+    { txt: '../image/bleu.png', car: '../image/bleu_voiture.png', pneu: '../image/bleu_pneux.png', cross: '../image/bleu_croisement_pneux.png' },      
+    { txt: '../image/vert.png', car: '../image/vert_voiture.png', pneu: '../image/vert_pneux.png', cross: '../image/vert_croisement_pneux.png' },      
+    { txt: '../image/rouge.png', car: '../image/rouge_voiture.png', pneu: '../image/rouge_pneux.png', cross: '../image/rouge_croisement_pneux.png' },     
+    { txt: '../image/jaune.png', car: '../image/jaune_voiture.png', pneu: '../image/jaune_pneux.png', cross: '../image/jaune_croisement_pneux.png' },     
+    { txt: '../image/violet.png', car: '../image/violet_voiture.png', pneu: '../image/violet_pneux.png', cross: '../image/violet_croisement_pneux.png' },    
+    { txt: '../image/rose.png', car: '../image/rose_voiture.png', pneu: '../image/rose_pneux.png', cross: '../image/rose_croisement_pneux.png' },      
+    { txt: '../image/bleu_ciel.png', car: '../image/bleu_ciel_voiture.png', pneu: '../image/bleu_ciel_pneux.png', cross: '../image/bleu_ciel_croisement_pneux.png' }, 
+    { txt: '../image/marron.png', car: '../image/marron_voiture.png', pneu: '../image/marron_pneux.png', cross: '../image/marron_croisement_pneux.png' },    
+    { txt: '../image/orange.png', car: '../image/orange_voiture.png', pneu: '../image/orange_pneux.png', cross: '../image/orange_croisement_pneux.png' },    
+    { txt: '../image/gris.png', car: '../image/gris_voiture.png', pneu: '../image/gris_pneux.png', cross: '../image/gris_croisement_pneux.png' },      
+    { txt: '../image/blanc.png', car: '../image/blanc_blanc.png', pneu: '../image/blanc_pneux.png', cross: '../image/blanc_croisement.png' } ,      
+    { txt: '../image/beige.png', car: '../image/beige_voiture.png', pneu: '../image/beige_pneux.png', cross: '../image/beige_croisement.png' },       
 ];
 
 // --- PREDEFINED LEVELS ---
@@ -169,7 +169,6 @@ const PREDEFINED_LEVELS = [
         ],
         solution: [{ r: 0, c: 2 }, { r: 1, c: 5 }, { r: 2, c: 0 }, { r: 3, c: 3 }, { r: 4, c: 1 }, { r: 5, c: 7 }, { r: 6, c: 4 }, { r: 7, c: 6 }]
     }
-    
 ];
 
 let SIZE = 8, grid = [], solution = [], chronoInterval = null, secondes = 0;
@@ -328,7 +327,7 @@ function lancerAleatoire() {
                     if (char >= '0' && char <= '9') {
                         colorId = parseInt(char);
                     } else {
-                        colorId = char.charCodeAt(0) - 55; // A=10, B=11...
+                        colorId = char.charCodeAt(0) - 55; 
                     }
                     grid[i][j] = { colorId: colorId, hasCar: false, hasX: false };
                 }
@@ -342,7 +341,6 @@ function lancerAleatoire() {
         });
 }
 
-// Optionnel: Gardé en backup JS au cas où
 function initGrid(size) {
     return Array.from({ length: size }, () =>
         Array.from({ length: size }, () => ({ colorId: -1, hasCar: false, hasX: false }))
@@ -358,10 +356,8 @@ function safeligne(g, r, c, size) {
     return true;
 }
 
-// Ajout pour le mode de récupération DB du collègue
 function loadLevelFromDB(id) {
     console.log("Chargement du niveau depuis la BDD ID:", id);
-    // Logique à implémenter si nécessaire pour fetch la bdd
 }
 
 function emptyregion(g, r, c, size) {
@@ -412,8 +408,8 @@ function afficherVictory(points, dejaFait = false) {
         pointsEl.classList.add('new-points');
         pointsEl.classList.remove('already-done');
     }
-        overlay.classList.add('active');
-    }
+    overlay.classList.add('active');
+}
 
 function gererFinDePartie() {
     clearInterval(chronoInterval);
@@ -427,7 +423,6 @@ function gererFinDePartie() {
         ? [1, 2, 3, 4, 5][idJS] ?? 1
         : (SIZE <= 5 ? 1 : SIZE <= 6 ? 2 : SIZE <= 7 ? 3 : SIZE <= 8 ? 4 : 5);
 
-    // Sending global scores
     fetch('../pages/save_score.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -447,7 +442,6 @@ function gererFinDePartie() {
         afficherVictory(0, false);
     });
 
-    // Envoi des chronos mode histoire
     if (type === 'fixed' && idJS >= 0) {
         fetch('../pages/save_chrono.php', {
             method: 'POST',

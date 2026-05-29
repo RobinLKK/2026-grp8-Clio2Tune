@@ -3,7 +3,6 @@ declare(strict_types=1);
 session_start();
 require_once '../includes/db.php';
 
-/* ── Classement : total des points par joueur ── */
 $stmt = $pdo->query("
     SELECT u.Pseudo, u.avatar,
            SUM(c.Points)  AS total_points,
@@ -16,7 +15,6 @@ $stmt = $pdo->query("
 ");
 $classement = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-/* ── Rang du joueur connecté (compatible MySQL 5.7) ── */
 $myRank = null;
 if (isset($_SESSION['user_id'])) {
     $myScore = $pdo->prepare("SELECT SUM(Points) FROM classement WHERE ID_utilisateur = ?");
@@ -84,7 +82,6 @@ if (isset($_SESSION['user_id'])) {
                 <p class="lb-empty">No scores recorded yet.</p>
             <?php else: ?>
 
-            <!-- Podium -->
             <div class="podium">
                 <?php
                 $order   = [1, 0, 2];
@@ -108,7 +105,6 @@ if (isset($_SESSION['user_id'])) {
                 <?php endforeach; ?>
             </div>
 
-            <!-- Tableau -->
             <div class="lb-table-wrap">
                 <table>
                     <thead>
@@ -152,7 +148,6 @@ if (isset($_SESSION['user_id'])) {
             </div>
 
             <?php endif; ?>
-
 
         </main>
 
